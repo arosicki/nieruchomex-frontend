@@ -1,5 +1,11 @@
 import { PostStatus } from '@/api/models/post';
 import { useSetFavorite } from '@/api/posts/favorite/use-set-favorite';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,9 +27,9 @@ import {
 } from '@/components/ui/select';
 import { useUserContext } from '@/context/user-context';
 import { capitalize } from '@/utils/capitalize';
-import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
+import { HeartFilledIcon, HeartIcon, ResetIcon } from '@radix-ui/react-icons';
 import { Link, useRouter } from '@tanstack/react-router';
-import { ArrowLeft, Pencil, Save } from 'lucide-react';
+import { ArrowLeft, BanIcon, Pencil, SaveIcon } from 'lucide-react';
 import { useState } from 'react';
 import { Control, FieldValues, Path } from 'react-hook-form';
 
@@ -44,6 +50,7 @@ const STRINGS = {
     UNSAVED_CHANGES: 'All unsaved changes will be lost.',
     CANCEL: 'Cancel',
     LEAVE: 'Leave',
+    RESET: 'Reset',
 };
 
 interface Props<T extends FieldValues> {
@@ -55,6 +62,7 @@ interface Props<T extends FieldValues> {
     control: Control<T>;
     isDirty?: boolean;
     isSaving?: boolean;
+    reset?: () => void;
 }
 
 export const TopNav = <T extends FieldValues>({
@@ -66,8 +74,10 @@ export const TopNav = <T extends FieldValues>({
     status,
     isDirty,
     isSaving,
+    reset,
 }: Props<T>) => {
     const user = useUserContext();
+
     // Will not be called with postId === 0
     const { mutateAsync: mutateAsyncSetFavorite } = useSetFavorite({
         id: +(postId || 0),
@@ -87,7 +97,7 @@ export const TopNav = <T extends FieldValues>({
             {isDirty ? (
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button variant="ghost">
+                        <Button variant="ghost" type="button">
                             <ArrowLeft />
                             {STRINGS.BACK}
                         </Button>
@@ -107,6 +117,7 @@ export const TopNav = <T extends FieldValues>({
                                 onClick={() => {
                                     setOpen(false);
                                 }}
+                                type="button"
                             >
                                 {STRINGS.CANCEL}
                             </Button>
@@ -116,6 +127,7 @@ export const TopNav = <T extends FieldValues>({
                                     setOpen(false);
                                     history.back();
                                 }}
+                                type="button"
                             >
                                 {STRINGS.LEAVE}
                             </Button>
@@ -123,7 +135,11 @@ export const TopNav = <T extends FieldValues>({
                     </DialogContent>
                 </Dialog>
             ) : (
-                <Button variant="ghost" onClick={() => history.back()}>
+                <Button
+                    variant="ghost"
+                    onClick={() => history.back()}
+                    type="button"
+                >
                     <ArrowLeft />
                     {STRINGS.BACK}
                 </Button>
@@ -190,10 +206,55 @@ export const TopNav = <T extends FieldValues>({
                             </FormItem>
                         )}
                     />
-                    <Button isLoading={isSaving}>
-                        <Save />
-                        {STRINGS.SAVE}
-                    </Button>
+
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    onClick={reset}
+                                    type="button"
+                                    size="icon"
+                                >
+                                    <ResetIcon />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{STRINGS.RESET}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant="ghost" size="icon" asChild>
+                                    <Link
+                                        to="/posts/$postId"
+                                        params={{ postId: `${postId!}` }}
+                                    >
+                                        <BanIcon />
+                                    </Link>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{STRINGS.CANCEL}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button size="icon">
+                                    <SaveIcon />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{STRINGS.SAVE}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 </div>
             )}
 
@@ -227,6 +288,7 @@ export const TopNav = <T extends FieldValues>({
                     onClick={() =>
                         mutateAsyncSetFavorite({ favorite: !isFavorite })
                     }
+                    type="button"
                 >
                     {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
                     {isFavorite

@@ -13,19 +13,16 @@ import { useUserContext } from '@/context/user-context';
 import { createDefaultValues } from './form/create-default-values';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PostFormFields, postFormSchema } from './form/schema';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useAddPost } from '@/api/posts/use-add-post';
 import { useEditPost } from '@/api/posts/use-edit-post';
 import { Map } from '../map/map';
 import { Marker } from 'react-leaflet';
 import { LocationSelector } from '../location-selector/location-selector';
-<<<<<<< HEAD
 import { useEditorRef } from '@udecode/plate-common/react';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
-=======
->>>>>>> parent of e51f451 (done)
 
 interface ViewProps {
     post: Post;
@@ -56,7 +53,7 @@ interface Props {
 const STRINGS = {
 <<<<<<< HEAD
     EMAIL: 'Email',
-    PHONE: 'Phone Number',
+    PHONE: 'Phone number',
     SELLER: 'Seller',
     LOCATION: 'Location',
     ARCHIVED_TITLE: 'This offer is archived',
@@ -78,6 +75,7 @@ export const PostEditor = ({ post, disabled }: Props) => {
     const user = useUserContext();
 <<<<<<< HEAD
     const navigate = useNavigate();
+    const editor = useEditorRef('richtext-editor');
 
     const { mutateAsync: mutateAsyncEditPost, isPending: isPendingEditPost } =
         useEditPost({ id: +(post?.id || 0) });
@@ -109,15 +107,11 @@ export const PostEditor = ({ post, disabled }: Props) => {
         if (!smallCarouselApi) return;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
     const parsedDescription = useMemo(() => {
         if (!post?.description) return;
 
         return JSON.parse(post.description);
     }, [post?.description]);
-=======
-    const parsedDescription = JSON.parse(post?.description || '{}');
->>>>>>> parent of e51f451 (done)
 
     return (
         <Form {...form}>
@@ -134,6 +128,11 @@ export const PostEditor = ({ post, disabled }: Props) => {
                     control={form.control}
                     isDirty={!disabled || form.formState.isDirty}
                     isSaving={isPending}
+                    reset={() => {
+                        form.reset();
+                        if (!editor.isFallback)
+                            editor.tf.setValue(parsedDescription);
+                    }}
                 />
 
                 {post?.status === 'ARCHIVED' && disabled && (
@@ -207,7 +206,7 @@ export const PostEditor = ({ post, disabled }: Props) => {
                             </div>
                         )}
                     </div>
-                    <div className="container flex flex-col gap-4 px-4 pb-8 xl:w-1/3 lg:pt-4">
+                    <div className="container flex flex-col-reverse gap-4 px-4 pb-8 xl:flex-col xl:w-1/3 lg:pt-4">
                         <div className="border rounded-xl p-4 ">
                             <h2 className="text-xl">{STRINGS.SELLER}</h2>
                             <div className="flex flex-col sm:flex-row xl:flex-col justify-center gap-4 items-center">

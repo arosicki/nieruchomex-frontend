@@ -17,6 +17,7 @@ import {
     FormControl,
     FormField,
     FormItem,
+    FormLabel,
     FormMessage,
 } from '../../../components/ui/form';
 import {
@@ -50,6 +51,8 @@ const STRINGS = {
     USER: 'User',
     ADMIN: 'Admin',
     INTERNAL_SERVER_ERROR: 'An unknown error occurred. Please try again later',
+    EMAIL: 'Email',
+    PHONE: 'Phone number',
 };
 
 const formSchema = z.object({
@@ -83,6 +86,20 @@ const formSchema = z.object({
     type: z.enum(['ADMIN', 'USER'], {
         message: 'Type is required.',
     }),
+    email: z
+        .string({
+            required_error: 'Email is required.',
+        })
+        .email({
+            message: 'Email must be a valid email address.',
+        }),
+    phone: z
+        .string({
+            required_error: 'Phone number is required.',
+        })
+        .regex(/^[+]?[0-9]{0,3}[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/, {
+            message: 'Phone number must be a valid phone number.',
+        }),
 });
 
 interface Props {
@@ -148,6 +165,7 @@ export const AddUserDialog = ({ children }: Props) => {
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
+                                    <FormLabel>{STRINGS.USERNAME}</FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder={STRINGS.USERNAME}
@@ -164,6 +182,7 @@ export const AddUserDialog = ({ children }: Props) => {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
+                                    <FormLabel>{STRINGS.PASSWORD}</FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder={STRINGS.PASSWORD}
@@ -178,9 +197,46 @@ export const AddUserDialog = ({ children }: Props) => {
                         />
                         <FormField
                             control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{STRINGS.EMAIL}</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder={STRINGS.EMAIL}
+                                            {...field}
+                                            type="email"
+                                            autoComplete="email"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{STRINGS.PHONE}</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder={STRINGS.PHONE}
+                                            {...field}
+                                            type="tel"
+                                            autoComplete="tel"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
                             name="type"
                             render={({ field }) => (
                                 <FormItem>
+                                    <FormLabel>{STRINGS.TYPE}</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}

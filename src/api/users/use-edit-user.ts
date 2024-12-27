@@ -11,6 +11,8 @@ import { getErrorText } from '@/api/helpers/get-error-text';
 interface Variables {
     userId: number;
     password?: string;
+    email: string;
+    phone: string;
     type: 'ADMIN' | 'USER';
 }
 
@@ -19,12 +21,14 @@ export const useEditUser = () => {
     const { toast } = useToast();
 
     return useMutation<Response<User>, FetchError, Variables>({
-        mutationFn: async ({ userId, password, type }) => {
+        mutationFn: async ({ userId, password, type, email, phone }) => {
             return callApi(Endpoints.USER, {
                 method: 'PATCH',
                 body: {
                     password: password || undefined,
                     type,
+                    email,
+                    phone,
                 },
                 params: {
                     id: `${userId}`,

@@ -13,16 +13,11 @@ interface Props {
     readOnly?: boolean;
 }
 
-<<<<<<< HEAD
 export const RichtextEditor = ({ value, readOnly }: Props) => {
-=======
-const emptyFn = () => {};
-
-export const RichtextEditor = ({ value, readOnly, onChange }: Props) => {
->>>>>>> parent of e51f451 (done)
     const editor = useCreateEditor({
         value,
         readOnly,
+        id: 'richtext-editor',
     });
 
     return (
