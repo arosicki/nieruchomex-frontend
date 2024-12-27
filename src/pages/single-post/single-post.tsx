@@ -7,6 +7,7 @@ import { GlobalLoader } from '@/components/global-loader';
 import { PostEditor } from '@/components/post-editor/post-editor';
 import { WallLayout } from '@/layouts/wall';
 import { useUserContext } from '@/context/user-context';
+<<<<<<< HEAD
 import { PlateController } from '@udecode/plate-common/react';
 =======
 import { Loader } from '../../components/loader/loader';
@@ -17,6 +18,8 @@ import { GlobalLoader } from '@/components/global-loader/global-loader';
 import { PostEditor } from '@/components/post-editor/post-editor';
 import { WallLayout } from '@/layouts/wall';
 >>>>>>> parent of c5f64a8 (Almost done)
+=======
+>>>>>>> parent of e51f451 (done)
 
 export const SinglePostPage = () => {
     const { postId } = useParams({
@@ -31,15 +34,14 @@ export const SinglePostPage = () => {
     if (postId === 'new') {
         return (
             <WallLayout>
-                <PlateController>
-                    <PostEditor />
-                </PlateController>
+                <PostEditor />
             </WallLayout>
         );
     }
 
     return (
         <WallLayout>
+<<<<<<< HEAD
 <<<<<<< HEAD
             <PlateController>
                 <Suspense fallback={<GlobalLoader />}>
@@ -51,6 +53,11 @@ export const SinglePostPage = () => {
                 <PostConnector id={postId} />
             </Suspense>
 >>>>>>> parent of c5f64a8 (Almost done)
+=======
+            <Suspense fallback={<GlobalLoader />}>
+                <PostConnector id={postId} isEditing={isEditing} />
+            </Suspense>
+>>>>>>> parent of e51f451 (done)
         </WallLayout>
 =======
         from: '/posts/$postId',

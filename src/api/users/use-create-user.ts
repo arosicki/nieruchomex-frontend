@@ -12,8 +12,6 @@ import { getErrorText } from '@/api/helpers/get-error-text';
 interface Variables {
     username: string;
     password: string;
-    email: string;
-    phone: string;
     type: 'ADMIN' | 'USER';
 }
 
@@ -22,15 +20,13 @@ export const useCreateUser = () => {
     const { toast } = useToast();
 
     return useMutation<Response<User>, FetchError, Variables>({
-        mutationFn: async ({ username, password, type, email, phone }) => {
+        mutationFn: async ({ username, password, type }) => {
             return callApi(Endpoints.USERS, {
                 method: 'POST',
                 body: {
                     name: username,
                     password,
                     type,
-                    email,
-                    phone,
                 },
             });
         },
