@@ -50,7 +50,7 @@ export const PostCarouselItem = ({
     const { mutateAsync: setFavoriteMutateAsync } = useSetFavorite({ id });
 
     return (
-        <CarouselItem className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+        <CarouselItem className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 relative">
             <Card>
                 {images[0]?.url ? (
                     <img
@@ -64,20 +64,23 @@ export const PostCarouselItem = ({
                     </div>
                 )}
 
+                {displayMode === 'status' && (
+                    <div className="bg-background/50 max-h-6 absolute top-2 right-2 flex rounded-md">
+                        <Badge
+                            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+                            variant={status.toLowerCase() as any}
+                        >
+                            {capitalize(status)}
+                        </Badge>
+                    </div>
+                )}
+
                 <CardHeader className="pb-4">
                     <CardTitle className="justify-between flex w-full">
                         <div className="text-2xl font-semibold tracking-tight truncate">
                             {formatPrice(price, type)}
                         </div>
-                        {displayMode === 'status' ? (
-                            <Badge
-                                className="max-h-6"
-                                /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-                                variant={status.toLowerCase() as any}
-                            >
-                                {capitalize(status)}
-                            </Badge>
-                        ) : (
+                        {displayMode === 'favorite' && (
                             <Button
                                 variant="ghost"
                                 size="icon"

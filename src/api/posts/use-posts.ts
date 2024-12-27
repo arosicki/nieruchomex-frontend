@@ -3,7 +3,7 @@ import { QueryKeys } from '../helpers/query-keys';
 import { DEFAULT_LIMIT } from '../../config';
 import { Endpoints } from '../helpers/endpoints';
 import { PaginatedResponse } from '../models/response';
-import { Post } from '../models/post';
+import { Post, PostStatus } from '../models/post';
 import { callApi } from '../helpers/call-api';
 import { FetchError } from '../helpers/fetch-error';
 import { useSearch } from '@tanstack/react-router';
@@ -22,12 +22,15 @@ interface Options {
 
     /** Show only posts for given userId */
     userId?: number;
+
+    status?: PostStatus[];
 }
 
 export const usePosts = ({
     variables,
     favoritesOnly,
     userId,
+    status,
 }: Options = {}) => {
     const { data: address } = useRetrieveAddress();
 
@@ -42,7 +45,7 @@ export const usePosts = ({
                 ...variables,
                 isFavorite: favoritesOnly ? 'true' : undefined,
                 userId: userId ? `${userId}` : undefined,
-                type: variables?.type !== 'ANY' ? variables.type : undefined,
+                type: variables?.type !== 'ALL' ? variables.type : undefined,
             };
 
         const { distance: rawDistance, ...queryParams } =
@@ -89,6 +92,7 @@ export const usePosts = ({
             parsedParams.isFavorite ? QueryKeys.FAVORITES : QueryKeys.POSTS,
             parsedParams,
             page,
+            status,
         ],
         queryFn: async ({ signal }) => {
             return callApi(Endpoints.POSTS, {
@@ -97,6 +101,7 @@ export const usePosts = ({
                     offset: DEFAULT_LIMIT * (page - 1),
                     limit: DEFAULT_LIMIT,
                     ...parsedParams,
+                    status: status?.join(','),
                 },
             });
         },

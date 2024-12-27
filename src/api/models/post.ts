@@ -1,13 +1,16 @@
 import { Image } from './image';
 import { User } from './user';
 
+export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+export type PostType = 'RENTAL' | 'SALE';
+
 export interface Post {
     id: number;
     images: Image[];
     title: string;
     description: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     author: User;
     favorites: number;
     isFavorite: boolean | null;
@@ -17,6 +20,6 @@ export interface Post {
     area: number;
     price: number;
     rooms: number;
-    status: string;
-    type: 'RENTAL' | 'SALE';
+    status: PostStatus;
+    type: PostType;
 }

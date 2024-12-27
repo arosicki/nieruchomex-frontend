@@ -6,6 +6,7 @@ export const NewestRentalPostsConnector = () => {
         variables: {
             type: 'RENTAL',
         },
+        status: ['PUBLISHED'],
     });
 
     return <PostCarousel posts={data.data} />;

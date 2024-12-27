@@ -34,3 +34,6 @@ export const BREAKPOINTS = {
     xl: 1280,
     '2xl': 1536,
 };
+
+// lat, lng
+export const MAP_CENTER: [number, number] = [54.35205, 18.64637];

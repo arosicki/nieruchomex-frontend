@@ -1,4 +1,4 @@
-import { Plate } from '@udecode/plate-common/react';
+import { Plate, OnChange } from '@udecode/plate-common/react';
 
 import { Editor, EditorContainer } from '@/components/plate-ui/editor';
 import type { Value } from '@udecode/plate-common';
@@ -7,24 +7,33 @@ import { FloatingToolbar } from '../plate-ui/floating-toolbar';
 import { FloatingToolbarButtons } from '../plate-ui/floating-toolbar-buttons';
 import { FixedToolbar } from '../plate-ui/fixed-toolbar';
 import { FixedToolbarButtons } from '../plate-ui/fixed-toolbar-buttons';
+import { debounce } from '@/utils/debounce';
 
 interface Props {
     value?: string | Value;
     readOnly?: boolean;
+    onChange?: OnChange;
 }
 
-export const RichtextEditor = ({ value, readOnly }: Props) => {
+const emptyFn = () => {};
+
+export const RichtextEditor = ({ value, readOnly, onChange }: Props) => {
     const editor = useCreateEditor({
         value,
         readOnly,
         id: 'richtext-editor',
     });
 
+    const [debounced] = debounce(onChange || emptyFn, 300);
+
     return (
-        <Plate editor={editor}>
-            <FixedToolbar>
-                <FixedToolbarButtons />
-            </FixedToolbar>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        <Plate editor={editor} onChange={debounced as any}>
+            {!readOnly && (
+                <FixedToolbar>
+                    <FixedToolbarButtons />
+                </FixedToolbar>
+            )}
 
             <EditorContainer>
                 {!readOnly && (

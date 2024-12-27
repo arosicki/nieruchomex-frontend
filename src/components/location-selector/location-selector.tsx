@@ -1,35 +1,39 @@
 import { MAP_CENTER, MAP_URL, SATELLITE_MAP_URL } from '@/config';
 import { cn } from '@/lib/utils';
 import { Map as LeafletMap } from 'leaflet';
-import { ReactNode, useEffect, useRef } from 'react';
-import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
+import { ReactNode, useRef, useState } from 'react';
+import {
+    LayersControl,
+    MapContainer,
+    Marker,
+    TileLayer,
+    useMapEvent,
+} from 'react-leaflet';
 
 interface Props {
     children?: ReactNode;
     className?: string;
-    orientation?: 'horizontal' | 'vertical';
     center?: [number, number];
+    onChange?: (lat: number, lng: number) => void;
 }
 
-export const Map = ({
+export const LocationSelector = ({
     children,
+    onChange,
     className,
-    orientation = 'vertical',
     center = MAP_CENTER,
 }: Props) => {
     const mapRef = useRef<LeafletMap>(null);
+    const [position, setPosition] = useState(center);
 
-    useEffect(() => {
-        const map = mapRef.current;
-        if (map) {
-            map?.invalidateSize();
-        }
-    }, [orientation]);
-
-    useEffect(() => {
-        const map = mapRef.current;
-        if (map) map.setView(center);
-    }, [center]);
+    const UpdateMarkerToMapCenter = () => {
+        const map = useMapEvent('move', () => {
+            const center = map.getCenter();
+            setPosition([center.lat, center.lng]);
+            onChange?.(center.lat, center.lng);
+        });
+        return null;
+    };
 
     return (
         <MapContainer
@@ -57,6 +61,8 @@ export const Map = ({
                 </LayersControl.BaseLayer>
             </LayersControl>
 
+            <Marker position={position} />
+            <UpdateMarkerToMapCenter />
             {children}
         </MapContainer>
     );

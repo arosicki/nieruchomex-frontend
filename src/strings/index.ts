@@ -20,10 +20,7 @@ export const STRINGS = {
     LOADING: 'Loading...',
 <<<<<<< HEAD
     PER_MONTH: 'per month',
-<<<<<<< HEAD
     OF: 'of',
 =======
 >>>>>>> parent of 075a5bc (Add richtext editor)
-=======
->>>>>>> parent of c5f64a8 (Almost done)
 };

@@ -8,48 +8,6 @@ interface Props {
     editButton?: boolean;
 }
 
-// const STRINGS = {
-//     NO_POSTS_FOUND: 'No posts found',
-//     SIGN_UP_TO_ADD_POST: 'Sign up and add a post',
-//     ADD_YOUR_FIRST_POST: 'Add your first post',
-//     USER_HASNT_ADDED_POSTS_YET: "User hasn't added any posts yet",
-//     ADD_POST: 'Add Post',
-// };
-
-// const CallToAction = ({
-//     user,
-//     isOtherUserWall = false,
-// }: {
-//     user: User | null;
-//     isOtherUserWall: boolean;
-// }) => {
-//     if (isOtherUserWall)
-//         return (
-//             <p className={$.emptyDescription}>
-//                 {STRINGS.USER_HASNT_ADDED_POSTS_YET}
-//             </p>
-//         );
-//     if (!user)
-//         return (
-//             <Link to="/sign-up">
-//                 <Button asChild>
-//                     {STRINGS.SIGN_UP_TO_ADD_POST}
-//                     <LogIn size={20} />
-//                 </Button>
-//             </Link>
-//         );
-//     return (
-//         <AddPostModal
-//             trigger={
-//                 <Button asChild>
-//                     {STRINGS.ADD_POST}
-//                     <PlusIcon size={20} />
-//                 </Button>
-//             }
-//         />
-//     );
-// };
-
 export const PostList = ({
     posts,
     displayMode = 'favorite',

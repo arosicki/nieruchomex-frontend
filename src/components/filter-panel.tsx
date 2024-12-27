@@ -37,7 +37,7 @@ const STRINGS = {
 
 const formSchema = z
     .object({
-        type: z.enum(['ANY', 'SALE', 'RENTAL'], {
+        type: z.enum(['ALL', 'SALE', 'RENTAL'], {
             message: 'Type is required.',
         }),
         minArea: z
@@ -141,7 +141,7 @@ export const FilterPanel = ({
     const onClearWrapper = async () => {
         await onClear?.();
         form.reset({
-            type: 'ANY',
+            type: 'ALL',
         });
     };
 
@@ -149,7 +149,10 @@ export const FilterPanel = ({
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className={cn('flex flex-col gap-4 px-2', className)}
+                className={cn(
+                    'flex flex-col gap-4 px-2 bg-background',
+                    className,
+                )}
             >
                 <div className="flex flex-col gap-4 items-center w-full sm:flex-row">
                     <div className="flex gap-2 flex-col w-full sm:w-auto">
@@ -173,7 +176,7 @@ export const FilterPanel = ({
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectItem value="ANY">
+                                                <SelectItem value="ALL">
                                                     {STRINGS.ANY}
                                                 </SelectItem>
                                                 <SelectItem value="SALE">

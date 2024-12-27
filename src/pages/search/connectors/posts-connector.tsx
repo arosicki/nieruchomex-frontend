@@ -6,7 +6,9 @@ import { useMediaQuery } from '@/utils/useMediaQuery';
 import { BREAKPOINTS } from '@/config';
 
 export const PostsConnector = () => {
-    const { data } = usePosts();
+    const { data } = usePosts({
+        status: ['PUBLISHED'],
+    });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const params: Record<string, any> = useSearch({
         from: '/search',
