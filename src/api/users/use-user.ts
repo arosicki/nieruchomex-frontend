@@ -19,6 +19,5 @@ export const useUser = ({ userId }: Params) => {
                 signal,
             });
         },
-        retry: 1,
     });
 };

@@ -48,7 +48,7 @@ export default {
                     DEFAULT: 'hsla(var(--draft))',
                     foreground: 'hsla(var(--draft-foreground))',
                 },
-                published: {
+                active: {
                     DEFAULT: 'hsla(var(--active))',
                     foreground: 'hsla(var(--active-foreground))',
                 },
@@ -84,21 +84,10 @@ export default {
                         height: '0',
                     },
                 },
-                'pulse-2': {
-                    '0%, 100%': {
-                        transform: 'scale(0.95)',
-                        opacity: '0.75',
-                    },
-                    '50%': {
-                        transform: 'scale(1)',
-                        opacity: '1',
-                    },
-                },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                'pulse-2': 'pulse-2 1.5s infinite',
             },
         },
     },

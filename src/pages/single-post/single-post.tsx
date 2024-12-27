@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { SinglePostConnector } from './connectors/post-connector';
 import { useParams } from '@tanstack/react-router';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { GlobalLoader } from '@/components/global-loader';
 import { PostEditor } from '@/components/post-editor/post-editor';
 import { WallLayout } from '@/layouts/wall';
@@ -11,30 +12,23 @@ import { PlateController } from '@udecode/plate-common/react';
 import { Loader } from '../../components/loader/loader';
 import $ from './single-post.module.scss';
 >>>>>>> parent of 075a5bc (Add richtext editor)
+=======
+import { GlobalLoader } from '@/components/global-loader/global-loader';
+import { PostEditor } from '@/components/post-editor/post-editor';
+import { WallLayout } from '@/layouts/wall';
+>>>>>>> parent of c5f64a8 (Almost done)
 
-const STRINGS = {
-    NO_PERMISSION: 'You do not have permission to view this page.',
-};
-
-interface Props {
-    isEditing?: boolean;
-}
-
-export const SinglePostPage = ({ isEditing }: Props) => {
-    const user = useUserContext();
+export const SinglePostPage = () => {
     const { postId } = useParams({
 <<<<<<< HEAD
+<<<<<<< HEAD
         strict: false,
+=======
+        from: '/posts/$postId/',
+>>>>>>> parent of c5f64a8 (Almost done)
     });
 
-    if (postId === 'new' || !postId) {
-        if (!user) {
-            throw new Response(STRINGS.NO_PERMISSION, {
-                status: 403,
-                statusText: STRINGS.NO_PERMISSION,
-            });
-        }
-
+    if (postId === 'new') {
         return (
             <WallLayout>
                 <PlateController>
@@ -44,20 +38,19 @@ export const SinglePostPage = ({ isEditing }: Props) => {
         );
     }
 
-    if (!user && isEditing) {
-        throw new Response(STRINGS.NO_PERMISSION, {
-            status: 403,
-            statusText: STRINGS.NO_PERMISSION,
-        });
-    }
-
     return (
         <WallLayout>
+<<<<<<< HEAD
             <PlateController>
                 <Suspense fallback={<GlobalLoader />}>
                     <PostConnector id={postId} isEditing={isEditing} />
                 </Suspense>
             </PlateController>
+=======
+            <Suspense fallback={<GlobalLoader />}>
+                <PostConnector id={postId} />
+            </Suspense>
+>>>>>>> parent of c5f64a8 (Almost done)
         </WallLayout>
 =======
         from: '/posts/$postId',

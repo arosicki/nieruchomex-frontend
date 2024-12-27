@@ -11,7 +11,6 @@ export const FavoritePostsConnector = () => {
     const { data } = usePosts({
         variables: {},
         favoritesOnly: true,
-        status: ['PUBLISHED', 'ARCHIVED'],
     });
 
     if (!data.data.length)

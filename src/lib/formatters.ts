@@ -1,7 +1,6 @@
-import { PostType } from '@/api/models/post';
 import { STRINGS } from '@/strings';
 
-export const formatPrice = (price: number, type: PostType) => {
+export const formatPrice = (price: number, type: 'RENTAL' | 'SALE') => {
     const formattedPrice = price.toLocaleString('pl-PL', {
         style: 'currency',
         currency: 'PLN',

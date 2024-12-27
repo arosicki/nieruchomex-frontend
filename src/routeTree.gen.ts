@@ -13,7 +13,6 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as MyProfileImport } from './routes/my-profile'
 import { Route as MyPostsImport } from './routes/my-posts'
 
 // Create Virtual Routes
@@ -59,12 +58,6 @@ const AdminLazyRoute = AdminLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/admin.lazy').then((d) => d.Route))
 
-const MyProfileRoute = MyProfileImport.update({
-  id: '/my-profile',
-  path: '/my-profile',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const MyPostsRoute = MyPostsImport.update({
   id: '/my-posts',
   path: '/my-posts',
@@ -105,13 +98,6 @@ declare module '@tanstack/react-router' {
       path: '/my-posts'
       fullPath: '/my-posts'
       preLoaderRoute: typeof MyPostsImport
-      parentRoute: typeof rootRoute
-    }
-    '/my-profile': {
-      id: '/my-profile'
-      path: '/my-profile'
-      fullPath: '/my-profile'
-      preLoaderRoute: typeof MyProfileImport
       parentRoute: typeof rootRoute
     }
     '/admin': {
@@ -171,7 +157,6 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/my-posts': typeof MyPostsRoute
-  '/my-profile': typeof MyProfileRoute
   '/admin': typeof AdminLazyRoute
   '/favorites': typeof FavoritesLazyRoute
   '/search': typeof SearchLazyRoute
@@ -184,7 +169,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/my-posts': typeof MyPostsRoute
-  '/my-profile': typeof MyProfileRoute
   '/admin': typeof AdminLazyRoute
   '/favorites': typeof FavoritesLazyRoute
   '/search': typeof SearchLazyRoute
@@ -198,7 +182,6 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/my-posts': typeof MyPostsRoute
-  '/my-profile': typeof MyProfileRoute
   '/admin': typeof AdminLazyRoute
   '/favorites': typeof FavoritesLazyRoute
   '/search': typeof SearchLazyRoute
@@ -213,7 +196,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/my-posts'
-    | '/my-profile'
     | '/admin'
     | '/favorites'
     | '/search'
@@ -225,7 +207,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/my-posts'
-    | '/my-profile'
     | '/admin'
     | '/favorites'
     | '/search'
@@ -237,7 +218,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/my-posts'
-    | '/my-profile'
     | '/admin'
     | '/favorites'
     | '/search'
@@ -251,7 +231,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   MyPostsRoute: typeof MyPostsRoute
-  MyProfileRoute: typeof MyProfileRoute
   AdminLazyRoute: typeof AdminLazyRoute
   FavoritesLazyRoute: typeof FavoritesLazyRoute
   SearchLazyRoute: typeof SearchLazyRoute
@@ -264,7 +243,6 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   MyPostsRoute: MyPostsRoute,
-  MyProfileRoute: MyProfileRoute,
   AdminLazyRoute: AdminLazyRoute,
   FavoritesLazyRoute: FavoritesLazyRoute,
   SearchLazyRoute: SearchLazyRoute,
@@ -286,7 +264,6 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/my-posts",
-        "/my-profile",
         "/admin",
         "/favorites",
         "/search",
@@ -301,9 +278,6 @@ export const routeTree = rootRoute
     },
     "/my-posts": {
       "filePath": "my-posts.tsx"
-    },
-    "/my-profile": {
-      "filePath": "my-profile.tsx"
     },
     "/admin": {
       "filePath": "admin.lazy.tsx"

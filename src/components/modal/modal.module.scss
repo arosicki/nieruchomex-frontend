@@ -1,0 +1,28 @@
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayWrapper {
+    z-index: 20;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal {
+    background-color: var(--color-accent);
+    width: 100%;
+    max-width: 36.125rem;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -14,8 +14,11 @@ import { softBreakPlugin } from './soft-break';
 import { trailingBlockPlugin } from './trailing-block';
 import { linkPlugin } from './link';
 import { tablePlugin } from './table';
+<<<<<<< HEAD
 import { exitBreakPlugin } from './exit-break';
 import { lineHeightPlugin } from './line-height';
+=======
+>>>>>>> parent of c5f64a8 (Almost done)
 
 export const viewPlugins = [
     basicElementsPlugin,
@@ -37,5 +40,4 @@ export const editorPlugins = [
     ...blockSelectionPlugins,
     softBreakPlugin,
     trailingBlockPlugin,
-    exitBreakPlugin,
 ];

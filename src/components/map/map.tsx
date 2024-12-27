@@ -1,21 +1,19 @@
-import { MAP_CENTER, MAP_URL, SATELLITE_MAP_URL } from '@/config';
+import { MAP_URL, SATELLITE_MAP_URL } from '@/config';
 import { cn } from '@/lib/utils';
 import { Map as LeafletMap } from 'leaflet';
 import { ReactNode, useEffect, useRef } from 'react';
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
 
 interface Props {
-    children?: ReactNode;
+    children: ReactNode;
     className?: string;
     orientation?: 'horizontal' | 'vertical';
-    center?: [number, number];
 }
 
 export const Map = ({
     children,
     className,
     orientation = 'vertical',
-    center = MAP_CENTER,
 }: Props) => {
     const mapRef = useRef<LeafletMap>(null);
 
@@ -26,14 +24,9 @@ export const Map = ({
         }
     }, [orientation]);
 
-    useEffect(() => {
-        const map = mapRef.current;
-        if (map) map.setView(center);
-    }, [center]);
-
     return (
         <MapContainer
-            center={center}
+            center={[54.35205, 18.64637]}
             zoom={20}
             className={cn('h-full sticky', className)}
             scrollWheelZoom={true}

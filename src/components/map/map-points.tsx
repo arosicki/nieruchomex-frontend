@@ -1,4 +1,6 @@
 import { Post } from '@/api/models/post';
+import { BREAKPOINTS } from '@/config';
+import { useMediaQuery } from '@/utils/useMediaQuery';
 import { Marker } from 'react-leaflet';
 
 interface Props {
@@ -6,26 +8,20 @@ interface Props {
 }
 
 export const MapPoints = ({ posts }: Props) => {
+    const isMobile = useMediaQuery(BREAKPOINTS.lg);
+
     return posts.map((post) => (
         <Marker
             key={post.id}
             position={[post.latitude, post.longitude]}
             eventHandlers={{
                 click: () => {
-                    const card = document.getElementById(`post-${post.id}`);
-
-                    const button = document.getElementById(
-                        `post-${post.id}-details`,
-                    );
-
-                    card?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                    });
-
-                    button?.focus({
-                        preventScroll: true,
-                    });
+                    document
+                        .getElementById(`post-${post.id}-details`)
+                        ?.scrollIntoView({
+                            behavior: 'smooth',
+                            block: isMobile ? 'end' : 'start',
+                        });
                 },
             }}
         />

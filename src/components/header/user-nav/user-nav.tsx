@@ -10,7 +10,7 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    // DropdownMenuShortcut,
+    DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,6 @@ const STRINGS = {
     MY_POSTS: 'My Posts',
     ADMIN_PANEL: 'Admin Panel',
     MY_FAVORITES: 'My Favorites',
-    MY_PROFILE: 'My Profile',
 };
 
 export const UserNav = ({ user }: Props) => {
@@ -70,7 +69,7 @@ export const UserNav = ({ user }: Props) => {
                         }
                     >
                         {STRINGS.MY_POSTS}
-                        {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
+                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         onClick={() =>
@@ -80,23 +79,13 @@ export const UserNav = ({ user }: Props) => {
                         }
                     >
                         {STRINGS.MY_FAVORITES}
-                        {/* <DropdownMenuShortcut>⇧⌘F</DropdownMenuShortcut> */}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                        onClick={() =>
-                            navigate({
-                                to: '/my-profile',
-                            })
-                        }
-                    >
-                        {STRINGS.MY_PROFILE}
-                        {/* <DropdownMenuShortcut>⇧⌘M</DropdownMenuShortcut> */}
+                        <DropdownMenuShortcut>⇧⌘F</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     {user.type === 'ADMIN' && (
                         <DropdownMenuItem asChild>
                             <Link to="/admin">
                                 {STRINGS.ADMIN_PANEL}
-                                {/* <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut> */}
+                                <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                             </Link>
                         </DropdownMenuItem>
                     )}
@@ -105,7 +94,7 @@ export const UserNav = ({ user }: Props) => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}>
                     {STRINGS.SIGN_OUT}
-                    {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

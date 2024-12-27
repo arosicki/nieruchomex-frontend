@@ -15,7 +15,6 @@ export const MyPostsConnector = () => {
     const { data } = usePosts({
         variables: {},
         userId: user?.id,
-        status: ['DRAFT', 'PUBLISHED', 'ARCHIVED'],
     });
 
     if (!data.data.length)

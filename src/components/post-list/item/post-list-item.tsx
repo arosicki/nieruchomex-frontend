@@ -107,10 +107,7 @@ export const PostListItem = ({
     }, [api]);
 
     return (
-        <Card
-            className="focus-within:ring-1 focus-within:ring-primary m-1"
-            id={`post-${id}`}
-        >
+        <Card>
             <div
                 className={cn('flex ', displayFormat === 'grid' && 'flex-col')}
             >
@@ -212,11 +209,15 @@ export const PostListItem = ({
                         {editButton ? (
                             <div className="flex gap-2">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <Button
                                     id={`post-${id}-details`}
                                     variant="secondary"
                                     asChild
                                 >
+=======
+                                <Button variant="secondary" asChild>
+>>>>>>> parent of c5f64a8 (Almost done)
                                     <Link
                                         to="/posts/$postId"
                                         params={{
@@ -244,7 +245,11 @@ export const PostListItem = ({
                             </div>
                         ) : (
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <Button id={`post-${id}-details`} asChild>
+=======
+                            <Button asChild>
+>>>>>>> parent of c5f64a8 (Almost done)
                                 <Link
                                     to="/posts/$postId"
                                     params={{

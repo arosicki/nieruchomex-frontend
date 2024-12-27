@@ -22,8 +22,8 @@ export const getFiltersSearchParams = (
     } = searchParams;
 
     const newType = ALLOWED_TYPE_OPTIONS.includes(type as string)
-        ? (type as 'SALE' | 'RENTAL' | 'ALL')
-        : 'ALL';
+        ? (type as 'SALE' | 'RENTAL' | 'ANY')
+        : 'ANY';
 
     const newMinArea =
         !isNaN(Number(minArea)) && Number(minArea) >= 0
