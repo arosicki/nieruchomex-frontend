@@ -3,14 +3,17 @@ import { FilterPanel, PostSearchFormModel } from '@/components/filter-panel';
 import { useUserContext } from '@/context/user-context';
 import { WallLayout } from '@/layouts/wall';
 import { getFiltersSearchParams } from '@/lib/get-search-url-params';
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { Link, useNavigate, useSearch } from '@tanstack/react-router';
 import { Suspense, useMemo } from 'react';
 import { MyPostsConnector } from './connectors/my-posts-connector';
 import { Loader } from '@/components/loader/loader';
+import { Button } from '@/components/ui/button';
+import { PlusIcon } from 'lucide-react';
 
 const STRINGS = {
     MY_POSTS: 'My posts',
     NO_PERMISSION: 'You do not have permission to view this page.',
+    ADD_POST: 'Add post',
 };
 
 export const MyPostsPage = () => {
@@ -58,9 +61,22 @@ export const MyPostsPage = () => {
         <WallLayout>
             <div className="flex flex-col items-center w-full py-12 gap-8">
                 <div className="flex flex-col container border p-4 rounded-lg">
-                    <h1 className="text-3xl font-semibold tracking-tight p-4">
-                        {STRINGS.MY_POSTS}
-                    </h1>
+                    <div className="flex justify-between items-center">
+                        <h1 className="text-3xl font-semibold tracking-tight p-4">
+                            {STRINGS.MY_POSTS}
+                        </h1>
+                        <Button asChild>
+                            <Link
+                                to="/posts/$postId"
+                                params={{
+                                    postId: 'new',
+                                }}
+                            >
+                                <PlusIcon className="w-6 h-6" />
+                                {STRINGS.ADD_POST}
+                            </Link>
+                        </Button>
+                    </div>
                     <AddressSearch />
                     <FilterPanel
                         onClear={onClear}

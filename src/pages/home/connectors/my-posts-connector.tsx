@@ -24,9 +24,12 @@ export const MyPostsConnector = () => {
                 <Info size={64} className="text-muted-foreground" />
                 <h3>{STRINGS.NO_FAVORITE_POSTS}</h3>
                 <Button asChild>
-                    {/* TODO */}
-                    {/* <Link to="/post"> */}
-                    <Link to="/">
+                    <Link
+                        to="/posts/$postId"
+                        params={{
+                            postId: 'new',
+                        }}
+                    >
                         <PlusIcon />
                         {STRINGS.ADD_POST}
                     </Link>

@@ -41,7 +41,7 @@ export const UserNav = ({ user }: Props) => {
                     className="relative h-8 w-8 rounded-full mr-4"
                 >
                     <Avatar className="h-8 w-8">
-                        {/* TODO */}
+                        {/* TODO: Stretch add user avatars */}
                         {/* <AvatarImage src="/avatars/01.png" alt="@shadcn" /> */}
                         <AvatarFallback>
                             {getInitials(user.name)}

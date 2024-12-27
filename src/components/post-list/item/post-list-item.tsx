@@ -32,6 +32,8 @@ import { CameraIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { useUserContext } from '@/context/user-context';
 import { useSetFavorite } from '@/api/posts/favorite/use-set-favorite';
 import { cn } from '@/lib/utils';
+import { Link } from '@tanstack/react-router';
+import { formatPrice, formatPricePerMeter } from '@/lib/formatters';
 
 const STRINGS = {
     PER_MONTH: 'per month',
@@ -40,30 +42,6 @@ const STRINGS = {
     VIEW_DETAILS: 'View details',
     EDIT: 'Edit',
     OF: 'of',
-};
-
-const formatPrice = (price: number, type: 'RENTAL' | 'SALE') => {
-    const formattedPrice = price.toLocaleString('pl-PL', {
-        style: 'currency',
-        currency: 'PLN',
-        maximumFractionDigits: 0,
-    });
-
-    if (type === 'RENTAL') {
-        return `${formattedPrice} ${STRINGS.PER_MONTH}`;
-    }
-
-    return formattedPrice;
-};
-
-const formatPricePerMeter = (price: number, area: number) => {
-    const pricePerMeter = price / area;
-
-    return `${pricePerMeter.toLocaleString('pl-PL', {
-        style: 'currency',
-        currency: 'PLN',
-        maximumFractionDigits: 0,
-    })}/m²`;
 };
 
 type Props = {
@@ -211,7 +189,6 @@ export const PostListItem = ({
                     <CardFooter className="flex w-full justify-end">
                         {editButton ? (
                             <div className="flex gap-2">
-<<<<<<< HEAD
                                 <Button
                                     id={`post-${id}-details`}
                                     variant="secondary"
@@ -235,15 +212,9 @@ export const PostListItem = ({
                                     >
                                         {STRINGS.EDIT}
                                     </Link>
-=======
-                                <Button variant="secondary">
-                                    {STRINGS.VIEW_DETAILS}
->>>>>>> parent of 075a5bc (Add richtext editor)
                                 </Button>
-                                <Button>{STRINGS.EDIT}</Button>
                             </div>
                         ) : (
-<<<<<<< HEAD
                             <Button id={`post-${id}-details`} asChild>
                                 <Link
                                     to="/posts/$postId"
@@ -253,10 +224,6 @@ export const PostListItem = ({
                                 >
                                     {STRINGS.VIEW_DETAILS}
                                 </Link>
-=======
-                            <Button id={`post-${id}-details`}>
-                                {STRINGS.VIEW_DETAILS}
->>>>>>> parent of 075a5bc (Add richtext editor)
                             </Button>
                         )}
                     </CardFooter>

@@ -15,6 +15,8 @@ import { useSetFavorite } from '@/api/posts/favorite/use-set-favorite';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { Badge } from '../ui/badge';
 import { capitalize } from '@/utils/capitalize';
+import { Link } from '@tanstack/react-router';
+import { formatPrice } from '@/lib/formatters';
 
 interface Props {
     post: Post;
@@ -26,20 +28,6 @@ const STRINGS = {
     ROOM: 'room',
     ROOMS: 'rooms',
     VIEW_DETAILS: 'View details',
-};
-
-const formatPrice = (price: number, type: 'RENTAL' | 'SALE') => {
-    const formattedPrice = price.toLocaleString('pl-PL', {
-        style: 'currency',
-        currency: 'PLN',
-        maximumFractionDigits: 0,
-    });
-
-    if (type === 'RENTAL') {
-        return `${formattedPrice} ${STRINGS.PER_MONTH}`;
-    }
-
-    return formattedPrice;
 };
 
 export const PostCarouselItem = ({
@@ -109,8 +97,15 @@ export const PostCarouselItem = ({
                     </CardDescription>
                 </CardHeader>
                 <CardFooter className="flex w-full justify-end">
-                    <Button id={`post-${id}-details`}>
-                        {STRINGS.VIEW_DETAILS}
+                    <Button asChild>
+                        <Link
+                            to="/posts/$postId"
+                            params={{
+                                postId: `${id}`,
+                            }}
+                        >
+                            {STRINGS.VIEW_DETAILS}
+                        </Link>
                     </Button>
                 </CardFooter>
             </Card>
