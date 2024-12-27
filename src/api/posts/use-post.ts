@@ -8,7 +8,7 @@ import { callApi } from '../helpers/call-api';
 import { FetchError } from '../helpers/fetch-error';
 
 interface Params {
-    id: string;
+    id: number;
 }
 
 export const usePost = ({ id }: Params) => {
@@ -16,7 +16,7 @@ export const usePost = ({ id }: Params) => {
         queryKey: [QueryKeys.POST, id],
         queryFn: async ({ signal }) => {
             return callApi(Endpoints.POST, {
-                params: { id },
+                params: { id: id.toString() },
                 signal,
             });
         },

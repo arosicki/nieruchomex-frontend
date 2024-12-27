@@ -18,6 +18,9 @@ export const STRINGS = {
     LIKED_BY_MANY: 'Liked by {{likes}} people',
 
     LOADING: 'Loading...',
+<<<<<<< HEAD
     PER_MONTH: 'per month',
     OF: 'of',
+=======
+>>>>>>> parent of 075a5bc (Add richtext editor)
 };

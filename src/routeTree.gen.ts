@@ -25,8 +25,7 @@ const FavoritesLazyImport = createFileRoute('/favorites')()
 const AdminLazyImport = createFileRoute('/admin')()
 const IndexLazyImport = createFileRoute('/')()
 const UsersUserIdLazyImport = createFileRoute('/users/$userId')()
-const PostsPostIdIndexLazyImport = createFileRoute('/posts/$postId/')()
-const PostsPostIdEditLazyImport = createFileRoute('/posts/$postId/edit')()
+const PostsPostIdLazyImport = createFileRoute('/posts/$postId')()
 
 // Create/Update Routes
 
@@ -84,21 +83,11 @@ const UsersUserIdLazyRoute = UsersUserIdLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/users/$userId.lazy').then((d) => d.Route))
 
-const PostsPostIdIndexLazyRoute = PostsPostIdIndexLazyImport.update({
-  id: '/posts/$postId/',
-  path: '/posts/$postId/',
+const PostsPostIdLazyRoute = PostsPostIdLazyImport.update({
+  id: '/posts/$postId',
+  path: '/posts/$postId',
   getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/posts/$postId/index.lazy').then((d) => d.Route),
-)
-
-const PostsPostIdEditLazyRoute = PostsPostIdEditLazyImport.update({
-  id: '/posts/$postId/edit',
-  path: '/posts/$postId/edit',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/posts/$postId/edit.lazy').then((d) => d.Route),
-)
+} as any).lazy(() => import('./routes/posts/$postId.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -160,25 +149,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpLazyImport
       parentRoute: typeof rootRoute
     }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/posts/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/users/$userId': {
       id: '/users/$userId'
       path: '/users/$userId'
       fullPath: '/users/$userId'
       preLoaderRoute: typeof UsersUserIdLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts/$postId/edit': {
-      id: '/posts/$postId/edit'
-      path: '/posts/$postId/edit'
-      fullPath: '/posts/$postId/edit'
-      preLoaderRoute: typeof PostsPostIdEditLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/posts/$postId/': {
-      id: '/posts/$postId/'
-      path: '/posts/$postId'
-      fullPath: '/posts/$postId'
-      preLoaderRoute: typeof PostsPostIdIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -195,9 +177,8 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchLazyRoute
   '/sign-in': typeof SignInLazyRoute
   '/sign-up': typeof SignUpLazyRoute
+  '/posts/$postId': typeof PostsPostIdLazyRoute
   '/users/$userId': typeof UsersUserIdLazyRoute
-  '/posts/$postId/edit': typeof PostsPostIdEditLazyRoute
-  '/posts/$postId': typeof PostsPostIdIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -209,9 +190,8 @@ export interface FileRoutesByTo {
   '/search': typeof SearchLazyRoute
   '/sign-in': typeof SignInLazyRoute
   '/sign-up': typeof SignUpLazyRoute
+  '/posts/$postId': typeof PostsPostIdLazyRoute
   '/users/$userId': typeof UsersUserIdLazyRoute
-  '/posts/$postId/edit': typeof PostsPostIdEditLazyRoute
-  '/posts/$postId': typeof PostsPostIdIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -224,9 +204,8 @@ export interface FileRoutesById {
   '/search': typeof SearchLazyRoute
   '/sign-in': typeof SignInLazyRoute
   '/sign-up': typeof SignUpLazyRoute
+  '/posts/$postId': typeof PostsPostIdLazyRoute
   '/users/$userId': typeof UsersUserIdLazyRoute
-  '/posts/$postId/edit': typeof PostsPostIdEditLazyRoute
-  '/posts/$postId/': typeof PostsPostIdIndexLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -240,9 +219,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/sign-in'
     | '/sign-up'
-    | '/users/$userId'
-    | '/posts/$postId/edit'
     | '/posts/$postId'
+    | '/users/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -253,9 +231,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/sign-in'
     | '/sign-up'
-    | '/users/$userId'
-    | '/posts/$postId/edit'
     | '/posts/$postId'
+    | '/users/$userId'
   id:
     | '__root__'
     | '/'
@@ -266,9 +243,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/sign-in'
     | '/sign-up'
+    | '/posts/$postId'
     | '/users/$userId'
-    | '/posts/$postId/edit'
-    | '/posts/$postId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -281,9 +257,8 @@ export interface RootRouteChildren {
   SearchLazyRoute: typeof SearchLazyRoute
   SignInLazyRoute: typeof SignInLazyRoute
   SignUpLazyRoute: typeof SignUpLazyRoute
+  PostsPostIdLazyRoute: typeof PostsPostIdLazyRoute
   UsersUserIdLazyRoute: typeof UsersUserIdLazyRoute
-  PostsPostIdEditLazyRoute: typeof PostsPostIdEditLazyRoute
-  PostsPostIdIndexLazyRoute: typeof PostsPostIdIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -295,9 +270,8 @@ const rootRouteChildren: RootRouteChildren = {
   SearchLazyRoute: SearchLazyRoute,
   SignInLazyRoute: SignInLazyRoute,
   SignUpLazyRoute: SignUpLazyRoute,
+  PostsPostIdLazyRoute: PostsPostIdLazyRoute,
   UsersUserIdLazyRoute: UsersUserIdLazyRoute,
-  PostsPostIdEditLazyRoute: PostsPostIdEditLazyRoute,
-  PostsPostIdIndexLazyRoute: PostsPostIdIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -318,9 +292,8 @@ export const routeTree = rootRoute
         "/search",
         "/sign-in",
         "/sign-up",
-        "/users/$userId",
-        "/posts/$postId/edit",
-        "/posts/$postId/"
+        "/posts/$postId",
+        "/users/$userId"
       ]
     },
     "/": {
@@ -347,14 +320,11 @@ export const routeTree = rootRoute
     "/sign-up": {
       "filePath": "sign-up.lazy.tsx"
     },
+    "/posts/$postId": {
+      "filePath": "posts/$postId.lazy.tsx"
+    },
     "/users/$userId": {
       "filePath": "users/$userId.lazy.tsx"
-    },
-    "/posts/$postId/edit": {
-      "filePath": "posts/$postId/edit.lazy.tsx"
-    },
-    "/posts/$postId/": {
-      "filePath": "posts/$postId/index.lazy.tsx"
     }
   }
 }

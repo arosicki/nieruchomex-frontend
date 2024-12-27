@@ -1,11 +1,16 @@
 import { Suspense } from 'react';
-import { PostConnector } from './connectors/post-connector';
+import { SinglePostConnector } from './connectors/post-connector';
 import { useParams } from '@tanstack/react-router';
+<<<<<<< HEAD
 import { GlobalLoader } from '@/components/global-loader';
 import { PostEditor } from '@/components/post-editor/post-editor';
 import { WallLayout } from '@/layouts/wall';
 import { useUserContext } from '@/context/user-context';
 import { PlateController } from '@udecode/plate-common/react';
+=======
+import { Loader } from '../../components/loader/loader';
+import $ from './single-post.module.scss';
+>>>>>>> parent of 075a5bc (Add richtext editor)
 
 const STRINGS = {
     NO_PERMISSION: 'You do not have permission to view this page.',
@@ -18,6 +23,7 @@ interface Props {
 export const SinglePostPage = ({ isEditing }: Props) => {
     const user = useUserContext();
     const { postId } = useParams({
+<<<<<<< HEAD
         strict: false,
     });
 
@@ -53,5 +59,20 @@ export const SinglePostPage = ({ isEditing }: Props) => {
                 </Suspense>
             </PlateController>
         </WallLayout>
+=======
+        from: '/posts/$postId',
+    });
+
+    return (
+        <Suspense
+            fallback={
+                <div className={$.loadingContainer}>
+                    <Loader />
+                </div>
+            }
+        >
+            <SinglePostConnector id={+postId} />
+        </Suspense>
+>>>>>>> parent of 075a5bc (Add richtext editor)
     );
 };
