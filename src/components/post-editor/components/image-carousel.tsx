@@ -38,7 +38,7 @@ export const ImageCarousel = ({ images, title }: Props) => {
         bigCarouselApi.on('select', () => {
             setCurrent(bigCarouselApi.selectedScrollSnap() + 1);
         });
-    }, [bigCarouselApi]);
+    }, [bigCarouselApi, images]);
 
     useEffect(() => {
         if (!smallCarouselApi) return;
