@@ -45,7 +45,6 @@ export const FavoritePostsConnector = () => {
             <PostList
                 posts={data.data}
                 displayFormat={isSmall ? 'grid' : 'list'}
-                editButton
             />
             <Pagination
                 totalPages={totalPages}
