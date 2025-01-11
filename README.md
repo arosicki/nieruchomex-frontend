@@ -1,30 +1,28 @@
-# React + TypeScript + Vite
+# Projekt Grupowy Backend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Running the application
 
-Currently, two official plugins are available:
+### Prerequisites
+- Node.js 20 installed on your syste *Node.js 18 should work as well, but it is not recommended*
+- (Backend app)[https://github.com/ar-ms-pz/projekt-grupowy] running and accesible via network
+- (Mapbox)[https://www.mapbox.com/] api token
+- Internet connection
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Configure the app
+Copy `example.env` file into `.env` and enter application configuration
+`cp example.env .env`
 
-## Expanding the ESLint configuration
+Update `VITE_MAPBOX_ACCESS_TOKEN` with your mapbox api token
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Install dependencies
+`npm install`
 
-- Configure the top-level `parserOptions` property like this:
+### Run the app
+a) Run in dev mode with hot reload
+`npm run dev`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+b) Run production build
+`npm run build`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Done ✨
+*App is accessible on `http://localhost:5173/`*
