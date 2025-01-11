@@ -19,6 +19,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 const STRINGS = {
     ALREADY_HAVE_AN_ACCOUNT: 'Already have an account?',
@@ -154,6 +155,9 @@ export const SignUpPage = () => {
                     <Logo />
                 </div>
                 <div className="mx-auto flex w-full flex-col justify-center h-full space-y-6 p-12 sm:w-96">
+                    <div className="absolute top-6 right-6">
+                        <ThemeToggle />
+                    </div>
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">
                             {STRINGS.CREATE_AN_ACCOUNT}
