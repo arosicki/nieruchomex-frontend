@@ -121,6 +121,10 @@ export const TopNav = <T extends FieldValues>({
                             <Button
                                 variant="ghost"
                                 onClick={() => {
+                                    if (!postId) {
+                                        history.back();
+                                        return;
+                                    }
                                     setLeaveModalOpen(false);
                                 }}
                                 type="button"
