@@ -4,8 +4,8 @@
 
 ### Prerequisites
 - Node.js 20 installed on your syste *Node.js 18 should work as well, but it is not recommended*
-- (Backend app)[https://github.com/ar-ms-pz/projekt-grupowy] running and accesible via network
-- (Mapbox)[https://www.mapbox.com/] api token
+- [Backend app](https://github.com/ar-ms-pz/projekt-grupowy) running and accesible via network
+- [Mapbox](https://www.mapbox.com/) api token
 - Internet connection
 
 ### Configure the app
