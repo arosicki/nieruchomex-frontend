@@ -152,7 +152,7 @@ export const TopNav = <T extends FieldValues>({
             )}
 
             {(isPostAuthor || !isExistingPost) && isEditing && (
-                <div className="gap-2 flex">
+                <div className="gap-2 flex flex-wrap justify-end flex-reverse">
                     <FormField
                         control={control}
                         name={'type' as Path<T>}
@@ -212,6 +212,42 @@ export const TopNav = <T extends FieldValues>({
                             </FormItem>
                         )}
                     />
+
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    onClick={reset}
+                                    type="button"
+                                    size="icon"
+                                >
+                                    <ResetIcon />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{STRINGS.RESET}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant="ghost" size="icon" asChild>
+                                    <Link
+                                        to="/posts/$postId"
+                                        params={{ postId: `${postId!}` }}
+                                    >
+                                        <BanIcon />
+                                    </Link>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{STRINGS.CANCEL}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
 
                     {!!postId && (
                         <Dialog
@@ -274,42 +310,6 @@ export const TopNav = <T extends FieldValues>({
                             </DialogContent>
                         </Dialog>
                     )}
-
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    onClick={reset}
-                                    type="button"
-                                    size="icon"
-                                >
-                                    <ResetIcon />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>{STRINGS.RESET}</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button variant="ghost" size="icon" asChild>
-                                    <Link
-                                        to="/posts/$postId"
-                                        params={{ postId: `${postId!}` }}
-                                    >
-                                        <BanIcon />
-                                    </Link>
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>{STRINGS.CANCEL}</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
 
                     <TooltipProvider>
                         <Tooltip>
