@@ -8,11 +8,10 @@ import { Endpoints } from '../helpers/endpoints';
 import { callApi } from '../helpers/call-api';
 import { Post } from '../models/post';
 import { QueryKeys } from '../helpers/query-keys';
-import { toast } from 'react-toastify';
-import { Toast } from '../../components/toast/toast';
-import { getErrorText } from '../helpers/get-error-text';
 import { ErrorCodes } from '../helpers/error-codes';
 import { FetchError } from '../helpers/fetch-error';
+import { useToast } from '@/hooks/use-toast';
+import { getErrorText } from '../helpers/get-error-text';
 
 interface Params {
     id: number;
@@ -20,6 +19,7 @@ interface Params {
 
 export const useDeletePost = ({ id }: Params) => {
     const queryClient = useQueryClient();
+    const { toast } = useToast();
 
     return useMutation<Response<Post>, FetchError>({
         mutationFn: async () => {
@@ -58,23 +58,20 @@ export const useDeletePost = ({ id }: Params) => {
                 },
             );
 
-            toast.success(
-                <Toast
-                    title="Post Deleted"
-                    message="Post deleted successfully"
-                />,
-            );
+            toast({
+                title: 'Post Deleted',
+                description: 'Post deleted successfully',
+            });
         },
         onError: (error) => {
             const errorCode =
                 error.errors[0]?.code ?? ErrorCodes.INTERNAL_SERVER_ERROR;
 
-            toast.error(
-                <Toast
-                    title="Could not delete post"
-                    message={getErrorText(errorCode)}
-                />,
-            );
+            toast({
+                title: 'Could not delete post',
+                description: getErrorText(errorCode),
+                variant: 'destructive',
+            });
         },
     });
 };

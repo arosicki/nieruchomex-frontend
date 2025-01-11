@@ -32,6 +32,7 @@ import { Link, useRouter } from '@tanstack/react-router';
 import { ArrowLeft, BanIcon, Pencil, SaveIcon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import { Control, FieldValues, Path } from 'react-hook-form';
+import { useDeletePost } from '@/api/posts/use-delete-post';
 
 const STRINGS = {
     BACK: 'Back',
@@ -84,10 +85,14 @@ export const TopNav = <T extends FieldValues>({
         id: +(postId || 0),
     });
     // Will not be called with postId === 0
+    const { mutateAsync: mutateAsyncDeletePost } = useDeletePost({
+        id: +(postId || 0),
+    });
 
-    const [open, setOpen] = useState(false);
+    const [leaveModalOpen, setLeaveModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-    const { history } = useRouter();
+    const { history, navigate } = useRouter();
 
     const isPostAuthor = user?.id === authorId;
 
@@ -96,7 +101,7 @@ export const TopNav = <T extends FieldValues>({
     return (
         <div className="flex justify-between px-4 pt-4 w-full">
             {isDirty ? (
-                <Dialog open={open} onOpenChange={setOpen}>
+                <Dialog open={leaveModalOpen} onOpenChange={setLeaveModalOpen}>
                     <DialogTrigger asChild>
                         <Button variant="ghost" type="button">
                             <ArrowLeft />
@@ -116,7 +121,7 @@ export const TopNav = <T extends FieldValues>({
                             <Button
                                 variant="ghost"
                                 onClick={() => {
-                                    setOpen(false);
+                                    setLeaveModalOpen(false);
                                 }}
                                 type="button"
                             >
@@ -125,7 +130,7 @@ export const TopNav = <T extends FieldValues>({
                             <Button
                                 variant="destructive"
                                 onClick={() => {
-                                    setOpen(false);
+                                    setLeaveModalOpen(false);
                                     history.back();
                                 }}
                                 type="button"
@@ -208,23 +213,67 @@ export const TopNav = <T extends FieldValues>({
                         )}
                     />
 
-                    {/* <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    onClick={reset}
-                                    type="button"
-                                    size="icon"
-                                >
-                                    <Trash2Icon />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>{STRINGS.DELETE}</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider> */}
+                    {!!postId && (
+                        <Dialog
+                            open={deleteModalOpen}
+                            onOpenChange={setDeleteModalOpen}
+                        >
+                            <DialogTrigger asChild>
+                                <div>
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    variant="destructive"
+                                                    type="button"
+                                                    size="icon"
+                                                >
+                                                    <Trash2Icon />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>{STRINGS.DELETE}</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </div>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                    <DialogTitle>
+                                        {STRINGS.DO_YOU_WANT_TO_LEAVE}
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                        {STRINGS.UNSAVED_CHANGES}
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                    <Button
+                                        variant="ghost"
+                                        onClick={() => {
+                                            setDeleteModalOpen(false);
+                                        }}
+                                        type="button"
+                                    >
+                                        {STRINGS.CANCEL}
+                                    </Button>
+                                    <Button
+                                        variant="destructive"
+                                        onClick={() => {
+                                            mutateAsyncDeletePost();
+                                            setDeleteModalOpen(false);
+                                            navigate({
+                                                to: '/my-posts',
+                                            });
+                                        }}
+                                        type="button"
+                                    >
+                                        {STRINGS.DELETE}
+                                    </Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    )}
 
                     <TooltipProvider>
                         <Tooltip>
