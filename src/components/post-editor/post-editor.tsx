@@ -25,7 +25,10 @@ import { Marker } from 'react-leaflet';
 import { LocationSelector } from '../location-selector/location-selector';
 import { useEditorRef } from '@udecode/plate-common/react';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import {
+    ExclamationTriangleIcon,
+    InfoCircledIcon,
+} from '@radix-ui/react-icons';
 
 interface ViewProps {
     post: Post;
@@ -140,7 +143,7 @@ export const PostEditor = ({ post, disabled }: Props) => {
                 {post?.status === 'ARCHIVED' && disabled && (
                     <div className="px-4 pt-4 w-full">
                         <Alert>
-                            <ExclamationTriangleIcon />
+                            <InfoCircledIcon />
                             <AlertTitle> {STRINGS.ARCHIVED_TITLE}</AlertTitle>
                             <AlertDescription>
                                 {STRINGS.ARCHIVED_DESCRIPTION}

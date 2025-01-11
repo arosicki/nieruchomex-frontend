@@ -32,13 +32,13 @@ export const ImageCarousel = ({ images, title }: Props) => {
     useEffect(() => {
         if (!bigCarouselApi) return;
 
-        setCount(bigCarouselApi.scrollSnapList().length);
+        setCount(images.length);
         setCurrent(bigCarouselApi.selectedScrollSnap() + 1);
 
         bigCarouselApi.on('select', () => {
             setCurrent(bigCarouselApi.selectedScrollSnap() + 1);
         });
-    }, [bigCarouselApi, images]);
+    }, [bigCarouselApi, images.length]);
 
     useEffect(() => {
         if (!smallCarouselApi) return;

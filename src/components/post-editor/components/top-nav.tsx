@@ -29,7 +29,7 @@ import { useUserContext } from '@/context/user-context';
 import { capitalize } from '@/utils/capitalize';
 import { HeartFilledIcon, HeartIcon, ResetIcon } from '@radix-ui/react-icons';
 import { Link, useRouter } from '@tanstack/react-router';
-import { ArrowLeft, BanIcon, Pencil, SaveIcon } from 'lucide-react';
+import { ArrowLeft, BanIcon, Pencil, SaveIcon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import { Control, FieldValues, Path } from 'react-hook-form';
 
@@ -51,6 +51,7 @@ const STRINGS = {
     CANCEL: 'Cancel',
     LEAVE: 'Leave',
     RESET: 'Reset',
+    DELETE: 'Delete',
 };
 
 interface Props<T extends FieldValues> {
@@ -206,6 +207,24 @@ export const TopNav = <T extends FieldValues>({
                             </FormItem>
                         )}
                     />
+
+                    {/* <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    onClick={reset}
+                                    type="button"
+                                    size="icon"
+                                >
+                                    <Trash2Icon />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{STRINGS.DELETE}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider> */}
 
                     <TooltipProvider>
                         <Tooltip>
