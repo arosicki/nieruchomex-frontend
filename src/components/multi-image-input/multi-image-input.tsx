@@ -65,10 +65,13 @@ export const MultiImageInput = <T extends FieldValues>({
                 variant: 'destructive',
             });
 
-        if (acceptedFiles.length)
+        if (acceptedFiles.length) {
             setImages({
                 add: acceptedFiles,
             });
+        }
+
+        e.target.value = '';
     };
 
     const handleImageUploadClick = () => {

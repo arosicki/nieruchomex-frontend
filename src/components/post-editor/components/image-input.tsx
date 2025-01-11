@@ -56,7 +56,6 @@ export const ImageInput = <T extends FieldValues>({
                         ),
                         ...addedImages,
                     ]);
-
                     setValue(
                         'removeImages' as Path<T>,
                         [...removeImages, ...removedIds] as PathValue<

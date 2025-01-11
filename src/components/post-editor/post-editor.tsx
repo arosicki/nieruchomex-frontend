@@ -25,10 +25,7 @@ import { Marker } from 'react-leaflet';
 import { LocationSelector } from '../location-selector/location-selector';
 import { useEditorRef } from '@udecode/plate-common/react';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import {
-    ExclamationTriangleIcon,
-    InfoCircledIcon,
-} from '@radix-ui/react-icons';
+import { InfoCircledIcon } from '@radix-ui/react-icons';
 
 interface ViewProps {
     post: Post;
