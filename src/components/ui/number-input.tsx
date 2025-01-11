@@ -19,6 +19,7 @@ export interface NumberInputProps
     fixedDecimalScale?: boolean;
     decimalScale?: number;
     unit?: string;
+    isAllowed?: (values: { floatValue: number | undefined }) => boolean;
 }
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -27,8 +28,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             stepper,
             thousandSeparator,
             placeholder,
-            min = -Infinity,
-            max = Infinity,
+            min = Number.MIN_SAFE_INTEGER,
+            max = Number.MAX_SAFE_INTEGER,
             onValueChange,
             fixedDecimalScale = false,
             decimalScale = 0,
@@ -45,7 +46,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         const handleIncrement = useCallback(() => {
             setValue((prev) =>
                 prev === undefined
-                    ? stepper ?? 1
+                    ? (stepper ?? 1)
                     : Math.min(prev + (stepper ?? 1), max),
             );
         }, [stepper, max]);
@@ -126,6 +127,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     prefix={prefix}
                     customInput={Input}
                     placeholder={placeholder}
+                    isAllowed={(values) => {
+                        const { floatValue } = values;
+                        return (
+                            floatValue === undefined ||
+                            (floatValue >= min && floatValue <= max)
+                        );
+                    }}
                     className={cn(
                         '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none rounded-r-none relative',
                         unit && 'pr-12',
