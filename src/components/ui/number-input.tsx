@@ -22,14 +22,17 @@ export interface NumberInputProps
     isAllowed?: (values: { floatValue: number | undefined }) => boolean;
 }
 
+const MAX_SAFE_INT_32 = 2147483647;
+const MIN_SAFE_INT_32 = -2147483648;
+
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     (
         {
             stepper,
             thousandSeparator,
             placeholder,
-            min = Number.MIN_SAFE_INTEGER,
-            max = Number.MAX_SAFE_INTEGER,
+            min = MIN_SAFE_INT_32,
+            max = MAX_SAFE_INT_32,
             onValueChange,
             fixedDecimalScale = false,
             decimalScale = 0,
