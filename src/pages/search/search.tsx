@@ -23,12 +23,15 @@ import {
 } from '@/components/ui/accordion';
 import { useSearch } from '@tanstack/react-router';
 import { getFiltersSearchParams } from '@/lib/get-search-url-params';
+import { useRetrieveAddress } from '@/api/address/use-retrive-address';
 
 const STRINGS = {
     FILTER: 'Filter',
 };
 
 export const SearchPage = () => {
+    const { data: address } = useRetrieveAddress();
+
     const isMobile = useMediaQuery(BREAKPOINTS.lg);
 
     const orientation = isMobile ? 'vertical' : 'horizontal';
@@ -72,6 +75,10 @@ export const SearchPage = () => {
         });
     };
 
+    const center = address?.geometry.coordinates
+        ? [address?.geometry.coordinates[1], address?.geometry.coordinates[0]]
+        : undefined;
+
     return (
         <WallLayout>
             <ResizablePanelGroup
@@ -82,6 +89,7 @@ export const SearchPage = () => {
                     <Map
                         className="h-[calc(100vh-8.25rem)] w-full"
                         orientation={orientation}
+                        center={center}
                     >
                         <Suspense>
                             <MapPointsConnector />
