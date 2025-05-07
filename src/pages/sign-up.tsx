@@ -20,20 +20,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { ThemeToggle } from '@/components/theme-toggle';
-
-const STRINGS = {
-    ALREADY_HAVE_AN_ACCOUNT: 'Already have an account?',
-    SIGN_IN: 'Sign in',
-    CREATE_AN_ACCOUNT: 'Create an account',
-    INTERNAL_SERVER_ERROR: 'An unknown error occurred. Please try again later',
-    USERNAME: 'Username',
-    PASSWORD: 'Password',
-    CONFIRM_PASSWORD: 'Confirm password',
-    SUBMIT: 'Sign up',
-    ERROR: 'Error',
-    PHONE: 'Phone number',
-    EMAIL: 'Email',
-};
+import { useTranslation } from 'react-i18next';
 
 const formSchema = z
     .object({
@@ -98,6 +85,7 @@ const formSchema = z
 type FormModel = z.infer<typeof formSchema>;
 
 export const SignUpPage = () => {
+    const { t } = useTranslation();
     const [error, setError] = useState<string | null>(null);
     const [isPending, setIsPending] = useState(false);
 
@@ -133,7 +121,10 @@ export const SignUpPage = () => {
         } catch (e) {
             if (e instanceof FetchError)
                 setError(getErrorText(e.errors[0]?.code));
-            else setError(STRINGS.INTERNAL_SERVER_ERROR);
+            else
+                setError(
+                    t('An unknown error occurred. Please try again later'),
+                );
         } finally {
             setIsPending(false);
         }
@@ -160,7 +151,7 @@ export const SignUpPage = () => {
                     </div>
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">
-                            {STRINGS.CREATE_AN_ACCOUNT}
+                            {t('Sign up')}
                         </h1>
                     </div>
                     <Form {...form}>
@@ -171,7 +162,7 @@ export const SignUpPage = () => {
                             {error && (
                                 <Alert variant="destructive">
                                     <ExclamationTriangleIcon className="h-4 w-4" />
-                                    <AlertTitle>{STRINGS.ERROR}</AlertTitle>
+                                    <AlertTitle>{t('Error')}</AlertTitle>
                                     <AlertDescription>{error}</AlertDescription>
                                 </Alert>
                             )}
@@ -182,7 +173,7 @@ export const SignUpPage = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Input
-                                                placeholder={STRINGS.USERNAME}
+                                                placeholder={t('Username')}
                                                 {...field}
                                                 autoComplete="username"
                                             />
@@ -198,7 +189,7 @@ export const SignUpPage = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Input
-                                                placeholder={STRINGS.EMAIL}
+                                                placeholder={t('Email')}
                                                 {...field}
                                                 autoComplete="username"
                                             />
@@ -214,7 +205,7 @@ export const SignUpPage = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Input
-                                                placeholder={STRINGS.PHONE}
+                                                placeholder={t('Phone number')}
                                                 {...field}
                                                 autoComplete="username"
                                             />
@@ -230,7 +221,7 @@ export const SignUpPage = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Input
-                                                placeholder={STRINGS.PASSWORD}
+                                                placeholder={t('Password')}
                                                 {...field}
                                                 type="password"
                                                 autoComplete="new-password"
@@ -247,9 +238,9 @@ export const SignUpPage = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Input
-                                                placeholder={
-                                                    STRINGS.CONFIRM_PASSWORD
-                                                }
+                                                placeholder={t(
+                                                    'Confirm password',
+                                                )}
                                                 {...field}
                                                 type="password"
                                                 autoComplete="new-password"
@@ -264,13 +255,13 @@ export const SignUpPage = () => {
                                 type="submit"
                                 isLoading={isPending}
                             >
-                                {STRINGS.SUBMIT}
+                                {t('Submit')}
                             </Button>
                         </form>
                     </Form>
                     <Button variant="link" asChild>
                         <Link to="/sign-in">
-                            {STRINGS.ALREADY_HAVE_AN_ACCOUNT}
+                            {t('Already have an account?')}
                         </Link>
                     </Button>
                 </div>

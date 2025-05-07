@@ -20,47 +20,41 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
-const STRINGS = {
-    DONT_HAVE_AN_ACCOUNT: "Don't have an account?",
-    SIGN_IN: 'Sign in',
-    INTERNAL_SERVER_ERROR: 'An unknown error occurred. Please try again later',
-    USERNAME: 'Username',
-    PASSWORD: 'Password',
-    SUBMIT: 'Sign in',
-    ERROR: 'Error',
-};
+import { useTranslation } from 'react-i18next';
+import { t as globalT } from 'i18next';
 
 const formSchema = z.object({
     username: z
         .string({
-            message: 'Username is required.',
+            message: globalT('Username is required.'),
         })
         .min(3, {
-            message: 'Username must be at least 3 characters long.',
+            message: globalT('Username must be at least 3 characters long.'),
         })
         .max(32, {
-            message: 'Username can be at most 32 characters long.',
+            message: globalT('Username can be at most 32 characters long.'),
         })
         .regex(/^[a-zA-Z0-9_]+$/, {
-            message:
+            message: globalT(
                 'Username can only contain letters, numbers, and underscores.',
+            ),
         }),
     password: z
         .string({
-            message: 'Password is required.',
+            message: globalT('Password is required.'),
         })
         .min(8, {
-            message: 'Password must be at least 8 characters long.',
+            message: globalT('Password must be at least 8 characters long.'),
         })
         .max(32, {
-            message: 'Password can be at most 32 characters long.',
+            message: globalT('Password can be at most 32 characters long.'),
         }),
 });
 
 type FormModel = z.infer<typeof formSchema>;
 
 export const SignInPage = () => {
+    const { t } = useTranslation();
     const [error, setError] = useState<string | null>(null);
     const [isPending, setIsPending] = useState(false);
     const { signIn } = useAuth();
@@ -92,7 +86,10 @@ export const SignInPage = () => {
         } catch (e) {
             if (e instanceof FetchError)
                 setError(getErrorText(e.errors[0]?.code));
-            else setError(STRINGS.INTERNAL_SERVER_ERROR);
+            else
+                setError(
+                    t('An unknown error occurred. Please try again later'),
+                );
         } finally {
             setIsPending(false);
         }
@@ -119,7 +116,7 @@ export const SignInPage = () => {
                     </div>
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">
-                            {STRINGS.SIGN_IN}
+                            {t('Sign in')}
                         </h1>
                     </div>
                     <Form {...form}>
@@ -130,7 +127,7 @@ export const SignInPage = () => {
                             {error && (
                                 <Alert variant="destructive">
                                     <ExclamationTriangleIcon className="h-4 w-4" />
-                                    <AlertTitle>{STRINGS.ERROR}</AlertTitle>
+                                    <AlertTitle>{t('Error')}</AlertTitle>
                                     <AlertDescription>{error}</AlertDescription>
                                 </Alert>
                             )}
@@ -141,7 +138,7 @@ export const SignInPage = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Input
-                                                placeholder={STRINGS.USERNAME}
+                                                placeholder={t('Username')}
                                                 {...field}
                                                 autoComplete="username"
                                             />
@@ -157,7 +154,7 @@ export const SignInPage = () => {
                                     <FormItem>
                                         <FormControl>
                                             <Input
-                                                placeholder={STRINGS.PASSWORD}
+                                                placeholder={t('Password')}
                                                 {...field}
                                                 type="password"
                                                 autoComplete="current-password"
@@ -172,14 +169,12 @@ export const SignInPage = () => {
                                 type="submit"
                                 isLoading={isPending}
                             >
-                                {STRINGS.SUBMIT}
+                                {t('Submit')}
                             </Button>
                         </form>
                     </Form>
                     <Button variant="link" asChild>
-                        <Link to="/sign-up">
-                            {STRINGS.DONT_HAVE_AN_ACCOUNT}
-                        </Link>
+                        <Link to="/sign-up">{t("Don't have an account?")}</Link>
                     </Button>
                 </div>
             </div>

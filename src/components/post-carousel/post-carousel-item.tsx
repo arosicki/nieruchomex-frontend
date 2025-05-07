@@ -17,23 +17,18 @@ import { Badge } from '../ui/badge';
 import { capitalize } from '@/utils/capitalize';
 import { Link } from '@tanstack/react-router';
 import { formatPrice } from '@/lib/formatters';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     post: Post;
     displayMode?: 'status' | 'favorite';
 }
 
-const STRINGS = {
-    PER_MONTH: 'per month',
-    ROOM: 'room',
-    ROOMS: 'rooms',
-    VIEW_DETAILS: 'View details',
-};
-
 export const PostCarouselItem = ({
     post: { id, images, title, isFavorite, price, type, address, status },
     displayMode = 'favorite',
 }: Props) => {
+    const { t } = useTranslation();
     const user = useUserContext();
     const { mutateAsync: setFavoriteMutateAsync } = useSetFavorite({ id });
 
@@ -66,7 +61,7 @@ export const PostCarouselItem = ({
                 <CardHeader className="pb-4">
                     <CardTitle className="justify-between flex w-full">
                         <div className="text-2xl font-semibold tracking-tight truncate">
-                            {formatPrice(price, type)}
+                            {formatPrice(price, type, t)}
                         </div>
                         {displayMode === 'favorite' && (
                             <Button
@@ -104,7 +99,7 @@ export const PostCarouselItem = ({
                                 postId: `${id}`,
                             }}
                         >
-                            {STRINGS.VIEW_DETAILS}
+                            {t('View details')}
                         </Link>
                     </Button>
                 </CardFooter>

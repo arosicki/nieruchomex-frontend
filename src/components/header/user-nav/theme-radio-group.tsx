@@ -9,20 +9,15 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
 } from '../../ui/dropdown-menu';
-
-const STRINGS = {
-    THEME: 'Theme',
-    LIGHT: 'Light',
-    DARK: 'Dark',
-    SYSTEM: 'System',
-};
+import { useTranslation } from 'react-i18next';
 
 export const ThemeRadioGroup = () => {
+    const { t } = useTranslation();
     const { setTheme, theme } = useTheme();
 
     return (
         <DropdownMenuSub>
-            <DropdownMenuSubTrigger>{STRINGS.THEME}</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>{t('Theme')}</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                     <DropdownMenuRadioGroup
@@ -30,13 +25,13 @@ export const ThemeRadioGroup = () => {
                         onValueChange={setTheme as (value: string) => void}
                     >
                         <DropdownMenuRadioItem value="light">
-                            {STRINGS.LIGHT}
+                            {t('Light')}
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="dark">
-                            {STRINGS.DARK}
+                            {t('Dark')}
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="system">
-                            {STRINGS.SYSTEM}
+                            {t('System')}
                         </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                 </DropdownMenuSubContent>

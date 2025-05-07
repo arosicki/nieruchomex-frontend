@@ -11,17 +11,12 @@ import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/user-context';
 import { FavoritePostsConnector } from './connectors/favorite-posts-connector';
 import { MyPostsConnector } from './connectors/my-posts-connector';
+import { useTranslation } from 'react-i18next';
 
-const STRINGS = {
-    WHAT_ARE_YOU_LOOKING_FOR: 'What are you looking for?',
-    NEWEST_SALE_OFFERS: 'Newest sale offers',
-    NEWEST_RENTAL_OFFERS: 'Newest rental offers',
-    MY_FAVORITES: 'My favorites',
-    MY_OFFERS: 'My offers',
-    VIEW_ALL: 'View all',
-};
+const STRINGS = {};
 
 export const HomePage = () => {
+    const { t } = useTranslation();
     const user = useUserContext();
     const navigate = useNavigate();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,7 +55,7 @@ export const HomePage = () => {
             <div className="flex flex-col items-center w-full py-12 gap-8">
                 <div className="flex flex-col container border p-4 rounded-lg">
                     <h1 className="text-3xl font-semibold tracking-tight p-4">
-                        {STRINGS.WHAT_ARE_YOU_LOOKING_FOR}
+                        {t('What are you looking for?')}
                     </h1>
                     <AddressSearch />
                     <FilterPanel
@@ -74,7 +69,7 @@ export const HomePage = () => {
                 <div className="container border p-8 rounded-lg">
                     <div className="w-full flex justify-between items-center pb-7">
                         <h2 className="text-3xl font-semibold tracking-tight">
-                            {STRINGS.NEWEST_SALE_OFFERS}
+                            {t('Latest sale offers')}
                         </h2>
 
                         <Button variant="link" asChild>
@@ -84,7 +79,7 @@ export const HomePage = () => {
                                     type: 'SALE',
                                 }}
                             >
-                                {STRINGS.VIEW_ALL}
+                                {t('View all')}
                             </Link>
                         </Button>
                     </div>
@@ -102,7 +97,7 @@ export const HomePage = () => {
                 <div className="container border p-8 rounded-lg">
                     <div className="w-full flex justify-between items-center pb-7">
                         <h2 className="text-3xl font-semibold tracking-tight">
-                            {STRINGS.NEWEST_RENTAL_OFFERS}
+                            {t('Latest rental offers')}
                         </h2>
 
                         <Button variant="link" asChild>
@@ -112,7 +107,7 @@ export const HomePage = () => {
                                     type: 'RENTAL',
                                 }}
                             >
-                                {STRINGS.VIEW_ALL}
+                                {t('View all')}
                             </Link>
                         </Button>
                     </div>
@@ -131,11 +126,11 @@ export const HomePage = () => {
                     <div className="container border p-8 rounded-lg">
                         <div className="w-full flex justify-between items-center pb-7">
                             <h2 className="text-3xl font-semibold tracking-tight">
-                                {STRINGS.MY_FAVORITES}
+                                {t('My favorites')}
                             </h2>
 
                             <Button variant="link" asChild>
-                                <Link to="/favorites">{STRINGS.VIEW_ALL}</Link>
+                                <Link to="/favorites">{t('View all')}</Link>
                             </Button>
                         </div>
                         <Suspense
@@ -154,11 +149,11 @@ export const HomePage = () => {
                     <div className="container border p-8 rounded-lg">
                         <div className="w-full flex justify-between items-center pb-7">
                             <h2 className="text-3xl font-semibold tracking-tight">
-                                {STRINGS.MY_OFFERS}
+                                {t('My offers')}
                             </h2>
 
                             <Button variant="link" asChild>
-                                <Link to="/my-posts">{STRINGS.VIEW_ALL}</Link>
+                                <Link to="/my-posts">{t('View all')}</Link>
                             </Button>
                         </div>
                         <Suspense

@@ -24,12 +24,11 @@ import {
 import { useSearch } from '@tanstack/react-router';
 import { getFiltersSearchParams } from '@/lib/get-search-url-params';
 import { useRetrieveAddress } from '@/api/address/use-retrive-address';
-
-const STRINGS = {
-    FILTER: 'Filter',
-};
+import { LatLngTuple } from 'leaflet';
+import { useTranslation } from 'react-i18next';
 
 export const SearchPage = () => {
+    const { t } = useTranslation();
     const { data: address } = useRetrieveAddress();
 
     const isMobile = useMediaQuery(BREAKPOINTS.lg);
@@ -76,7 +75,10 @@ export const SearchPage = () => {
     };
 
     const center = address?.geometry.coordinates
-        ? [address?.geometry.coordinates[1], address?.geometry.coordinates[0]]
+        ? ([
+              address?.geometry.coordinates[1],
+              address?.geometry.coordinates[0],
+          ] as LatLngTuple)
         : undefined;
 
     return (
@@ -106,7 +108,7 @@ export const SearchPage = () => {
                                     <AccordionItem value="item-1">
                                         <AccordionTrigger className="hover:no-underline">
                                             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-                                                {STRINGS.FILTER}
+                                                {t('Filter')}
                                             </h1>
                                         </AccordionTrigger>
                                         <AccordionContent>

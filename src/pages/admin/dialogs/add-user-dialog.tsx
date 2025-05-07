@@ -38,67 +38,56 @@ import { useCreateUser } from '@/api/users/use-create-user';
 import { useState } from 'react';
 import { FetchError } from '@/api/helpers/fetch-error';
 import { getErrorText } from '@/api/helpers/get-error-text';
-
-const STRINGS = {
-    CREATE_USER: 'Create user',
-    CREATE_USER_DESCRIPTION:
-        'You can create a new user here. It is recommended for the user to change his password when he logs in.',
-    USERNAME: 'Username',
-    PASSWORD: 'Password',
-    CONFIRM_PASSWORD: 'Confirm password',
-    TYPE: 'Type',
-    ERROR: 'Error',
-    USER: 'User',
-    ADMIN: 'Admin',
-    INTERNAL_SERVER_ERROR: 'An unknown error occurred. Please try again later',
-    EMAIL: 'Email',
-    PHONE: 'Phone number',
-};
+import { useTranslation } from 'react-i18next';
+import { t as globalT } from 'i18next';
 
 const formSchema = z.object({
     username: z
         .string({
-            message: 'Username is required.',
+            message: globalT('Username is required.'),
         })
         .min(3, {
-            message: 'Username must be at least 3 characters long.',
+            message: globalT('Username must be at least 3 characters long.'),
         })
         .max(32, {
-            message: 'Username can be at most 32 characters long.',
+            message: globalT('Username can be at most 32 characters long.'),
         })
         .regex(/^[a-zA-Z0-9_]+$/, {
-            message:
+            message: globalT(
                 'Username can only contain letters, numbers, and underscores.',
+            ),
         }),
     password: z
         .string({
-            message: 'Password is required.',
+            message: globalT('Password is required.'),
         })
         .min(8, {
-            message: 'Password must be at least 8 characters long.',
+            message: globalT('Password must be at least 8 characters long.'),
         })
         .max(32, {
-            message: 'Password can be at most 32 characters long.',
+            message: globalT('Password can be at most 32 characters long.'),
         })
         .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).+$/, {
-            message: `Password must contain at least one uppercase letter, one lowercase letter, one number and one special character from the following: #?!@$ %^&*-`,
+            message: globalT(
+                `Password must contain at least one uppercase letter, one lowercase letter, one number and one special character from the following: #?!@$ %^&*-`,
+            ),
         }),
     type: z.enum(['ADMIN', 'USER'], {
-        message: 'Type is required.',
+        message: globalT('Type is required.'),
     }),
     email: z
         .string({
-            required_error: 'Email is required.',
+            required_error: globalT('Email is required.'),
         })
         .email({
-            message: 'Email must be a valid email address.',
+            message: globalT('Email must be a valid email address.'),
         }),
     phone: z
         .string({
-            required_error: 'Phone number is required.',
+            required_error: globalT('Phone number is required.'),
         })
         .regex(/^[+]?[0-9]{0,3}[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/, {
-            message: 'Phone number must be a valid phone number.',
+            message: globalT('Phone number must be a valid phone number.'),
         }),
 });
 
@@ -109,6 +98,7 @@ interface Props {
 type FormModel = z.infer<typeof formSchema>;
 
 export const AddUserDialog = ({ children }: Props) => {
+    const { t } = useTranslation();
     const { mutateAsync: createUserMutateAsync } = useCreateUser();
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -132,7 +122,10 @@ export const AddUserDialog = ({ children }: Props) => {
         } catch (e) {
             if (e instanceof FetchError)
                 setError(getErrorText(e.errors[0]?.code));
-            else setError(STRINGS.INTERNAL_SERVER_ERROR);
+            else
+                setError(
+                    t('An unknown error occurred. Please try again later'),
+                );
         } finally {
             setLoading(false);
         }
@@ -143,9 +136,11 @@ export const AddUserDialog = ({ children }: Props) => {
             <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>{STRINGS.CREATE_USER}</DialogTitle>
+                    <DialogTitle>{t('Create user')}</DialogTitle>
                     <DialogDescription>
-                        {STRINGS.CREATE_USER_DESCRIPTION}
+                        {t(
+                            'You can create a new user here. It is recommended for the user to change his password when he logs in.',
+                        )}
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
@@ -156,7 +151,7 @@ export const AddUserDialog = ({ children }: Props) => {
                         {error && (
                             <Alert variant="destructive">
                                 <ExclamationTriangleIcon className="h-4 w-4" />
-                                <AlertTitle>{STRINGS.ERROR}</AlertTitle>
+                                <AlertTitle>{t('Error')}</AlertTitle>
                                 <AlertDescription>{error}</AlertDescription>
                             </Alert>
                         )}
@@ -165,10 +160,10 @@ export const AddUserDialog = ({ children }: Props) => {
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{STRINGS.USERNAME}</FormLabel>
+                                    <FormLabel>{t('Username')}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder={STRINGS.USERNAME}
+                                            placeholder={t('Username')}
                                             {...field}
                                             autoComplete="username"
                                         />
@@ -182,10 +177,10 @@ export const AddUserDialog = ({ children }: Props) => {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{STRINGS.PASSWORD}</FormLabel>
+                                    <FormLabel>{t('Password')}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder={STRINGS.PASSWORD}
+                                            placeholder={t('Password')}
                                             {...field}
                                             type="password"
                                             autoComplete="new-password"
@@ -200,10 +195,10 @@ export const AddUserDialog = ({ children }: Props) => {
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{STRINGS.EMAIL}</FormLabel>
+                                    <FormLabel>{t('Email')}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder={STRINGS.EMAIL}
+                                            placeholder={t('Email')}
                                             {...field}
                                             type="email"
                                             autoComplete="email"
@@ -218,10 +213,10 @@ export const AddUserDialog = ({ children }: Props) => {
                             name="phone"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{STRINGS.PHONE}</FormLabel>
+                                    <FormLabel>{t('Phone number')}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder={STRINGS.PHONE}
+                                            placeholder={t('Phone number')}
                                             {...field}
                                             type="tel"
                                             autoComplete="tel"
@@ -236,7 +231,7 @@ export const AddUserDialog = ({ children }: Props) => {
                             name="type"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>{STRINGS.TYPE}</FormLabel>
+                                    <FormLabel>{t('Type')}</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
@@ -248,10 +243,10 @@ export const AddUserDialog = ({ children }: Props) => {
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectItem value="USER">
-                                                    {STRINGS.USER}
+                                                    {t('User')}
                                                 </SelectItem>
                                                 <SelectItem value="ADMIN">
-                                                    {STRINGS.ADMIN}
+                                                    {t('Admin')}
                                                 </SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
@@ -261,7 +256,7 @@ export const AddUserDialog = ({ children }: Props) => {
                         />
                         <DialogFooter>
                             <Button type="submit" isLoading={loading}>
-                                {STRINGS.CREATE_USER}
+                                {t('Create user')}
                             </Button>
                         </DialogFooter>
                     </form>

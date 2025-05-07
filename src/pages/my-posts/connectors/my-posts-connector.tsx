@@ -8,13 +8,10 @@ import { useMediaQuery } from '@/utils/useMediaQuery';
 import { useSearch } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
 import { Info, PlusIcon } from 'lucide-react';
-
-const STRINGS = {
-    NO_FAVORITE_POSTS: "You haven't added any posts yet.",
-    ADD_POST: 'Add post',
-};
+import { useTranslation } from 'react-i18next';
 
 export const MyPostsConnector = () => {
+    const { t } = useTranslation();
     const user = useUserContext();
     const { data } = usePosts({
         variables: {},
@@ -34,7 +31,7 @@ export const MyPostsConnector = () => {
         return (
             <div className="w-full flex flex-col items-center gap-4">
                 <Info size={64} className="text-muted-foreground" />
-                <h3>{STRINGS.NO_FAVORITE_POSTS}</h3>
+                <h3>{t("You haven't added any posts yet.")}</h3>
                 <Button asChild>
                     <Link
                         to="/posts/$postId"
@@ -43,7 +40,7 @@ export const MyPostsConnector = () => {
                         }}
                     >
                         <PlusIcon />
-                        {STRINGS.ADD_POST}
+                        {t('Add post')}
                     </Link>
                 </Button>
             </div>

@@ -23,35 +23,23 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { getInitials } from '@/utils/getInitials';
 import { capitalize } from '@/utils/capitalize';
-
-const STRINGS = {
-    NO_PERMISSION: 'You do not have permission to view this page.',
-    MY_PROFILE: 'My profile',
-    NEW_PASSWORD: 'New password',
-    ERROR: 'Error',
-    INTERNAL_SERVER_ERROR: 'An unknown error occurred. Please try again later',
-    EMAIL: 'Email',
-    PHONE: 'Phone number',
-    SAVE: 'Save',
-    RESET: 'Reset',
-    WILL_NOT_CHANGE:
-        'If you leave the password field empty, the password will not be changed.',
-};
+import { useTranslation } from 'react-i18next';
+import { t as globalT } from 'i18next';
 
 const formSchema = z.object({
     email: z
         .string({
-            required_error: 'Email is required.',
+            required_error: globalT('Email is required.'),
         })
         .email({
-            message: 'Email must be a valid email address.',
+            message: globalT('Email must be a valid email address.'),
         }),
     phone: z
         .string({
-            required_error: 'Phone number is required.',
+            required_error: globalT('Phone number is required.'),
         })
         .regex(/^[+]?[0-9]{0,3}[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/, {
-            message: 'Phone number must be a valid phone number.',
+            message: globalT('Phone number must be a valid phone number.'),
         }),
     password: z.string().optional(),
 });
@@ -59,6 +47,7 @@ const formSchema = z.object({
 type FormModel = z.infer<typeof formSchema>;
 
 export const MyProfilePage = () => {
+    const { t } = useTranslation();
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const { mutateAsync: editUserMutateAsync } = useEditUser();
@@ -73,9 +62,9 @@ export const MyProfilePage = () => {
     });
 
     if (!user)
-        throw new Response(STRINGS.NO_PERMISSION, {
+        throw new Response(t('You do not have permission to view this page.'), {
             status: 403,
-            statusText: STRINGS.NO_PERMISSION,
+            statusText: t('You do not have permission to view this page.'),
         });
 
     const onSubmit = async (data: FormModel) => {
@@ -90,7 +79,10 @@ export const MyProfilePage = () => {
         } catch (e) {
             if (e instanceof FetchError)
                 setError(getErrorText(e.errors[0]?.code));
-            else setError(STRINGS.INTERNAL_SERVER_ERROR);
+            else
+                setError(
+                    t('An unknown error occurred. Please try again later'),
+                );
         } finally {
             setLoading(false);
         }
@@ -101,7 +93,7 @@ export const MyProfilePage = () => {
             <div className="flex items-center justify-center">
                 <div className="flex flex-col items-center w-full py-8 gap-8 container">
                     <h1 className="text-3xl font-bold w-full">
-                        {STRINGS.MY_PROFILE}
+                        {t('My profile')}
                     </h1>
 
                     <div className="flex flex-col container border p-4 rounded-xl">
@@ -131,7 +123,7 @@ export const MyProfilePage = () => {
                                 {error && (
                                     <Alert variant="destructive">
                                         <ExclamationTriangleIcon className="h-4 w-4" />
-                                        <AlertTitle>{STRINGS.ERROR}</AlertTitle>
+                                        <AlertTitle>{t('Error')}</AlertTitle>
                                         <AlertDescription>
                                             {error}
                                         </AlertDescription>
@@ -143,20 +135,22 @@ export const MyProfilePage = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>
-                                                {STRINGS.NEW_PASSWORD}
+                                                {t('New password')}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder={
-                                                        STRINGS.NEW_PASSWORD
-                                                    }
+                                                    placeholder={t(
+                                                        'New password',
+                                                    )}
                                                     {...field}
                                                     type="password"
                                                     autoComplete="new-password"
                                                 />
                                             </FormControl>
                                             <FormDescription>
-                                                {STRINGS.WILL_NOT_CHANGE}
+                                                {t(
+                                                    'If you leave the password field empty, the password will remain unchanged.',
+                                                )}
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -167,14 +161,12 @@ export const MyProfilePage = () => {
                                     name="email"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>
-                                                {STRINGS.EMAIL}
-                                            </FormLabel>
+                                            <FormLabel>{t('Email')}</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder={
-                                                        STRINGS.NEW_PASSWORD
-                                                    }
+                                                    placeholder={t(
+                                                        'New password',
+                                                    )}
                                                     {...field}
                                                     type="email"
                                                     autoComplete="email"
@@ -190,11 +182,13 @@ export const MyProfilePage = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>
-                                                {STRINGS.PHONE}
+                                                {t('Phone number')}
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder={STRINGS.PHONE}
+                                                    placeholder={t(
+                                                        'Phone number',
+                                                    )}
                                                     {...field}
                                                     type="tel"
                                                     autoComplete="tel"
@@ -211,10 +205,10 @@ export const MyProfilePage = () => {
                                         type="button"
                                         onClick={() => form.reset()}
                                     >
-                                        {STRINGS.RESET}
+                                        {t('Reset')}
                                     </Button>
                                     <Button type="submit" isLoading={loading}>
-                                        {STRINGS.SAVE}
+                                        {t('Save')}
                                     </Button>
                                 </div>
                             </form>

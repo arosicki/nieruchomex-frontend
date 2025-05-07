@@ -10,17 +10,7 @@ import {
     SquarePenIcon,
 } from 'lucide-react';
 import { Control, FieldValues, Path } from 'react-hook-form';
-
-const STRINGS = {
-    OF: 'of',
-    PER_MONTH: 'per month',
-    ADDRESS: 'Address',
-    AREA: 'Area',
-    ROOMS: 'Rooms',
-    METERS_SQUARED: 'm²',
-    CREATED_AT: 'Added',
-    UPDATED_AT: 'Last update',
-};
+import { useTranslation } from 'react-i18next';
 
 interface ViewProps {
     address: string;
@@ -53,11 +43,12 @@ export const Details = <T extends FieldValues>({
     isEditing,
     control,
 }: Props<T>) => {
+    const { t } = useTranslation();
     return (
         <dl className="border rounded-xl grid grid-cols-2 p-4 gap-1">
             <dt className="flex gap-2 text-md font-medium items-center">
                 <MapPinIcon size={20} />
-                {STRINGS.ADDRESS}
+                {t('Address')}
             </dt>
             <dd>
                 {isEditing ? (
@@ -67,7 +58,7 @@ export const Details = <T extends FieldValues>({
                         render={({ field }) => (
                             <FormItem className="flex-1">
                                 <Input
-                                    placeholder={STRINGS.ADDRESS}
+                                    placeholder={t('Address')}
                                     autoComplete="off"
                                     {...field}
                                 />
@@ -80,7 +71,7 @@ export const Details = <T extends FieldValues>({
             </dd>
             <dt className="flex gap-2 text-md font-medium items-center">
                 <LandPlotIcon size={20} />
-                {STRINGS.AREA}
+                {t('Area')}
             </dt>
             <dd>
                 {isEditing ? (
@@ -91,8 +82,8 @@ export const Details = <T extends FieldValues>({
                             <FormItem className="flex-1">
                                 <NumberInput
                                     min={1}
-                                    unit={STRINGS.METERS_SQUARED}
-                                    placeholder={STRINGS.AREA}
+                                    unit={t('m²')}
+                                    placeholder={t('Area')}
                                     stepper={1}
                                     autoComplete="off"
                                     onValueChange={onChange}
@@ -103,13 +94,13 @@ export const Details = <T extends FieldValues>({
                     />
                 ) : (
                     <>
-                        {area} {STRINGS.METERS_SQUARED}
+                        {area} {t('m²')}
                     </>
                 )}
             </dd>
             <dt className="flex gap-2 font-medium text-md items-center">
                 <BoxIcon size={20} />
-                {STRINGS.ROOMS}
+                {t('Rooms')}
             </dt>
             <dd>
                 {isEditing ? (
@@ -120,7 +111,7 @@ export const Details = <T extends FieldValues>({
                             <FormItem className="flex-1">
                                 <NumberInput
                                     min={1}
-                                    placeholder={STRINGS.ROOMS}
+                                    placeholder={t('Rooms')}
                                     stepper={1}
                                     autoComplete="off"
                                     onValueChange={onChange}
@@ -137,14 +128,14 @@ export const Details = <T extends FieldValues>({
                 <>
                     <dt className="flex gap-2 font-medium text-md items-center">
                         <CirclePlusIcon size={20} />
-                        {STRINGS.CREATED_AT}
+                        {t('Created at')}
                     </dt>
                     <dd>
                         <RelativeDate date={createdAt} />
                     </dd>
                     <dt className="flex gap-2 font-medium text-md items-center">
                         <SquarePenIcon size={20} />
-                        {STRINGS.UPDATED_AT}
+                        {t('Updated at')}
                     </dt>
                     <dd>
                         <RelativeDate date={updatedAt} />

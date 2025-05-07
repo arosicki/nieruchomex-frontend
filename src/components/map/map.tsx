@@ -1,6 +1,6 @@
 import { MAP_CENTER, MAP_URL, SATELLITE_MAP_URL } from '@/config';
 import { cn } from '@/lib/utils';
-import { Map as LeafletMap } from 'leaflet';
+import { LatLngTuple, Map as LeafletMap } from 'leaflet';
 import { ReactNode, useEffect, useRef } from 'react';
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
 
@@ -8,7 +8,7 @@ interface Props {
     children?: ReactNode;
     className?: string;
     orientation?: 'horizontal' | 'vertical';
-    center?: [number, number];
+    center?: LatLngTuple;
 }
 
 export const Map = ({

@@ -7,19 +7,16 @@ import { Suspense, useMemo } from 'react';
 import { FavoritePostsConnector } from './connectors/favorite-posts-connector';
 import { Loader } from '@/components/loader/loader';
 import { useUserContext } from '@/context/user-context';
-
-const STRINGS = {
-    MY_FAVORITE_POSTS: 'My favorite posts',
-    NO_PERMISSION: 'You do not have permission to view this page.',
-};
+import { useTranslation } from 'react-i18next';
 
 export const FavoritePostsPage = () => {
     const user = useUserContext();
+    const { t } = useTranslation();
 
     if (!user)
-        throw new Response(STRINGS.NO_PERMISSION, {
+        throw new Response(t('You do not have permission to view this page.'), {
             status: 403,
-            statusText: STRINGS.NO_PERMISSION,
+            statusText: t('You do not have permission to view this page.'),
         });
 
     const navigate = useNavigate();
@@ -59,7 +56,7 @@ export const FavoritePostsPage = () => {
             <div className="flex flex-col items-center w-full py-12 gap-8 px-4">
                 <div className="flex flex-col container border p-4 rounded-lg">
                     <h1 className="text-3xl font-semibold tracking-tight p-4">
-                        {STRINGS.MY_FAVORITE_POSTS}
+                        {t('My favorites')}
                     </h1>
                     <AddressSearch />
                     <FilterPanel

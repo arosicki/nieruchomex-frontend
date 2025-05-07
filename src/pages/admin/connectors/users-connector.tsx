@@ -15,16 +15,10 @@ import { Button } from '@/components/ui/button';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 import { DeleteUserDialog } from '@/pages/admin/dialogs/delete-user-dialog';
 import { Trash2 } from 'lucide-react';
-
-const STRINGS = {
-    ID: 'ID',
-    USERNAME: 'Username',
-    TYPE: 'Type',
-    CREATED: 'Created',
-    UPDATED: 'Updated',
-};
+import { useTranslation } from 'react-i18next';
 
 export const UsersConnector = () => {
+    const { t } = useTranslation();
     const { data } = useUsers();
 
     const totalPages = Math.ceil(data.info.total / data.info.limit);
@@ -35,11 +29,11 @@ export const UsersConnector = () => {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-12">{STRINGS.ID}</TableHead>
-                        <TableHead>{STRINGS.USERNAME}</TableHead>
-                        <TableHead>{STRINGS.TYPE}</TableHead>
-                        <TableHead>{STRINGS.CREATED}</TableHead>
-                        <TableHead>{STRINGS.UPDATED}</TableHead>
+                        <TableHead className="w-12">{t('ID')}</TableHead>
+                        <TableHead>{t('Username')}</TableHead>
+                        <TableHead>{t('Type')}</TableHead>
+                        <TableHead>{t('Created')}</TableHead>
+                        <TableHead>{t('Updated')}</TableHead>
                         <TableHead className="w-24" />
                     </TableRow>
                 </TableHeader>
@@ -59,6 +53,8 @@ export const UsersConnector = () => {
                                 <EditUserDialog
                                     userId={user.id}
                                     userType={user.type}
+                                    userEmail={user.email}
+                                    userPhone={user.phone}
                                 >
                                     <Button size="icon" variant="ghost">
                                         <Pencil1Icon />

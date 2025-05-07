@@ -34,15 +34,7 @@ import { useSetFavorite } from '@/api/posts/favorite/use-set-favorite';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
 import { formatPrice, formatPricePerMeter } from '@/lib/formatters';
-
-const STRINGS = {
-    PER_MONTH: 'per month',
-    ROOM: 'room',
-    ROOMS: 'rooms',
-    VIEW_DETAILS: 'View details',
-    EDIT: 'Edit',
-    OF: 'of',
-};
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     displayMode?: 'status' | 'favorite';
@@ -65,6 +57,7 @@ export const PostListItem = ({
     displayFormat = 'list',
     editButton = false,
 }: Props) => {
+    const { t } = useTranslation();
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
     const [count, setCount] = useState(0);
@@ -120,7 +113,7 @@ export const PostListItem = ({
                                 className="absolute bottom-4 right-4 flex gap-2"
                             >
                                 <CameraIcon />
-                                {current} {STRINGS.OF} {count}
+                                {current} {t('of')} {count}
                             </Badge>
                         </Carousel>
                     ) : (
@@ -134,7 +127,7 @@ export const PostListItem = ({
                     <CardHeader className="pb-4">
                         <CardTitle className="justify-between flex w-full">
                             <div className="text-2xl font-semibold tracking-tight">
-                                {formatPrice(price, type)}
+                                {formatPrice(price, type, t)}
                             </div>
                             {displayMode === 'status' ? (
                                 <Badge
@@ -175,7 +168,7 @@ export const PostListItem = ({
                     <CardContent className="flex gap-4 flex-1 items-start">
                         <CardDescription className="flex items-center gap-2">
                             <BoxIcon />
-                            {`${rooms} ${rooms === 1 ? STRINGS.ROOM : STRINGS.ROOMS}`}
+                            {t('Rooms', { count: rooms })}
                         </CardDescription>
                         <CardDescription className="flex items-center gap-2">
                             <ReceiptIcon />
@@ -200,7 +193,7 @@ export const PostListItem = ({
                                             postId: `${id}`,
                                         }}
                                     >
-                                        {STRINGS.VIEW_DETAILS}
+                                        {t('View details')}
                                     </Link>
                                 </Button>
                                 <Button asChild>
@@ -210,7 +203,7 @@ export const PostListItem = ({
                                             postId: `${id}`,
                                         }}
                                     >
-                                        {STRINGS.EDIT}
+                                        {t('Edit')}
                                     </Link>
                                 </Button>
                             </div>
@@ -222,7 +215,7 @@ export const PostListItem = ({
                                         postId: `${id}`,
                                     }}
                                 >
-                                    {STRINGS.VIEW_DETAILS}
+                                    {t('View details')}
                                 </Link>
                             </Button>
                         )}

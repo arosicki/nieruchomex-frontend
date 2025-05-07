@@ -26,6 +26,7 @@ import { LocationSelector } from '../location-selector/location-selector';
 import { useEditorRef } from '@udecode/plate-common/react';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
+import { useTranslation } from 'react-i18next';
 
 interface ViewProps {
     post: Post;
@@ -39,16 +40,8 @@ interface EditProps {
 
 type Props = ViewProps | EditProps;
 
-const STRINGS = {
-    EMAIL: 'Email',
-    PHONE: 'Phone number',
-    SELLER: 'Seller',
-    LOCATION: 'Location',
-    ARCHIVED_TITLE: 'This offer is archived',
-    ARCHIVED_DESCRIPTION: 'It is no longer available.',
-};
-
 export const PostEditor = ({ post, disabled }: Props) => {
+    const { t } = useTranslation();
     const form = useForm<PostFormFields>({
         defaultValues: createDefaultValues(post),
         resolver: zodResolver(postFormSchema),
@@ -141,9 +134,11 @@ export const PostEditor = ({ post, disabled }: Props) => {
                     <div className="px-4 pt-4 w-full">
                         <Alert>
                             <InfoCircledIcon />
-                            <AlertTitle> {STRINGS.ARCHIVED_TITLE}</AlertTitle>
+                            <AlertTitle>
+                                {t('This offer is archived')}
+                            </AlertTitle>
                             <AlertDescription>
-                                {STRINGS.ARCHIVED_DESCRIPTION}
+                                {t('It is no longer available.')}
                             </AlertDescription>
                         </Alert>
                     </div>
@@ -210,7 +205,7 @@ export const PostEditor = ({ post, disabled }: Props) => {
                     </div>
                     <div className="container flex flex-col-reverse gap-4 px-4 pb-8 xl:flex-col xl:w-1/3 lg:pt-4">
                         <div className="border rounded-xl p-4 ">
-                            <h2 className="text-xl">{STRINGS.SELLER}</h2>
+                            <h2 className="text-xl">{t('Seller')}</h2>
                             <div className="flex flex-col sm:flex-row xl:flex-col justify-center gap-4 items-center">
                                 <div className="flex flex-col w-full gap-4 items-center p-8 xl:p-0">
                                     <Avatar className="size-32">
@@ -227,12 +222,12 @@ export const PostEditor = ({ post, disabled }: Props) => {
                                 <dl className="grid grid-cols-1 lg:grid-cols-2 p-4 gap-1 w-full">
                                     <dt className="flex gap-2 text-md font-medium items-center">
                                         <AtSignIcon size={20} />
-                                        {STRINGS.EMAIL}
+                                        {t('Email')}
                                     </dt>
                                     <dd>{author?.email}</dd>
                                     <dt className="flex gap-2 text-md font-medium items-center pt-4 lg:pt-0">
                                         <PhoneIcon size={20} />
-                                        {STRINGS.PHONE}
+                                        {t('Phone number')}
                                     </dt>
                                     <dd>{author?.phone}</dd>
                                 </dl>
@@ -240,7 +235,7 @@ export const PostEditor = ({ post, disabled }: Props) => {
                         </div>
 
                         <div className="border rounded-xl p-4 flex flex-col gap-4">
-                            <h2 className="text-xl">{STRINGS.LOCATION}</h2>
+                            <h2 className="text-xl">{t('Location')}</h2>
                             <div className="h-96 w-full">
                                 {disabled ? (
                                     <Map center={mapCenter}>

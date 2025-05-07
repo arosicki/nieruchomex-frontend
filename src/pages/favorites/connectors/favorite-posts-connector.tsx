@@ -5,14 +5,10 @@ import { BREAKPOINTS } from '@/config';
 import { useMediaQuery } from '@/utils/useMediaQuery';
 import { useSearch } from '@tanstack/react-router';
 import { Info } from 'lucide-react';
-
-const STRINGS = {
-    NO_FAVORITE_POSTS: "You haven't added any posts yet.",
-    ADD_POST: 'Add post',
-    ADD_FAVORITE_POSTS_TO_SEE_THEM_HERE: 'Add favorite posts to see them here.',
-};
+import { useTranslation } from 'react-i18next';
 
 export const FavoritePostsConnector = () => {
+    const { t } = useTranslation();
     const { data } = usePosts({
         variables: {},
         favoritesOnly: true,
@@ -33,9 +29,9 @@ export const FavoritePostsConnector = () => {
                 <Info size={64} className="text-muted-foreground" />
                 <div className="flex items-center flex-col gap-2">
                     <h3 className="text-2xl font-semibold tracking-tight">
-                        {STRINGS.NO_FAVORITE_POSTS}
+                        {t("You haven't added any posts yet.")}
                     </h3>
-                    <p>{STRINGS.ADD_FAVORITE_POSTS_TO_SEE_THEM_HERE}</p>
+                    <p>{t('Add favorite posts to see them here.')}</p>
                 </div>
             </div>
         );

@@ -15,25 +15,7 @@ import { Button } from './ui/button';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
-
-const STRINGS = {
-    TYPE: 'Type',
-    SELECT_TYPE: 'Select post type',
-    ANY: 'Any',
-    RENTAL: 'Rental',
-    SALE: 'Sale',
-    MIN: 'Min',
-    MAX: 'Max',
-    PLN: 'PLN',
-    M2: 'm²',
-    NAME_OR_ADDRESS: 'Name or address',
-    SEARCH: 'Search',
-    FILTER: 'More filters',
-    PRICE: 'Price',
-    AREA: 'Area',
-    CLEAR: 'Clear',
-    ROOMS: 'Rooms',
-};
+import { useTranslation } from 'react-i18next';
 
 const formSchema = z
     .object({
@@ -123,6 +105,8 @@ export const FilterPanel = ({
     defaultValues,
     className,
 }: Props) => {
+    const { t } = useTranslation();
+
     const form = useForm<PostSearchFormModel>({
         resolver: zodResolver(formSchema),
         defaultValues,
@@ -156,7 +140,7 @@ export const FilterPanel = ({
             >
                 <div className="flex flex-col gap-4 items-center w-full sm:flex-row">
                     <div className="flex gap-2 flex-col w-full sm:w-auto">
-                        <FormLabel>{STRINGS.TYPE}</FormLabel>
+                        <FormLabel>{t('Type')}</FormLabel>
                         <FormField
                             control={form.control}
                             name="type"
@@ -169,21 +153,21 @@ export const FilterPanel = ({
                                     >
                                         <SelectTrigger className="sm:w-[180px]">
                                             <SelectValue
-                                                placeholder={
-                                                    STRINGS.SELECT_TYPE
-                                                }
+                                                placeholder={t(
+                                                    'Select post type',
+                                                )}
                                             />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectItem value="ALL">
-                                                    {STRINGS.ANY}
+                                                    {t('Any')}
                                                 </SelectItem>
                                                 <SelectItem value="SALE">
-                                                    {STRINGS.SALE}
+                                                    {t('Sale')}
                                                 </SelectItem>
                                                 <SelectItem value="RENTAL">
-                                                    {STRINGS.RENTAL}
+                                                    {t('Rental')}
                                                 </SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
@@ -194,7 +178,7 @@ export const FilterPanel = ({
                     </div>
 
                     <div className="flex flex-col gap-2 flex-1 w-full sm:w-auto">
-                        <FormLabel>{STRINGS.PRICE}</FormLabel>
+                        <FormLabel>{t('Price')}</FormLabel>
                         <div className="flex gap-4">
                             <FormField
                                 control={form.control}
@@ -203,8 +187,8 @@ export const FilterPanel = ({
                                     <FormItem className="flex-1">
                                         <NumberInput
                                             min={0}
-                                            unit={STRINGS.PLN}
-                                            placeholder={STRINGS.MIN}
+                                            unit={t('PLN')}
+                                            placeholder={t('Min')}
                                             stepper={priceStepper}
                                             autoComplete="off"
                                             onValueChange={onChange}
@@ -220,9 +204,9 @@ export const FilterPanel = ({
                                     <FormItem className="flex-1">
                                         <NumberInput
                                             min={0}
-                                            unit={STRINGS.PLN}
+                                            unit={t('PLN')}
                                             stepper={priceStepper}
-                                            placeholder={STRINGS.MAX}
+                                            placeholder={t('Max')}
                                             autoComplete="off"
                                             onValueChange={onChange}
                                             {...field}
@@ -236,7 +220,7 @@ export const FilterPanel = ({
 
                 <div className="flex flex-col gap-4 flex-1 sm:flex-row">
                     <div className="flex flex-col gap-2 flex-1">
-                        <FormLabel>{STRINGS.AREA}</FormLabel>
+                        <FormLabel>{t('Area')}</FormLabel>
                         <div className="flex gap-4">
                             <FormField
                                 control={form.control}
@@ -245,8 +229,8 @@ export const FilterPanel = ({
                                     <FormItem className="flex-1">
                                         <NumberInput
                                             min={0}
-                                            unit={STRINGS.M2}
-                                            placeholder={STRINGS.MIN}
+                                            unit={t('m²')}
+                                            placeholder={t('Min')}
                                             stepper={5}
                                             autoComplete="off"
                                             onValueChange={onChange}
@@ -262,8 +246,8 @@ export const FilterPanel = ({
                                     <FormItem className="flex-1">
                                         <NumberInput
                                             min={0}
-                                            unit={STRINGS.M2}
-                                            placeholder={STRINGS.MIN}
+                                            unit={t('m²')}
+                                            placeholder={t('Max')}
                                             stepper={5}
                                             autoComplete="off"
                                             onValueChange={onChange}
@@ -275,7 +259,7 @@ export const FilterPanel = ({
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 flex-1">
-                        <FormLabel>{STRINGS.ROOMS}</FormLabel>
+                        <FormLabel>{t('Rooms')}</FormLabel>
                         <div className="flex gap-4">
                             <FormField
                                 control={form.control}
@@ -284,7 +268,7 @@ export const FilterPanel = ({
                                     <FormItem className="flex-1">
                                         <NumberInput
                                             min={0}
-                                            placeholder={STRINGS.MIN}
+                                            placeholder={t('Min')}
                                             autoComplete="off"
                                             onValueChange={onChange}
                                             {...field}
@@ -299,7 +283,7 @@ export const FilterPanel = ({
                                     <FormItem className="flex-1">
                                         <NumberInput
                                             min={0}
-                                            placeholder={STRINGS.MAX}
+                                            placeholder={t('Max')}
                                             autoComplete="off"
                                             onValueChange={onChange}
                                             {...field}
@@ -318,12 +302,12 @@ export const FilterPanel = ({
                         variant="secondary"
                         onClick={onClearWrapper}
                     >
-                        {STRINGS.CLEAR}
+                        {t('Clear')}
                     </Button>
 
                     <Button type="submit" className="w-fit">
                         <MagnifyingGlassIcon className="size-5" />
-                        {STRINGS.SEARCH}
+                        {t('Search')}
                     </Button>
                 </div>
             </form>

@@ -6,6 +6,7 @@ import { getImageUrl } from '@/utils/getImageUrl';
 import { InputImage } from './input-image';
 import { PlusIcon } from 'lucide-react';
 import { MAX_FILE_SIZE } from '@/config';
+import { useTranslation } from 'react-i18next';
 
 interface Props<T extends FieldValues> {
     name: Path<T>;
@@ -17,11 +18,6 @@ interface Props<T extends FieldValues> {
     }) => void;
 }
 
-const STRINGS = {
-    TOAST_TITLE:
-        'Some files were rejected due to their type, size or duplicate name.',
-};
-
 const acceptedFileTypes = ['image/png', 'image/jpeg', 'image/gif'];
 
 export const MultiImageInput = <T extends FieldValues>({
@@ -30,6 +26,7 @@ export const MultiImageInput = <T extends FieldValues>({
     addedImages,
     setImages,
 }: Props<T>) => {
+    const { t } = useTranslation();
     const { toast } = useToast();
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -60,7 +57,9 @@ export const MultiImageInput = <T extends FieldValues>({
 
         if (rejectedFiles.length)
             toast({
-                title: STRINGS.TOAST_TITLE,
+                title: t(
+                    'Some files were rejected due to their type, size or duplicate name.',
+                ),
                 description: rejectedFiles.map((file) => file.name).join(', '),
                 variant: 'destructive',
             });
@@ -109,7 +108,9 @@ export const MultiImageInput = <T extends FieldValues>({
 
         if (rejectedFiles.length)
             toast({
-                title: STRINGS.TOAST_TITLE,
+                title: t(
+                    'Some files were rejected due to their type, size or duplicate name.',
+                ),
                 description: rejectedFiles.map((file) => file.name).join(', '),
                 variant: 'destructive',
             });

@@ -9,20 +9,16 @@ import { MyPostsConnector } from './connectors/my-posts-connector';
 import { Loader } from '@/components/loader/loader';
 import { Button } from '@/components/ui/button';
 import { PlusIcon } from 'lucide-react';
-
-const STRINGS = {
-    MY_POSTS: 'My posts',
-    NO_PERMISSION: 'You do not have permission to view this page.',
-    ADD_POST: 'Add post',
-};
+import { useTranslation } from 'react-i18next';
 
 export const MyPostsPage = () => {
+    const { t } = useTranslation();
     const user = useUserContext();
 
     if (!user)
-        throw new Response(STRINGS.NO_PERMISSION, {
+        throw new Response(t('You do not have permission to view this page.'), {
             status: 403,
-            statusText: STRINGS.NO_PERMISSION,
+            statusText: t('You do not have permission to view this page.'),
         });
 
     const navigate = useNavigate();
@@ -63,7 +59,7 @@ export const MyPostsPage = () => {
                 <div className="flex flex-col container border p-4 rounded-lg">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold tracking-tight p-4">
-                            {STRINGS.MY_POSTS}
+                            {t('My posts')}
                         </h1>
                         <Button asChild>
                             <Link
@@ -73,7 +69,7 @@ export const MyPostsPage = () => {
                                 }}
                             >
                                 <PlusIcon className="w-6 h-6" />
-                                {STRINGS.ADD_POST}
+                                {t('Add post')}
                             </Link>
                         </Button>
                     </div>

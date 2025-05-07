@@ -1,13 +1,10 @@
 import { usePosts } from '@/api/posts/use-posts';
 import { PostCarousel } from '@/components/post-carousel/post-carousel';
 import { Info } from 'lucide-react';
-
-const STRINGS = {
-    NO_FAVORITE_POSTS: "You haven't added any posts to favorites yet.",
-    CLICK_HEART: 'Click the heart icon on next to a post to see it here.',
-};
+import { useTranslation } from 'react-i18next';
 
 export const FavoritePostsConnector = () => {
+    const { t } = useTranslation();
     const { data } = usePosts({
         variables: {},
         favoritesOnly: true,
@@ -18,8 +15,12 @@ export const FavoritePostsConnector = () => {
         return (
             <div className="w-full flex flex-col items-center gap-2">
                 <Info size={64} className="text-muted-foreground" />
-                <h3>{STRINGS.NO_FAVORITE_POSTS}</h3>
-                <p>{STRINGS.CLICK_HEART}</p>
+                <h3>{t("You haven't added any posts to favorites yet.")}</h3>
+                <p>
+                    {t(
+                        'Click the heart icon on next to a post to see it here.',
+                    )}
+                </p>
             </div>
         );
 

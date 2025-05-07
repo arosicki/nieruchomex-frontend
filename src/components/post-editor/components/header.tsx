@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { NumberInput } from '@/components/ui/number-input';
 import { formatPrice, formatPricePerMeter } from '@/lib/formatters';
 import { Control, FieldValues, Path, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface DisplayProps {
     isEditing: false;
@@ -25,13 +26,6 @@ type Props<T extends FieldValues> = (DisplayProps | EditingProps) & {
     control: Control<T>;
 };
 
-const STRINGS = {
-    PLN: 'PLN',
-    PLN_PER_MONTH: 'PLN per month',
-    PRICE: 'Price',
-    TITLE: 'Title',
-};
-
 export const Header = <T extends FieldValues>({
     price,
     type,
@@ -40,6 +34,8 @@ export const Header = <T extends FieldValues>({
     isEditing,
     control,
 }: Props<T>) => {
+    const { t } = useTranslation();
+
     const formPrice = useWatch({
         control,
         name: 'price' as Path<T>,
@@ -61,8 +57,7 @@ export const Header = <T extends FieldValues>({
     const currentArea = isEditing ? (hasBothValues ? formArea : 1) : area;
 
     const priceStepper = formType === 'RENTAL' ? 250 : 10000;
-    const priceUnit =
-        formType === 'RENTAL' ? STRINGS.PLN_PER_MONTH : STRINGS.PLN;
+    const priceUnit = formType === 'RENTAL' ? t('PLN per month') : t('PLN');
 
     return (
         <div className="py-2 gap-2 flex flex-col">
@@ -76,7 +71,7 @@ export const Header = <T extends FieldValues>({
                                 <NumberInput
                                     min={0}
                                     unit={priceUnit}
-                                    placeholder={STRINGS.PRICE}
+                                    placeholder={t('Price')}
                                     stepper={priceStepper}
                                     autoComplete="off"
                                     onValueChange={onChange}
@@ -101,7 +96,7 @@ export const Header = <T extends FieldValues>({
                     render={({ field }) => (
                         <FormItem className="flex-1">
                             <Input
-                                placeholder={STRINGS.TITLE}
+                                placeholder={t('Title')}
                                 autoComplete="off"
                                 {...field}
                             />
@@ -109,7 +104,7 @@ export const Header = <T extends FieldValues>({
                     )}
                 />
             ) : (
-                <p className="text-md">{title} </p>
+                <p className="text-md">{title}</p>
             )}
         </div>
     );

@@ -9,13 +9,7 @@ import { debounce } from '@/utils/debounce';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Loader } from '@/components/loader/loader';
 import { AddUserDialog } from '@/pages/admin/dialogs/add-user-dialog';
-
-const STRINGS = {
-    ADMIN_PANEL: 'Admin Panel',
-    NO_PERMISSION: 'You do not have permission to view this page.',
-    CREATE_USER: 'Create User',
-    SEARCH_USERS: 'Search users',
-};
+import { useTranslation } from 'react-i18next';
 
 interface PageParams {
     search?: string;
@@ -23,6 +17,7 @@ interface PageParams {
 }
 
 export const AdminPage = () => {
+    const { t } = useTranslation();
     const user = useUserContext();
     const navigate = useNavigate();
 
@@ -53,22 +48,22 @@ export const AdminPage = () => {
     }, 300);
 
     if (user?.type !== 'ADMIN')
-        throw new Response(STRINGS.NO_PERMISSION, {
+        throw new Response(t('You do not have permission to view this page.'), {
             status: 403,
-            statusText: STRINGS.NO_PERMISSION,
+            statusText: t('You do not have permission to view this page.'),
         });
 
     return (
         <WallLayout>
             <div className="container px-4 mx-auto pt-6">
                 <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight">
-                    {STRINGS.ADMIN_PANEL}
+                    {t('You do not have permission to view this page.')}
                 </h1>
 
                 <div className="flex justify-between pt-3 pb-4 gap-4">
                     <div className="relative w-full max-w-64">
                         <Input
-                            placeholder={STRINGS.SEARCH_USERS}
+                            placeholder={t('Search users')}
                             onChange={onSearch}
                             defaultValue={params.search}
                         />
@@ -79,7 +74,7 @@ export const AdminPage = () => {
 
                     <AddUserDialog>
                         <Button>
-                            {STRINGS.CREATE_USER}
+                            {t('Create user')}
                             <PlusIcon />
                         </Button>
                     </AddUserDialog>

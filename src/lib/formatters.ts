@@ -1,7 +1,7 @@
 import { PostType } from '@/api/models/post';
-import { STRINGS } from '@/strings';
+import { TFunction } from 'i18next';
 
-export const formatPrice = (price: number, type: PostType) => {
+export const formatPrice = (price: number, type: PostType, t: TFunction) => {
     const formattedPrice = price.toLocaleString('pl-PL', {
         style: 'currency',
         currency: 'PLN',
@@ -9,7 +9,7 @@ export const formatPrice = (price: number, type: PostType) => {
     });
 
     if (type === 'RENTAL') {
-        return `${formattedPrice} ${STRINGS.PER_MONTH}`;
+        return `${formattedPrice} ${t('per month')}`;
     }
 
     return formattedPrice;

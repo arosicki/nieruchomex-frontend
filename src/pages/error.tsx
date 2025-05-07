@@ -5,13 +5,12 @@ import { ErrorCodes } from '../api/helpers/error-codes';
 import { Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/header/header';
+import { useTranslation } from 'react-i18next';
 
-const STRINGS = {
-    HOME_PAGE: 'Home Page',
-    INTERNAL_SERVER_ERROR_CODE: '500',
-};
+const INTERNAL_SERVER_ERROR_CODE = '500';
 
 export const ErrorPage = ({ error }: ErrorComponentProps) => {
+    const { t } = useTranslation();
     if (error instanceof FetchError || error instanceof Response) {
         const messages =
             error instanceof FetchError
@@ -23,7 +22,7 @@ export const ErrorPage = ({ error }: ErrorComponentProps) => {
                 <Header />
                 <div className="flex flex-col justify-center items-center h-[calc(100vh-3.75rem)] gap-3">
                     <h1 className="text-4xl font-semibold">
-                        {error.status || STRINGS.INTERNAL_SERVER_ERROR_CODE}
+                        {error.status || INTERNAL_SERVER_ERROR_CODE}
                     </h1>
                     <div className="border-b w-40" />
                     {messages.map((message) => (
@@ -34,7 +33,7 @@ export const ErrorPage = ({ error }: ErrorComponentProps) => {
                     <Button asChild className="mt-6">
                         <Link to="/">
                             <Home />
-                            {STRINGS.HOME_PAGE}
+                            {t('Home page')}
                         </Link>
                     </Button>
                 </div>
@@ -47,7 +46,7 @@ export const ErrorPage = ({ error }: ErrorComponentProps) => {
             <Header />
             <div className="flex flex-col justify-center items-center h-[calc(100vh-3.75rem)] gap-3">
                 <h1 className="text-4xl font-semibold">
-                    {STRINGS.INTERNAL_SERVER_ERROR_CODE}
+                    {INTERNAL_SERVER_ERROR_CODE}
                 </h1>
                 <div className="border-b w-40" />
                 <p className="text-lg font-medium">

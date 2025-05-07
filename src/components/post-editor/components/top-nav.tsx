@@ -33,27 +33,7 @@ import { ArrowLeft, BanIcon, Pencil, SaveIcon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useDeletePost } from '@/api/posts/use-delete-post';
-
-const STRINGS = {
-    BACK: 'Back',
-    EDIT: 'Edit',
-    SAVE: 'Save',
-    ADD_TO_FAVORITES: 'Add to favorites',
-    REMOVE_FROM_FAVORITES: 'Remove from favorites',
-    DRAFT: 'Draft',
-    PUBLISHED: 'Published',
-    ARCHIVED: 'Archived',
-    STATUS: 'Status',
-    RENTAL: 'Rental',
-    SALE: 'Sale',
-    TYPE: 'Type',
-    DO_YOU_WANT_TO_LEAVE: 'Do you want to leave?',
-    UNSAVED_CHANGES: 'All unsaved changes will be lost.',
-    CANCEL: 'Cancel',
-    LEAVE: 'Leave',
-    RESET: 'Reset',
-    DELETE: 'Delete',
-};
+import { useTranslation } from 'react-i18next';
 
 interface Props<T extends FieldValues> {
     postId?: number | string;
@@ -78,6 +58,7 @@ export const TopNav = <T extends FieldValues>({
     isSaving,
     reset,
 }: Props<T>) => {
+    const { t } = useTranslation();
     const user = useUserContext();
 
     // Will not be called with postId === 0
@@ -105,16 +86,16 @@ export const TopNav = <T extends FieldValues>({
                     <DialogTrigger asChild>
                         <Button variant="ghost" type="button">
                             <ArrowLeft />
-                            {STRINGS.BACK}
+                            {t('Back')}
                         </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
                             <DialogTitle>
-                                {STRINGS.DO_YOU_WANT_TO_LEAVE}
+                                {t('Do you want to leave?')}
                             </DialogTitle>
                             <DialogDescription>
-                                {STRINGS.UNSAVED_CHANGES}
+                                {t('All unsaved changes will be lost.')}
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
@@ -129,7 +110,7 @@ export const TopNav = <T extends FieldValues>({
                                 }}
                                 type="button"
                             >
-                                {STRINGS.CANCEL}
+                                {t('Cancel')}
                             </Button>
                             <Button
                                 variant="destructive"
@@ -139,7 +120,7 @@ export const TopNav = <T extends FieldValues>({
                                 }}
                                 type="button"
                             >
-                                {STRINGS.LEAVE}
+                                {t('Leave')}
                             </Button>
                         </DialogFooter>
                     </DialogContent>
@@ -151,7 +132,7 @@ export const TopNav = <T extends FieldValues>({
                     type="button"
                 >
                     <ArrowLeft />
-                    {STRINGS.BACK}
+                    {t('Back')}
                 </Button>
             )}
 
@@ -169,16 +150,16 @@ export const TopNav = <T extends FieldValues>({
                                     <FormControl>
                                         <SelectTrigger className="w-32">
                                             <SelectValue
-                                                placeholder={STRINGS.TYPE}
+                                                placeholder={t('Type')}
                                             />
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
                                         <SelectItem value="RENTAL">
-                                            {STRINGS.RENTAL}
+                                            {t('Rental')}
                                         </SelectItem>
                                         <SelectItem value="SALE">
-                                            {STRINGS.SALE}
+                                            {t('Sale')}
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -197,19 +178,19 @@ export const TopNav = <T extends FieldValues>({
                                     <FormControl>
                                         <SelectTrigger className="w-32">
                                             <SelectValue
-                                                placeholder={STRINGS.STATUS}
+                                                placeholder={t('Status')}
                                             />
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
                                         <SelectItem value="DRAFT">
-                                            {STRINGS.DRAFT}
+                                            {t('Draft')}
                                         </SelectItem>
                                         <SelectItem value="PUBLISHED">
-                                            {STRINGS.PUBLISHED}
+                                            {t('Published')}
                                         </SelectItem>
                                         <SelectItem value="ARCHIVED">
-                                            {STRINGS.ARCHIVED}
+                                            {t('Archived')}
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -230,7 +211,7 @@ export const TopNav = <T extends FieldValues>({
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>{STRINGS.RESET}</p>
+                                <p>{t('Reset')}</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
@@ -248,7 +229,7 @@ export const TopNav = <T extends FieldValues>({
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>{STRINGS.CANCEL}</p>
+                                <p>{t('Cancel')}</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
@@ -272,7 +253,7 @@ export const TopNav = <T extends FieldValues>({
                                                 </Button>
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                                <p>{STRINGS.DELETE}</p>
+                                                <p>{t('Delete')}</p>
                                             </TooltipContent>
                                         </Tooltip>
                                     </TooltipProvider>
@@ -281,10 +262,11 @@ export const TopNav = <T extends FieldValues>({
                             <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
                                     <DialogTitle>
-                                        {STRINGS.DO_YOU_WANT_TO_LEAVE}
+                                        {t('Do you want to delete this post?')}
                                     </DialogTitle>
                                     <DialogDescription>
-                                        {STRINGS.UNSAVED_CHANGES}
+                                        {/* TODO: Can be undone in future */}
+                                        {t('This action cannot be undone.')}
                                     </DialogDescription>
                                 </DialogHeader>
                                 <DialogFooter>
@@ -295,7 +277,7 @@ export const TopNav = <T extends FieldValues>({
                                         }}
                                         type="button"
                                     >
-                                        {STRINGS.CANCEL}
+                                        {t('Cancel')}
                                     </Button>
                                     <Button
                                         variant="destructive"
@@ -308,7 +290,7 @@ export const TopNav = <T extends FieldValues>({
                                         }}
                                         type="button"
                                     >
-                                        {STRINGS.DELETE}
+                                        {t('Delete')}
                                     </Button>
                                 </DialogFooter>
                             </DialogContent>
@@ -323,7 +305,7 @@ export const TopNav = <T extends FieldValues>({
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>{STRINGS.SAVE}</p>
+                                <p>{t('Save')}</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
@@ -347,7 +329,7 @@ export const TopNav = <T extends FieldValues>({
                             replace
                         >
                             <Pencil />
-                            {STRINGS.EDIT}
+                            {t('Edit')}
                         </Link>
                     </Button>
                 </div>
@@ -363,9 +345,7 @@ export const TopNav = <T extends FieldValues>({
                     type="button"
                 >
                     {isFavorite ? <HeartFilledIcon /> : <HeartIcon />}
-                    {isFavorite
-                        ? STRINGS.REMOVE_FROM_FAVORITES
-                        : STRINGS.ADD_TO_FAVORITES}
+                    {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                 </Button>
             )}
         </div>

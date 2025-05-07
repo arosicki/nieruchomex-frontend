@@ -12,8 +12,8 @@ import {
 import { getImageUrl } from '@/utils/getImageUrl';
 import { useEffect, useState } from 'react';
 import { Image } from '@/api/models/image';
-import { STRINGS } from '@/strings';
 import { ImageOff } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     images: Image[];
@@ -21,6 +21,7 @@ interface Props {
 }
 
 export const ImageCarousel = ({ images, title }: Props) => {
+    const { t } = useTranslation();
     const [current, setCurrent] = useState(0);
     const [count, setCount] = useState(0);
     const [bigCarouselApi, setBigCarouselApi] = useState<CarouselApi | null>(
@@ -74,7 +75,7 @@ export const ImageCarousel = ({ images, title }: Props) => {
                     className="absolute bottom-4 right-4 flex gap-2"
                 >
                     <CameraIcon />
-                    {current} {STRINGS.OF} {count}
+                    {current} {t('of')} {count}
                 </Badge>
             </Carousel>
             <Carousel className="w-full mb-2" setApi={setSmallCarouselApi}>

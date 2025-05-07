@@ -22,13 +22,7 @@ import { Button } from './ui/button';
 import { useRouter, useSearch } from '@tanstack/react-router';
 import { CrossCircledIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { useRetrieveAddress } from '@/api/address/use-retrive-address';
-
-const STRINGS = {
-    ADDRESS: 'Enter Address...',
-    DISTANCE: 'Distance',
-    ENTER_AT_LEAST_3_CHARACTERS: 'Please enter at least 3 characters',
-    NO_RESULTS: 'No results found',
-};
+import { useTranslation } from 'react-i18next';
 
 const DISTANCE_STEPS = ['1', '5', '10', '15', '20', '30', '50', '100'] as const;
 
@@ -44,6 +38,8 @@ export const AddressSearch = ({ className }: Props) => {
     const { data, isLoading } = useSearchAddress({ search });
     const { data: addressData, isFetching: isFetchingAddress } =
         useRetrieveAddress();
+
+    const { t } = useTranslation();
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -112,8 +108,7 @@ export const AddressSearch = ({ className }: Props) => {
                     <div className="w-full relative">
                         <Input
                             autoComplete="off"
-                            placeholder={STRINGS.ADDRESS}
-                            // {...field}
+                            placeholder={t('Enter address...')}
                             disabled
                             value={selectedValue.name}
                             className="pr-9"
@@ -153,7 +148,7 @@ export const AddressSearch = ({ className }: Props) => {
                             <div className="w-full relative">
                                 <Input
                                     autoComplete="off"
-                                    placeholder={STRINGS.ADDRESS}
+                                    placeholder={t('Enter address...')}
                                     onChange={onSearch}
                                     className="pr-9"
                                     ref={inputRef}
@@ -171,7 +166,7 @@ export const AddressSearch = ({ className }: Props) => {
                         >
                             {search.length < 3 && (
                                 <div className="text-center p-2">
-                                    {STRINGS.ENTER_AT_LEAST_3_CHARACTERS}
+                                    {t('Enter at least 3 characters')}
                                 </div>
                             )}
 
@@ -211,7 +206,7 @@ export const AddressSearch = ({ className }: Props) => {
                                     ))
                                 ) : (
                                     <div className="text-center p-2">
-                                        {STRINGS.NO_RESULTS}
+                                        {t('No results found')}
                                     </div>
                                 ))}
                         </PopoverContent>
@@ -225,7 +220,7 @@ export const AddressSearch = ({ className }: Props) => {
                     }
                 >
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder={STRINGS.DISTANCE} />
+                        <SelectValue placeholder={t('Distance')} />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>

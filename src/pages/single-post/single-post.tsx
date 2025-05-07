@@ -7,10 +7,6 @@ import { WallLayout } from '@/layouts/wall';
 import { useUserContext } from '@/context/user-context';
 import { PlateController } from '@udecode/plate-common/react';
 
-const STRINGS = {
-    NO_PERMISSION: 'You do not have permission to view this page.',
-};
-
 interface Props {
     isEditing?: boolean;
 }
@@ -23,10 +19,13 @@ export const SinglePostPage = ({ isEditing }: Props) => {
 
     if (postId === 'new' || !postId) {
         if (!user) {
-            throw new Response(STRINGS.NO_PERMISSION, {
-                status: 403,
-                statusText: STRINGS.NO_PERMISSION,
-            });
+            throw new Response(
+                'You do not have permission to view this page.',
+                {
+                    status: 403,
+                    statusText: 'You do not have permission to view this page.',
+                },
+            );
         }
 
         return (
@@ -39,9 +38,9 @@ export const SinglePostPage = ({ isEditing }: Props) => {
     }
 
     if (!user && isEditing) {
-        throw new Response(STRINGS.NO_PERMISSION, {
+        throw new Response('You do not have permission to view this page.', {
             status: 403,
-            statusText: STRINGS.NO_PERMISSION,
+            statusText: 'You do not have permission to view this page.',
         });
     }
 

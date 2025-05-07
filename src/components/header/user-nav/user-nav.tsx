@@ -16,20 +16,14 @@ import {
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ThemeRadioGroup } from './theme-radio-group';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     user: User;
 }
 
-const STRINGS = {
-    SIGN_OUT: 'Sign out',
-    MY_POSTS: 'My Posts',
-    ADMIN_PANEL: 'Admin Panel',
-    MY_FAVORITES: 'My Favorites',
-    MY_PROFILE: 'My Profile',
-};
-
 export const UserNav = ({ user }: Props) => {
+    const { t } = useTranslation();
     const { signOut } = useAuth();
     const navigate = useNavigate();
 
@@ -69,7 +63,7 @@ export const UserNav = ({ user }: Props) => {
                             })
                         }
                     >
-                        {STRINGS.MY_POSTS}
+                        {t('My posts')}
                         {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
                     </DropdownMenuItem>
                     <DropdownMenuItem
@@ -79,7 +73,7 @@ export const UserNav = ({ user }: Props) => {
                             })
                         }
                     >
-                        {STRINGS.MY_FAVORITES}
+                        {t('My favorites')}
                         {/* <DropdownMenuShortcut>⇧⌘F</DropdownMenuShortcut> */}
                     </DropdownMenuItem>
                     <DropdownMenuItem
@@ -89,13 +83,13 @@ export const UserNav = ({ user }: Props) => {
                             })
                         }
                     >
-                        {STRINGS.MY_PROFILE}
+                        {t('My profile')}
                         {/* <DropdownMenuShortcut>⇧⌘M</DropdownMenuShortcut> */}
                     </DropdownMenuItem>
                     {user.type === 'ADMIN' && (
                         <DropdownMenuItem asChild>
                             <Link to="/admin">
-                                {STRINGS.ADMIN_PANEL}
+                                {t('Admin panel')}
                                 {/* <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut> */}
                             </Link>
                         </DropdownMenuItem>
@@ -104,7 +98,7 @@ export const UserNav = ({ user }: Props) => {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}>
-                    {STRINGS.SIGN_OUT}
+                    {t('Sign out')}
                     {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
                 </DropdownMenuItem>
             </DropdownMenuContent>
