@@ -22,6 +22,7 @@ import { z } from 'zod';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useTranslation } from 'react-i18next';
 import { t as globalT } from 'i18next';
+import { LangToggle } from '@/components/lang-toggle';
 
 const formSchema = z
     .object({
@@ -154,7 +155,8 @@ export const SignUpPage = () => {
                     <Logo />
                 </div>
                 <div className="mx-auto flex w-full flex-col justify-center h-full space-y-6 p-12 sm:w-96">
-                    <div className="absolute top-6 right-6">
+                    <div className="absolute top-6 right-6 gap-2 flex flex-row">
+                        <LangToggle />
                         <ThemeToggle />
                     </div>
                     <div className="flex flex-col space-y-2 text-center">

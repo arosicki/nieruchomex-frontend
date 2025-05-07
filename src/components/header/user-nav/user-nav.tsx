@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ThemeRadioGroup } from './theme-radio-group';
 import { useTranslation } from 'react-i18next';
+import { LangRadioGroup } from './lang-radio-group';
 
 interface Props {
     user: User;
@@ -50,7 +51,7 @@ export const UserNav = ({ user }: Props) => {
                             {user.name}
                         </p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            {capitalize(user.type)}
+                            {t(capitalize(user.type))}
                         </p>
                     </div>
                 </DropdownMenuLabel>
@@ -94,6 +95,7 @@ export const UserNav = ({ user }: Props) => {
                             </Link>
                         </DropdownMenuItem>
                     )}
+                    <LangRadioGroup />
                     <ThemeRadioGroup />
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

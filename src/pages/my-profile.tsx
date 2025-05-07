@@ -108,10 +108,10 @@ export const MyProfilePage = () => {
                                 </Avatar>
                                 <div className="flex flex-col items-center">
                                     <h3 className="text-lg">
-                                        {capitalize(user.name)}
+                                        {t(capitalize(user.name))}
                                     </h3>
                                     <p className="text-sm text-muted-foreground">
-                                        {capitalize(user.type)}
+                                        {t(capitalize(user.type))}
                                     </p>
                                 </div>
                             </div>

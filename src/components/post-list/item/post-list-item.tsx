@@ -135,7 +135,7 @@ export const PostListItem = ({
                                     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                                     variant={status.toLowerCase() as any}
                                 >
-                                    {capitalize(status)}
+                                    {t(capitalize(status))}
                                 </Badge>
                             ) : (
                                 <Button

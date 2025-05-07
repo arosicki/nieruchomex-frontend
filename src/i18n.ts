@@ -11,7 +11,7 @@ i18n.use(Backend)
     .init({
         fallbackLng: 'en',
         debug: true,
-
+        supportedLngs: ['en', 'pl'],
         interpolation: {
             escapeValue: false,
         },
