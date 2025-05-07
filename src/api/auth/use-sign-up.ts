@@ -6,7 +6,7 @@ import { User } from '../models/user';
 import { FetchError } from '../helpers/fetch-error';
 
 export interface SignUpVariables {
-    username: string;
+    name: string;
     password: string;
     email: string;
     phone: string;
@@ -14,11 +14,11 @@ export interface SignUpVariables {
 
 export const useSignUp = () => {
     return useMutation<Response<User>, FetchError, SignUpVariables>({
-        mutationFn: async ({ username, password, email, phone }) => {
+        mutationFn: async ({ name, password, email, phone }) => {
             return callApi(Endpoints.REGISTER, {
                 method: 'POST',
                 body: {
-                    username,
+                    name,
                     password,
                     email,
                     phone,

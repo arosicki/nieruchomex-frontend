@@ -25,7 +25,7 @@ import { t as globalT } from 'i18next';
 
 const formSchema = z
     .object({
-        username: z
+        name: z
             .string({
                 message: globalT('Username is required.'),
             })
@@ -104,7 +104,7 @@ export const SignUpPage = () => {
     const form = useForm<FormModel>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: '',
+            name: '',
             email: '',
             phone: '',
             password: '',
@@ -159,7 +159,7 @@ export const SignUpPage = () => {
                     </div>
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">
-                            {t('Sign up')}
+                            {t('Create an account')}
                         </h1>
                     </div>
                     <Form {...form}>
@@ -176,7 +176,7 @@ export const SignUpPage = () => {
                             )}
                             <FormField
                                 control={form.control}
-                                name="username"
+                                name="name"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
