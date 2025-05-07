@@ -82,7 +82,7 @@ export const Header = <T extends FieldValues>({
                     />
                 ) : (
                     <h1 className="text-2xl font-bold">
-                        {formatPrice(price, type)}
+                        {formatPrice(price, type, t)}
                     </h1>
                 )}
                 <p className="text-md min-w-24 text-right">

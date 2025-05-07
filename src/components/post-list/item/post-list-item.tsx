@@ -113,7 +113,7 @@ export const PostListItem = ({
                                 className="absolute bottom-4 right-4 flex gap-2"
                             >
                                 <CameraIcon />
-                                {current} {t('of')} {count}
+                                {t('# of #', { current, max: count })}
                             </Badge>
                         </Carousel>
                     ) : (
@@ -168,7 +168,7 @@ export const PostListItem = ({
                     <CardContent className="flex gap-4 flex-1 items-start">
                         <CardDescription className="flex items-center gap-2">
                             <BoxIcon />
-                            {t('Rooms', { count: rooms })}
+                            {t('# Rooms', { count: rooms })}
                         </CardDescription>
                         <CardDescription className="flex items-center gap-2">
                             <ReceiptIcon />

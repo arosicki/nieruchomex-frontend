@@ -13,8 +13,6 @@ import { FavoritePostsConnector } from './connectors/favorite-posts-connector';
 import { MyPostsConnector } from './connectors/my-posts-connector';
 import { useTranslation } from 'react-i18next';
 
-const STRINGS = {};
-
 export const HomePage = () => {
     const { t } = useTranslation();
     const user = useUserContext();

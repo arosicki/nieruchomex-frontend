@@ -75,7 +75,7 @@ export const ImageCarousel = ({ images, title }: Props) => {
                     className="absolute bottom-4 right-4 flex gap-2"
                 >
                     <CameraIcon />
-                    {current} {t('of')} {count}
+                    {t('# of #', { current, max: count })}
                 </Badge>
             </Carousel>
             <Carousel className="w-full mb-2" setApi={setSmallCarouselApi}>

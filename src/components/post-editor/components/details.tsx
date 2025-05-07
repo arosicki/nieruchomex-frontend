@@ -93,9 +93,7 @@ export const Details = <T extends FieldValues>({
                         )}
                     />
                 ) : (
-                    <>
-                        {area} {t('m²')}
-                    </>
+                    t('# m²', { count: area })
                 )}
             </dd>
             <dt className="flex gap-2 font-medium text-md items-center">

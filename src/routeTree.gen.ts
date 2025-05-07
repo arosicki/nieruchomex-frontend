@@ -24,7 +24,6 @@ const SearchLazyImport = createFileRoute('/search')()
 const FavoritesLazyImport = createFileRoute('/favorites')()
 const AdminLazyImport = createFileRoute('/admin')()
 const IndexLazyImport = createFileRoute('/')()
-const UsersUserIdLazyImport = createFileRoute('/users/$userId')()
 const PostsPostIdIndexLazyImport = createFileRoute('/posts/$postId/')()
 const PostsPostIdEditLazyImport = createFileRoute('/posts/$postId/edit')()
 
@@ -77,12 +76,6 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
-
-const UsersUserIdLazyRoute = UsersUserIdLazyImport.update({
-  id: '/users/$userId',
-  path: '/users/$userId',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/users/$userId.lazy').then((d) => d.Route))
 
 const PostsPostIdIndexLazyRoute = PostsPostIdIndexLazyImport.update({
   id: '/posts/$postId/',
@@ -160,13 +153,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpLazyImport
       parentRoute: typeof rootRoute
     }
-    '/users/$userId': {
-      id: '/users/$userId'
-      path: '/users/$userId'
-      fullPath: '/users/$userId'
-      preLoaderRoute: typeof UsersUserIdLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/posts/$postId/edit': {
       id: '/posts/$postId/edit'
       path: '/posts/$postId/edit'
@@ -195,7 +181,6 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchLazyRoute
   '/sign-in': typeof SignInLazyRoute
   '/sign-up': typeof SignUpLazyRoute
-  '/users/$userId': typeof UsersUserIdLazyRoute
   '/posts/$postId/edit': typeof PostsPostIdEditLazyRoute
   '/posts/$postId': typeof PostsPostIdIndexLazyRoute
 }
@@ -209,7 +194,6 @@ export interface FileRoutesByTo {
   '/search': typeof SearchLazyRoute
   '/sign-in': typeof SignInLazyRoute
   '/sign-up': typeof SignUpLazyRoute
-  '/users/$userId': typeof UsersUserIdLazyRoute
   '/posts/$postId/edit': typeof PostsPostIdEditLazyRoute
   '/posts/$postId': typeof PostsPostIdIndexLazyRoute
 }
@@ -224,7 +208,6 @@ export interface FileRoutesById {
   '/search': typeof SearchLazyRoute
   '/sign-in': typeof SignInLazyRoute
   '/sign-up': typeof SignUpLazyRoute
-  '/users/$userId': typeof UsersUserIdLazyRoute
   '/posts/$postId/edit': typeof PostsPostIdEditLazyRoute
   '/posts/$postId/': typeof PostsPostIdIndexLazyRoute
 }
@@ -240,7 +223,6 @@ export interface FileRouteTypes {
     | '/search'
     | '/sign-in'
     | '/sign-up'
-    | '/users/$userId'
     | '/posts/$postId/edit'
     | '/posts/$postId'
   fileRoutesByTo: FileRoutesByTo
@@ -253,7 +235,6 @@ export interface FileRouteTypes {
     | '/search'
     | '/sign-in'
     | '/sign-up'
-    | '/users/$userId'
     | '/posts/$postId/edit'
     | '/posts/$postId'
   id:
@@ -266,7 +247,6 @@ export interface FileRouteTypes {
     | '/search'
     | '/sign-in'
     | '/sign-up'
-    | '/users/$userId'
     | '/posts/$postId/edit'
     | '/posts/$postId/'
   fileRoutesById: FileRoutesById
@@ -281,7 +261,6 @@ export interface RootRouteChildren {
   SearchLazyRoute: typeof SearchLazyRoute
   SignInLazyRoute: typeof SignInLazyRoute
   SignUpLazyRoute: typeof SignUpLazyRoute
-  UsersUserIdLazyRoute: typeof UsersUserIdLazyRoute
   PostsPostIdEditLazyRoute: typeof PostsPostIdEditLazyRoute
   PostsPostIdIndexLazyRoute: typeof PostsPostIdIndexLazyRoute
 }
@@ -295,7 +274,6 @@ const rootRouteChildren: RootRouteChildren = {
   SearchLazyRoute: SearchLazyRoute,
   SignInLazyRoute: SignInLazyRoute,
   SignUpLazyRoute: SignUpLazyRoute,
-  UsersUserIdLazyRoute: UsersUserIdLazyRoute,
   PostsPostIdEditLazyRoute: PostsPostIdEditLazyRoute,
   PostsPostIdIndexLazyRoute: PostsPostIdIndexLazyRoute,
 }
@@ -318,7 +296,6 @@ export const routeTree = rootRoute
         "/search",
         "/sign-in",
         "/sign-up",
-        "/users/$userId",
         "/posts/$postId/edit",
         "/posts/$postId/"
       ]
@@ -346,9 +323,6 @@ export const routeTree = rootRoute
     },
     "/sign-up": {
       "filePath": "sign-up.lazy.tsx"
-    },
-    "/users/$userId": {
-      "filePath": "users/$userId.lazy.tsx"
     },
     "/posts/$postId/edit": {
       "filePath": "posts/$postId/edit.lazy.tsx"

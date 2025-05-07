@@ -21,55 +21,63 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useTranslation } from 'react-i18next';
+import { t as globalT } from 'i18next';
 
 const formSchema = z
     .object({
         username: z
             .string({
-                message: 'Username is required.',
+                message: globalT('Username is required.'),
             })
             .min(3, {
-                message: 'Username must be at least 3 characters long.',
+                message: globalT(
+                    'Username must be at least 3 characters long.',
+                ),
             })
             .max(32, {
-                message: 'Username can be at most 32 characters long.',
+                message: globalT('Username can be at most 32 characters long.'),
             })
             .regex(/^[a-zA-Z0-9_]+$/, {
-                message:
+                message: globalT(
                     'Username can only contain letters, numbers, and underscores.',
+                ),
             }),
         email: z
             .string({
-                required_error: 'Email is required.',
+                required_error: globalT('Email is required.'),
             })
             .email({
-                message: 'Email must be a valid email address.',
+                message: globalT('Email must be a valid email address.'),
             }),
         phone: z
             .string({
-                required_error: 'Phone number is required.',
+                required_error: globalT('Phone number is required.'),
             })
             .regex(/^[+]?[0-9]{0,3}[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/, {
-                message: 'Phone number must be a valid phone number.',
+                message: globalT('Phone number must be a valid phone number.'),
             }),
         password: z
             .string({
-                message: 'Password is required.',
+                message: globalT('Password is required.'),
             })
             .min(8, {
-                message: 'Password must be at least 8 characters long.',
+                message: globalT(
+                    'Password must be at least 8 characters long.',
+                ),
             })
             .max(32, {
-                message: 'Password can be at most 32 characters long.',
+                message: globalT('Password can be at most 32 characters long.'),
             })
             .regex(
                 /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).+$/,
                 {
-                    message: `Password must contain at least one uppercase letter, one lowercase letter, one number and one special character from the following: #?!@$ %^&*-`,
+                    message: globalT(
+                        `Password must contain at least one uppercase letter, one lowercase letter, one number and one special character from the following: #?!@$ %^&*-`,
+                    ),
                 },
             ),
         confirmPassword: z.string({
-            message: 'Confirm password is required.',
+            message: globalT('Confirm password is required.'),
         }),
     })
     .refine(
@@ -77,7 +85,7 @@ const formSchema = z
             return data.password === data.confirmPassword;
         },
         {
-            message: 'Passwords must match',
+            message: globalT('Passwords must match'),
             path: ['confirmPassword'],
         },
     );

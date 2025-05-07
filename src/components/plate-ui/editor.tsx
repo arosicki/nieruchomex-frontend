@@ -92,7 +92,6 @@ export const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
                 ref={ref}
                 className={cn(
                     editorVariants({
-                        disabled,
                         focused,
                         variant,
                     }),

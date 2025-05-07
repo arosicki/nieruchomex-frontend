@@ -42,7 +42,7 @@ export const UsersConnector = () => {
                         <TableRow key={user.id}>
                             <TableCell>{user.id}</TableCell>
                             <TableCell>{user.name}</TableCell>
-                            <TableCell>{capitalize(user.type)}</TableCell>
+                            <TableCell>{t(capitalize(user.type))}</TableCell>
                             <TableCell>
                                 <RelativeDate date={user.createdAt} />
                             </TableCell>

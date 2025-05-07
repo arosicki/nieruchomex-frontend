@@ -108,7 +108,7 @@ export const SearchPage = () => {
                                     <AccordionItem value="item-1">
                                         <AccordionTrigger className="hover:no-underline">
                                             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-                                                {t('Filter')}
+                                                {t('Filters')}
                                             </h1>
                                         </AccordionTrigger>
                                         <AccordionContent>

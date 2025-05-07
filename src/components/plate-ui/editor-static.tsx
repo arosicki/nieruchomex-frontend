@@ -4,6 +4,7 @@ import { cn } from '@udecode/cn';
 import { type PlateStaticProps, PlateStatic } from '@udecode/plate-common';
 import { cva } from 'class-variance-authority';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const editorVariants = cva(
     cn(
         'group/editor',

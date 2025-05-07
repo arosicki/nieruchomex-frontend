@@ -16,18 +16,19 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
+import { t as globalT } from 'i18next';
 
 const formSchema = z
     .object({
         type: z.enum(['ALL', 'SALE', 'RENTAL'], {
-            message: 'Type is required.',
+            message: globalT('Type is required.'),
         }),
         minArea: z
             .number({
                 coerce: true,
             })
             .min(0, {
-                message: 'Minimum area must be a positive number.',
+                message: globalT('Minimum area must be a positive number.'),
             })
             .optional(),
         maxArea: z
@@ -35,7 +36,7 @@ const formSchema = z
                 coerce: true,
             })
             .min(0, {
-                message: 'Maximum area must be a positive number.',
+                message: globalT('Maximum area must be a positive number.'),
             })
             .optional(),
 
@@ -44,7 +45,7 @@ const formSchema = z
                 coerce: true,
             })
             .min(0, {
-                message: 'Minimum price must be a positive number.',
+                message: globalT('Minimum price must be a positive number.'),
             })
             .optional(),
         maxPrice: z
@@ -52,7 +53,7 @@ const formSchema = z
                 coerce: true,
             })
             .min(0, {
-                message: 'Maximum price must be a positive number.',
+                message: globalT('Maximum price must be a positive number.'),
             })
             .optional(),
         minRooms: z
@@ -60,7 +61,7 @@ const formSchema = z
                 coerce: true,
             })
             .min(0, {
-                message: 'Minimum rooms must be a positive number.',
+                message: globalT('Minimum rooms must be a positive number.'),
             })
             .optional(),
         maxRooms: z
@@ -68,7 +69,7 @@ const formSchema = z
                 coerce: true,
             })
             .min(0, {
-                message: 'Maximum rooms must be a positive number.',
+                message: globalT('Maximum rooms must be a positive number.'),
             })
             .optional(),
         search: z.string().optional(),
@@ -77,7 +78,9 @@ const formSchema = z
         (data) =>
             !data.minArea || !data.maxArea || data.minArea <= data.maxArea,
         {
-            message: 'Minimum area must be less than or equal to maximum area.',
+            message: globalT(
+                'Minimum area must be less than or equal to maximum area.',
+            ),
             path: ['minArea'],
         },
     )
@@ -85,8 +88,9 @@ const formSchema = z
         (data) =>
             !data.minPrice || !data.maxPrice || data.minPrice <= data.maxPrice,
         {
-            message:
+            message: globalT(
                 'Minimum price must be less than or equal to maximum price.',
+            ),
         },
     );
 

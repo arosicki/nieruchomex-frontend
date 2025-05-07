@@ -51,7 +51,8 @@ export const usePosts = ({
         const { distance: rawDistance, ...queryParams } =
             getFiltersSearchParams(params);
 
-        const { latitude, longitude } = address?.geometry.coordinates
+        const { latitude = undefined, longitude = undefined } = address
+            ?.geometry.coordinates
             ? {
                   latitude: address.geometry.coordinates[1],
                   longitude: address.geometry.coordinates[0],
