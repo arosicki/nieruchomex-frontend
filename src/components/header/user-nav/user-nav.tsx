@@ -34,6 +34,7 @@ export const UserNav = ({ user }: Props) => {
                 <Button
                     variant="ghost"
                     className="relative h-8 w-8 rounded-full mr-4"
+                    data-testid="user-nav-button"
                 >
                     <Avatar className="h-8 w-8">
                         {/* TODO: Stretch add user avatars */}
