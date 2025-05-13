@@ -26,10 +26,10 @@ export const LangToggle = () => {
                     value={i18n.language}
                     onValueChange={i18n.changeLanguage}
                 >
-                    <DropdownMenuRadioItem value="en">
+                    <DropdownMenuRadioItem value="en" data-testid="lang-en">
                         {t('English')}
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="pl">
+                    <DropdownMenuRadioItem value="pl" data-testid="lang-pl">
                         {t('Polish')}
                     </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>

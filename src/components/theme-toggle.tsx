@@ -29,13 +29,13 @@ export const ThemeToggle = () => {
                     value={theme}
                     onValueChange={setTheme as (value: string) => void}
                 >
-                    <DropdownMenuRadioItem value="light">
+                    <DropdownMenuRadioItem value="light" data-testid="light-theme">
                         {t('Light')}
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="dark">
+                    <DropdownMenuRadioItem value="dark" data-testid="dark-theme">
                         {t('Dark')}
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="system">
+                    <DropdownMenuRadioItem value="system" data-testid="system-theme">
                         {t('System')}
                     </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>

@@ -52,7 +52,7 @@ export const HomePage = () => {
         <WallLayout>
             <div className="flex flex-col items-center w-full py-12 gap-8">
                 <div className="flex flex-col container border p-4 rounded-lg">
-                    <h1 className="text-3xl font-semibold tracking-tight p-4">
+                    <h1 className="text-3xl font-semibold tracking-tight p-4" data-testid="home-search-header">
                         {t('What are you looking for?')}
                     </h1>
                     <AddressSearch />

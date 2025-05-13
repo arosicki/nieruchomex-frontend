@@ -20,8 +20,8 @@ export const Logo = ({ className }: Props) => {
             )}
             asChild
         >
-            <Link to="/">
-                <Home size={24} className="min-w-6 min-h-6" />
+            <Link to="/"  data-testid="home-logo-link">
+                <Home size={24} className="min-w-6 min-h-6"/>
                 {t('Nieruchomex')}
             </Link>
         </Button>

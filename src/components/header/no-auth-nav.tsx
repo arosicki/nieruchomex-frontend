@@ -11,10 +11,10 @@ export const NoAuthNav = () => {
         <nav className="flex mr-4 items-center gap-1">
             <LangToggle />
             <ThemeToggle />
-            <Button variant="link" asChild>
+            <Button variant="link" asChild data-testid="sign-in-button">
                 <Link to="/sign-in">{t('Sign in')}</Link>
             </Button>
-            <Button asChild>
+            <Button asChild data-testid="sign-up-button">
                 <Link to="/sign-up">{t('Sign up')}</Link>
             </Button>
         </nav>
