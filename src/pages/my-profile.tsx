@@ -139,6 +139,7 @@ export const MyProfilePage = () => {
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    data-testid="password-input"
                                                     placeholder={t(
                                                         'New password',
                                                     )}
@@ -164,8 +165,9 @@ export const MyProfilePage = () => {
                                             <FormLabel>{t('Email')}</FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    data-testid="email-input"
                                                     placeholder={t(
-                                                        'New password',
+                                                        'Email',
                                                     )}
                                                     {...field}
                                                     type="email"
@@ -186,6 +188,7 @@ export const MyProfilePage = () => {
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    data-testid="phone-input"
                                                     placeholder={t(
                                                         'Phone number',
                                                     )}
