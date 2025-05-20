@@ -21,7 +21,8 @@ export const ErrorPage = ({ error }: ErrorComponentProps) => {
             <>
                 <Header />
                 <div className="flex flex-col justify-center items-center h-[calc(100vh-3.75rem)] gap-3">
-                    <h1 className="text-4xl font-semibold">
+                    <h1 className="text-4xl font-semibold"
+                        data-testid="error-page-status-code">
                         {error.status || INTERNAL_SERVER_ERROR_CODE}
                     </h1>
                     <div className="border-b w-40" />
