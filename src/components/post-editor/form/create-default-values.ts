@@ -38,7 +38,11 @@ export const createDefaultValues = (post?: Post): PostFormFields => {
         try {
             postDescription = JSON.parse(description);
         } catch (error) {
-            console.error('Failed to parse post description', error);
+            console.error(
+                'Failed to parse post description, treating description as string',
+                error,
+            );
+            postDescription = description;
         }
     }
 

@@ -104,8 +104,16 @@ export const PostEditor = ({ post, disabled }: Props) => {
 
     const parsedDescription = useMemo(() => {
         if (!post?.description) return;
+        try {
+            return JSON.parse(post.description);
+        } catch (error) {
+            console.error(
+                'Failed to parse post description, treating description as string',
+                error,
+            );
 
-        return JSON.parse(post.description);
+            return post.description;
+        }
     }, [post?.description]);
 
     return (
