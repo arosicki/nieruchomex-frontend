@@ -248,6 +248,7 @@ export const TopNav = <T extends FieldValues>({
                                                     variant="destructive"
                                                     type="button"
                                                     size="icon"
+                                                    data-testid="delete-post-button"
                                                 >
                                                     <Trash2Icon />
                                                 </Button>
