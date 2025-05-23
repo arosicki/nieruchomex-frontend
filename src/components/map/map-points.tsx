@@ -2,11 +2,9 @@ import { Post } from '@/api/models/post';
 import { Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { createMarkerIcon } from './create-marker-icon';
-import { getImageUrl } from '@/utils/getImageUrl';
-import { MapPinIcon } from 'lucide-react';
+import { MapPinIcon, Receipt } from 'lucide-react';
 import { formatPrice } from '../../lib/formatters';
 import { useTranslation } from 'react-i18next';
-import { CubeIcon } from '@radix-ui/react-icons';
 import { ImageCarousel } from '../post-editor/components/image-carousel';
 
 interface Props {
@@ -50,18 +48,21 @@ export const MapPoints = ({ posts }: Props) => {
                                 title={post.title}
                                 navCarousel={false}
                             />
-                            <h1 className="font-semibold line-clamp-1 leading-tight px-2 text-base">
+                            <h1 className="font-semibold line-clamp-2 leading-tight px-2 text-base mb-2">
                                 {post.title}
                             </h1>
                             <div className="flex items-center px-2">
-                                <MapPinIcon />
-                                <div className="line-clamp-1 px-2 text-base">
+                                <MapPinIcon className="size-4" />
+                                <div className="line-clamp-1 px-2 text-sm">
                                     {post.address}
                                 </div>
                             </div>
-                            <p className="!m-1 font-medium text-lg px-2">
-                                {formatPrice(post.price, post.type, t)}
-                            </p>
+                            <div className="flex items-center px-2 mb-3">
+                                <Receipt className="size-4" />
+                                <div className="line-clamp-1 px-2 text-sm">
+                                    {formatPrice(post.price, post.type, t)}
+                                </div>
+                            </div>
                         </div>
                     </Popup>
                 </Marker>

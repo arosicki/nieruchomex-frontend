@@ -1,5 +1,5 @@
 export const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
-export const DEFAULT_LIMIT = +(import.meta.env.VITE_DEFAULT_LIMIT ?? 16);
+export const DEFAULT_LIMIT = +(import.meta.env.VITE_DEFAULT_LIMIT ?? 24);
 export const TOKEN_EXPIRATION_TIME =
     +(import.meta.env.VITE_TOKEN_EXPIRATION_DAYS ?? 30) * 1000 * 60 * 60 * 24;
 export const TOKEN_REFRESH_THRESHOLD =

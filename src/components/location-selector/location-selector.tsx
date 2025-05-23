@@ -37,7 +37,6 @@ export const LocationSelector = ({
         });
         return null;
     };
-    console.count('render');
 
     return (
         <MapContainer

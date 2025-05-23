@@ -1,4 +1,4 @@
-import { Suspense, useMemo } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { WallLayout } from '../../layouts/wall';
 import { PostsConnector } from './connectors/posts-connector';
 import { Loader } from '../../components/loader/loader';
@@ -26,10 +26,13 @@ import { getFiltersSearchParams } from '@/lib/get-search-url-params';
 import { useRetrieveAddress } from '@/api/address/use-retrive-address';
 import { LatLngTuple } from 'leaflet';
 import { useTranslation } from 'react-i18next';
+import { toast } from '@/hooks/use-toast';
+import { Link } from '@tanstack/react-router';
 
 export const SearchPage = () => {
     const { t } = useTranslation();
     const { data: address } = useRetrieveAddress();
+    const [userLocation, setUserLocation] = useState<LatLngTuple | undefined>();
 
     const isMobile = useMediaQuery(BREAKPOINTS.lg);
 
@@ -45,6 +48,35 @@ export const SearchPage = () => {
         () => getFiltersSearchParams(params),
         [params],
     );
+
+    useEffect(() => {
+        const getBrowserLocation = async () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        setUserLocation([latitude, longitude]);
+                    },
+                    () => {
+                        toast({
+                            title: t('Location access denied'),
+                            description: t(
+                                'Allowing location access will help you find posts near you.',
+                            ),
+                        });
+                    },
+                );
+            }
+        };
+
+        getBrowserLocation();
+    }, [address, t]);
+
+    const center = useMemo(() => {
+        if (params.mapboxId) return address?.geometry.coordinates;
+
+        return userLocation;
+    }, [userLocation, address, params.mapboxId]);
 
     const onSubmit = (data: PostSearchFormModel) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,13 +105,8 @@ export const SearchPage = () => {
             search: newSearch as any,
         });
     };
-
-    const center = address?.geometry.coordinates
-        ? ([
-              address?.geometry.coordinates[1],
-              address?.geometry.coordinates[0],
-          ] as LatLngTuple)
-        : undefined;
+    console.log(center);
+    console.log(userLocation);
 
     return (
         <WallLayout>

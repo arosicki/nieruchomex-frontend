@@ -44,10 +44,10 @@
         --deleted: 0 84.2% 65.2%;
         --deleted-foreground: 0 0% 98%;
 
-        .marker-cluster-small {
+        .marker-cluster.marker-cluster {
             background-color: hsl(var(--foreground), 0.6);
         }
-        .marker-cluster-small div {
+        .marker-cluster.marker-cluster div {
             background-color: hsl(var(--foreground));
             color: hsl(var(--background));
         }

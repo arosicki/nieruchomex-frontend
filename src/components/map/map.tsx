@@ -34,7 +34,7 @@ export const Map = ({
     return (
         <MapContainer
             center={center}
-            zoom={20}
+            zoom={12}
             className={cn('h-full sticky', className)}
             scrollWheelZoom={true}
             minZoom={1}
