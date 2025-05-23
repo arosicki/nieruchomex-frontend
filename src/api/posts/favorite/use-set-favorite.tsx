@@ -9,6 +9,7 @@ import { Favorite } from '../../models/favorite';
 import { ErrorCodes } from '../../helpers/error-codes';
 import { getErrorText } from '../../helpers/get-error-text';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface Params {
     id: number;
@@ -21,6 +22,7 @@ interface Variables {
 export const useSetFavorite = ({ id }: Params) => {
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     return useMutation<Response<Favorite>, FetchError, Variables>({
         mutationFn: async ({ favorite }) => {
@@ -32,7 +34,7 @@ export const useSetFavorite = ({ id }: Params) => {
         },
         onSuccess: (_, variables) => {
             queryClient.setQueryData<Response<Post>>(
-                [QueryKeys.POST, id],
+                [QueryKeys.POST, `${id}`],
                 (oldData) => {
                     if (!oldData) return oldData;
 
@@ -76,12 +78,12 @@ export const useSetFavorite = ({ id }: Params) => {
             queryClient.invalidateQueries({ queryKey: [QueryKeys.FAVORITES] });
 
             const title = variables.favorite
-                ? 'Post added to favorites'
-                : 'Post removed from favorites';
+                ? t('Post added to favorites')
+                : t('Post removed from favorites');
 
             const description = variables.favorite
-                ? 'The post has been added to favorites'
-                : 'The post has been removed from favorites';
+                ? t('The post has been added to favorites')
+                : t('The post has been removed from favorites');
 
             toast({
                 title,
@@ -90,8 +92,8 @@ export const useSetFavorite = ({ id }: Params) => {
         },
         onError: (error, variables) => {
             const title = variables.favorite
-                ? 'Could not add post to favorites'
-                : 'Could not remove post from favorites';
+                ? t('Could not add post to favorites')
+                : t('Could not remove post from favorites');
 
             const errorCode =
                 error.errors[0]?.code ?? ErrorCodes.INTERNAL_SERVER_ERROR;

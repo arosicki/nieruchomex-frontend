@@ -138,19 +138,21 @@ export const PostEditor = ({ post, disabled }: Props) => {
                     }}
                 />
 
-                {post?.status === 'ARCHIVED' && disabled && (
-                    <div className="px-4 pt-4 w-full">
-                        <Alert>
-                            <InfoCircledIcon />
-                            <AlertTitle>
-                                {t('This offer is archived')}
-                            </AlertTitle>
-                            <AlertDescription>
-                                {t('It is no longer available.')}
-                            </AlertDescription>
-                        </Alert>
-                    </div>
-                )}
+                {post?.status === 'ARCHIVED' &&
+                    user?.id !== post.author.id &&
+                    disabled && (
+                        <div className="px-4 pt-4 w-full">
+                            <Alert>
+                                <InfoCircledIcon />
+                                <AlertTitle>
+                                    {t('This offer is archived')}
+                                </AlertTitle>
+                                <AlertDescription>
+                                    {t('It is no longer available.')}
+                                </AlertDescription>
+                            </Alert>
+                        </div>
+                    )}
 
                 <div className="container flex justify-center flex-col xl:gap-4 xl:flex-row">
                     <div className="p-4 xl:w-2/3 gap-4 flex flex-col">

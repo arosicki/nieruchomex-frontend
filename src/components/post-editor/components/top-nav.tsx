@@ -29,11 +29,19 @@ import { useUserContext } from '@/context/user-context';
 import { capitalize } from '@/utils/capitalize';
 import { HeartFilledIcon, HeartIcon, ResetIcon } from '@radix-ui/react-icons';
 import { Link, useRouter } from '@tanstack/react-router';
-import { ArrowLeft, BanIcon, Pencil, SaveIcon, Trash2Icon } from 'lucide-react';
+import {
+    ArrowLeft,
+    BanIcon,
+    Pencil,
+    SaveIcon,
+    Trash2Icon,
+    Undo2,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useDeletePost } from '@/api/posts/use-delete-post';
 import { useTranslation } from 'react-i18next';
+import { useRestorePost } from '@/api/posts/restore/use-restore-post';
 
 interface Props<T extends FieldValues> {
     postId?: number | string;
@@ -67,6 +75,14 @@ export const TopNav = <T extends FieldValues>({
     });
     // Will not be called with postId === 0
     const { mutateAsync: mutateAsyncDeletePost } = useDeletePost({
+        id: +(postId || 0),
+    });
+
+    // Will not be called with postId === 0
+    const {
+        mutateAsync: mutateAsyncRestorePost,
+        isPending: isPendingRestorePost,
+    } = useRestorePost({
         id: +(postId || 0),
     });
 
@@ -321,18 +337,31 @@ export const TopNav = <T extends FieldValues>({
                             {t(capitalize(status!))}
                         </Badge>
                     </div>
-                    <Button variant="ghost" asChild isLoading={isSaving}>
-                        <Link
-                            to="/posts/$postId/edit"
-                            params={{
-                                postId: `${postId}`,
+                    {status === 'DELETED' ? (
+                        <Button
+                            variant="ghost"
+                            isLoading={isPendingRestorePost}
+                            onClick={async () => {
+                                await mutateAsyncRestorePost();
                             }}
-                            replace
                         >
-                            <Pencil />
-                            {t('Edit')}
-                        </Link>
-                    </Button>
+                            <Undo2 />
+                            {t('Restore')}
+                        </Button>
+                    ) : (
+                        <Button variant="ghost" asChild isLoading={isSaving}>
+                            <Link
+                                to="/posts/$postId/edit"
+                                params={{
+                                    postId: `${postId}`,
+                                }}
+                                replace
+                            >
+                                <Pencil />
+                                {t('Edit')}
+                            </Link>
+                        </Button>
+                    )}
                 </div>
             )}
 

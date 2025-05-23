@@ -12,6 +12,7 @@ import { ErrorCodes } from '../helpers/error-codes';
 import { FetchError } from '../helpers/fetch-error';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorText } from '../helpers/get-error-text';
+import { useTranslation } from 'react-i18next';
 
 interface Params {
     id: number;
@@ -20,6 +21,7 @@ interface Params {
 export const useDeletePost = ({ id }: Params) => {
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     return useMutation<Response<Post>, FetchError>({
         mutationFn: async () => {
@@ -32,7 +34,7 @@ export const useDeletePost = ({ id }: Params) => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: [QueryKeys.POST, id],
+                queryKey: [QueryKeys.POST, `${id}`],
             });
 
             queryClient.setQueriesData<InfiniteData<Response<Post[]>, number>>(
@@ -59,8 +61,8 @@ export const useDeletePost = ({ id }: Params) => {
             );
 
             toast({
-                title: 'Post Deleted',
-                description: 'Post deleted successfully',
+                title: t('Post deleted'),
+                description: t('Post has been deleted successfully'),
             });
         },
         onError: (error) => {
@@ -68,7 +70,7 @@ export const useDeletePost = ({ id }: Params) => {
                 error.errors[0]?.code ?? ErrorCodes.INTERNAL_SERVER_ERROR;
 
             toast({
-                title: 'Could not delete post',
+                title: t('Could not delete post'),
                 description: getErrorText(errorCode),
                 variant: 'destructive',
             });

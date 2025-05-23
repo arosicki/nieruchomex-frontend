@@ -7,6 +7,7 @@ import { FetchError } from '../helpers/fetch-error';
 import { QueryKeys } from '../helpers/query-keys';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorText } from '@/api/helpers/get-error-text';
+import { useTranslation } from 'react-i18next';
 
 interface Variables {
     userId: number;
@@ -19,6 +20,7 @@ interface Variables {
 export const useEditUser = () => {
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     return useMutation<Response<User>, FetchError, Variables>({
         mutationFn: async ({ userId, password, type, email, phone }) => {
@@ -44,8 +46,8 @@ export const useEditUser = () => {
             });
 
             toast({
-                title: 'User updated',
-                description: 'The user has been updated successfully',
+                title: t('User updated'),
+                description: t('The user has been updated successfully'),
             });
         },
 
@@ -54,7 +56,7 @@ export const useEditUser = () => {
                 error.errors?.[0]?.code ?? 'INTERNAL_SERVER_ERROR';
 
             toast({
-                title: 'Could not update user',
+                title: t('Could not update user'),
                 description: getErrorText(errorCode),
                 variant: 'destructive',
             });

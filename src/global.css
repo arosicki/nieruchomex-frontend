@@ -39,6 +39,9 @@
 
         --archived: 0 0% 96.1%;
         --archived-foreground: 0 0% 3.9%;
+
+        --deleted: 0 84.2% 65.2%;
+        --deleted-foreground: 0 0% 98%;
     }
     .dark {
         --background: 0 0% 3.9%;
@@ -76,6 +79,9 @@
 
         --archived: 0, 0%, 96.1%, 0.3;
         --archived-foreground: 0, 0%, 96.1%;
+
+        --deleted: 0, 84.2%, 65.2%, 0.3;
+        --deleted-foreground: 0 80.2% 70.2%;
 
         .leaflet-layer.topography,
         .leaflet-control-zoom-in,

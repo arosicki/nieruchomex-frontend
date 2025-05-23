@@ -56,6 +56,10 @@ export default {
                     DEFAULT: 'hsla(var(--archived))',
                     foreground: 'hsla(var(--archived-foreground))',
                 },
+                deleted: {
+                    DEFAULT: 'hsla(var(--deleted))',
+                    foreground: 'hsla(var(--deleted-foreground))',
+                },
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',

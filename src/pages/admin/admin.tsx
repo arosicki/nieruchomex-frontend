@@ -57,7 +57,7 @@ export const AdminPage = () => {
         <WallLayout>
             <div className="container px-4 mx-auto pt-6">
                 <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight">
-                    {t('You do not have permission to view this page.')}
+                    {t('Admin panel')}
                 </h1>
 
                 <div className="flex justify-between pt-3 pb-4 gap-4">

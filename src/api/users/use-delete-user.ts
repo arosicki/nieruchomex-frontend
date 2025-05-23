@@ -7,6 +7,7 @@ import { FetchError } from '../helpers/fetch-error';
 import { QueryKeys } from '../helpers/query-keys';
 import { getErrorText } from '@/api/helpers/get-error-text';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface Variables {
     userId: number;
@@ -15,6 +16,7 @@ interface Variables {
 export const useDeleteUser = () => {
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     return useMutation<Response<User>, FetchError, Variables>({
         mutationFn: async ({ userId }) => {
@@ -34,8 +36,8 @@ export const useDeleteUser = () => {
             });
 
             toast({
-                title: 'User deleted',
-                description: 'The user has been deleted successfully',
+                title: t('User deleted'),
+                description: t('The user has been deleted successfully'),
             });
         },
 
@@ -44,7 +46,7 @@ export const useDeleteUser = () => {
                 error.errors?.[0]?.code ?? 'INTERNAL_SERVER_ERROR';
 
             toast({
-                title: 'Could not delete user',
+                title: t('Could not delete user'),
                 description: getErrorText(errorCode),
                 variant: 'destructive',
             });

@@ -50,7 +50,7 @@ export const createDefaultValues = (post?: Post): PostFormFields => {
         description: postDescription,
         title,
         address,
-        status,
+        status: status as PostFormFields['status'],
         type,
         price,
         area,

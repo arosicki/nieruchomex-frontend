@@ -13,6 +13,7 @@ export const Endpoints = {
     WHO_AM_I: '/who-am-i',
 
     SET_FAVORITE: '/posts/[id]/set-favorite',
+    RESTORE_POST: '/posts/[id]/restore',
 } as const;
 
 export const MapboxEndpoints = {

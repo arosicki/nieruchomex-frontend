@@ -8,7 +8,7 @@ import { Suspense, useMemo } from 'react';
 import { MyPostsConnector } from './connectors/my-posts-connector';
 import { Loader } from '@/components/loader/loader';
 import { Button } from '@/components/ui/button';
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon, Trash2Icon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export const MyPostsPage = () => {
@@ -61,17 +61,30 @@ export const MyPostsPage = () => {
                         <h1 className="text-3xl font-semibold tracking-tight p-4">
                             {t('My posts')}
                         </h1>
-                        <Button asChild>
-                            <Link
-                                to="/posts/$postId"
-                                params={{
-                                    postId: 'new',
-                                }}
-                            >
-                                <PlusIcon className="w-6 h-6" />
-                                {t('Add post')}
-                            </Link>
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button asChild variant="ghost">
+                                <Link
+                                    to="/trash-can"
+                                    params={{
+                                        postId: 'new',
+                                    }}
+                                >
+                                    <Trash2Icon className="w-6 h-6" />
+                                    {t('Trash can')}
+                                </Link>
+                            </Button>
+                            <Button asChild>
+                                <Link
+                                    to="/posts/$postId"
+                                    params={{
+                                        postId: 'new',
+                                    }}
+                                >
+                                    <PlusIcon className="w-6 h-6" />
+                                    {t('Add post')}
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
                     <AddressSearch />
                     <FilterPanel

@@ -8,6 +8,7 @@ import { QueryKeys } from '../helpers/query-keys';
 import { ErrorCodes } from '../helpers/error-codes';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorText } from '@/api/helpers/get-error-text';
+import { useTranslation } from 'react-i18next';
 
 interface Variables {
     username: string;
@@ -20,6 +21,7 @@ interface Variables {
 export const useCreateUser = () => {
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     return useMutation<Response<User>, FetchError, Variables>({
         mutationFn: async ({ username, password, type, email, phone }) => {
@@ -40,8 +42,8 @@ export const useCreateUser = () => {
             });
 
             toast({
-                title: 'User created',
-                description: 'The user has been created successfully',
+                title: t('User created'),
+                description: t('The user has been created successfully'),
             });
         },
         onError: (error) => {
@@ -49,7 +51,7 @@ export const useCreateUser = () => {
                 error.errors?.[0]?.code ?? ErrorCodes.INTERNAL_SERVER_ERROR;
 
             toast({
-                title: 'Could not create user',
+                title: t('Could not create user'),
                 description: getErrorText(errorCode),
                 variant: 'destructive',
             });

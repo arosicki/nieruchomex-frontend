@@ -20,6 +20,8 @@ const badgeVariants = cva(
                     'border-transparent bg-published text-published-foreground dark:border-published-foreground',
                 archived:
                     'border-transparent bg-archived text-archived-foreground dark:border-archived-foreground',
+                deleted:
+                    'border-transparent bg-deleted text-deleted-foreground dark:border-deleted-foreground',
             },
         },
         defaultVariants: {

@@ -8,6 +8,7 @@ import { getErrorText } from '../helpers/get-error-text';
 import { ErrorCodes } from '../helpers/error-codes';
 import { FetchError } from '../helpers/fetch-error';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface Variables {
     images: File[];
@@ -27,6 +28,7 @@ interface Variables {
 export const useAddPost = () => {
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     return useMutation<Response<Post>, FetchError, Variables>({
         mutationFn: async ({
@@ -65,7 +67,7 @@ export const useAddPost = () => {
         },
         onSuccess: (data) => {
             queryClient.setQueryData<Response<Post>>(
-                [QueryKeys.POST, data.data.id],
+                [QueryKeys.POST, `${data.data.id}`],
                 () => data,
             );
 
@@ -78,8 +80,8 @@ export const useAddPost = () => {
             });
 
             toast({
-                title: 'Post Added',
-                description: 'Post added successfully',
+                title: t('Post added'),
+                description: t('Post added successfully'),
             });
         },
         onError: (error) => {
@@ -87,7 +89,7 @@ export const useAddPost = () => {
                 error.errors[0]?.code ?? ErrorCodes.INTERNAL_SERVER_ERROR;
 
             toast({
-                title: 'Could not add post',
+                title: t('Could not add post'),
                 description: getErrorText(errorCode),
                 variant: 'destructive',
             });

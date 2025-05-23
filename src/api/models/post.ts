@@ -1,7 +1,7 @@
 import { Image } from './image';
 import { User } from './user';
 
-export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
+export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'DELETED';
 export type PostType = 'RENTAL' | 'SALE';
 
 export interface Post {
@@ -11,6 +11,7 @@ export interface Post {
     description: string;
     createdAt: string;
     updatedAt: string;
+    deletedAt: string | null;
     author: User;
     favorites: number;
     isFavorite: boolean | null;

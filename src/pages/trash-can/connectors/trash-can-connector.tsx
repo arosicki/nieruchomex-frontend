@@ -1,25 +1,23 @@
 import { usePosts } from '@/api/posts/use-posts';
 import { Pagination } from '@/components/pagination';
 import { PostList } from '@/components/post-list/post-list';
-import { Button } from '@/components/ui/button';
 import { BREAKPOINTS } from '@/config';
 import { useUserContext } from '@/context/user-context';
 import { useMediaQuery } from '@/utils/useMediaQuery';
 import { useSearch } from '@tanstack/react-router';
-import { Link } from '@tanstack/react-router';
-import { Info, PlusIcon } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-export const MyPostsConnector = () => {
+export const TrashCanConnector = () => {
     const { t } = useTranslation();
     const user = useUserContext();
     const { data } = usePosts({
         variables: {},
         userId: user?.id,
-        status: ['ARCHIVED', 'DRAFT', 'PUBLISHED'],
+        status: ['DELETED'],
     });
     const params = useSearch({
-        from: '/my-posts',
+        from: '/trash-can',
     });
 
     const isSmall = useMediaQuery(BREAKPOINTS.sm);
@@ -29,20 +27,14 @@ export const MyPostsConnector = () => {
 
     if (!data.data.length)
         return (
-            <div className="w-full flex flex-col items-center gap-4">
-                <Info size={64} className="text-muted-foreground" />
-                <h3>{t("You haven't added any posts yet.")}</h3>
-                <Button asChild>
-                    <Link
-                        to="/posts/$postId"
-                        params={{
-                            postId: 'new',
-                        }}
-                    >
-                        <PlusIcon />
-                        {t('Add post')}
-                    </Link>
-                </Button>
+            <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+                <Trash2Icon size={64} className="text-muted-foreground" />
+                <h3>{t("You don't have any deleted posts.")}</h3>
+                <p>
+                    {t(
+                        'If you delete a post it will be available here for 7 days',
+                    )}
+                </p>
             </div>
         );
 
@@ -52,7 +44,7 @@ export const MyPostsConnector = () => {
                 posts={data.data}
                 displayMode="status"
                 displayFormat={isSmall ? 'grid' : 'list'}
-                buttonConfiguration="edit"
+                buttonConfiguration="restore"
             />
             <Pagination
                 totalPages={totalPages}

@@ -32,14 +32,15 @@ import { CameraIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { useUserContext } from '@/context/user-context';
 import { useSetFavorite } from '@/api/posts/favorite/use-set-favorite';
 import { cn } from '@/lib/utils';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { formatPrice, formatPricePerMeter } from '@/lib/formatters';
 import { useTranslation } from 'react-i18next';
+import { useRestorePost } from '@/api/posts/restore/use-restore-post';
 
 type Props = {
     displayMode?: 'status' | 'favorite';
     displayFormat?: 'list' | 'grid';
-    editButton?: boolean;
+    buttonConfiguration?: 'edit' | 'restore' | 'view';
 } & Post;
 
 export const PostListItem = ({
@@ -55,14 +56,16 @@ export const PostListItem = ({
     isFavorite,
     displayMode = 'favorite',
     displayFormat = 'list',
-    editButton = false,
+    buttonConfiguration = 'view',
 }: Props) => {
     const { t } = useTranslation();
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
     const [count, setCount] = useState(0);
     const user = useUserContext();
+    const navigate = useNavigate();
     const { mutateAsync: setFavoriteMutateAsync } = useSetFavorite({ id });
+    const { mutateAsync: restorePostMutateAsync } = useRestorePost({ id });
 
     useEffect(() => {
         if (!api) {
@@ -180,7 +183,7 @@ export const PostListItem = ({
                         </CardDescription>
                     </CardContent>
                     <CardFooter className="flex w-full justify-end">
-                        {editButton ? (
+                        {buttonConfiguration === 'edit' && (
                             <div className="flex gap-2">
                                 <Button
                                     id={`post-${id}-details`}
@@ -207,7 +210,36 @@ export const PostListItem = ({
                                     </Link>
                                 </Button>
                             </div>
-                        ) : (
+                        )}
+                        {buttonConfiguration === 'restore' && (
+                            <div className="flex gap-2">
+                                <Button variant="secondary" asChild>
+                                    <Link
+                                        to="/posts/$postId"
+                                        params={{
+                                            postId: `${id}`,
+                                        }}
+                                    >
+                                        {t('View details')}
+                                    </Link>
+                                </Button>
+                                <Button
+                                    id={`post-${id}-details`}
+                                    onClick={async () => {
+                                        await restorePostMutateAsync();
+                                        await navigate({
+                                            to: '/posts/$postId',
+                                            params: {
+                                                postId: `${id}`,
+                                            },
+                                        });
+                                    }}
+                                >
+                                    {t('Restore')}
+                                </Button>
+                            </div>
+                        )}
+                        {buttonConfiguration === 'view' && (
                             <Button id={`post-${id}-details`} asChild>
                                 <Link
                                     to="/posts/$postId"

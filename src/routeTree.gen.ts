@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TrashCanImport } from './routes/trash-can'
 import { Route as MyProfileImport } from './routes/my-profile'
 import { Route as MyPostsImport } from './routes/my-posts'
 
@@ -58,6 +59,12 @@ const AdminLazyRoute = AdminLazyImport.update({
   path: '/admin',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/admin.lazy').then((d) => d.Route))
+
+const TrashCanRoute = TrashCanImport.update({
+  id: '/trash-can',
+  path: '/trash-can',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const MyProfileRoute = MyProfileImport.update({
   id: '/my-profile',
@@ -118,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyProfileImport
       parentRoute: typeof rootRoute
     }
+    '/trash-can': {
+      id: '/trash-can'
+      path: '/trash-can'
+      fullPath: '/trash-can'
+      preLoaderRoute: typeof TrashCanImport
+      parentRoute: typeof rootRoute
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -176,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/my-posts': typeof MyPostsRoute
   '/my-profile': typeof MyProfileRoute
+  '/trash-can': typeof TrashCanRoute
   '/admin': typeof AdminLazyRoute
   '/favorites': typeof FavoritesLazyRoute
   '/search': typeof SearchLazyRoute
@@ -189,6 +204,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/my-posts': typeof MyPostsRoute
   '/my-profile': typeof MyProfileRoute
+  '/trash-can': typeof TrashCanRoute
   '/admin': typeof AdminLazyRoute
   '/favorites': typeof FavoritesLazyRoute
   '/search': typeof SearchLazyRoute
@@ -203,6 +219,7 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/my-posts': typeof MyPostsRoute
   '/my-profile': typeof MyProfileRoute
+  '/trash-can': typeof TrashCanRoute
   '/admin': typeof AdminLazyRoute
   '/favorites': typeof FavoritesLazyRoute
   '/search': typeof SearchLazyRoute
@@ -218,6 +235,7 @@ export interface FileRouteTypes {
     | '/'
     | '/my-posts'
     | '/my-profile'
+    | '/trash-can'
     | '/admin'
     | '/favorites'
     | '/search'
@@ -230,6 +248,7 @@ export interface FileRouteTypes {
     | '/'
     | '/my-posts'
     | '/my-profile'
+    | '/trash-can'
     | '/admin'
     | '/favorites'
     | '/search'
@@ -242,6 +261,7 @@ export interface FileRouteTypes {
     | '/'
     | '/my-posts'
     | '/my-profile'
+    | '/trash-can'
     | '/admin'
     | '/favorites'
     | '/search'
@@ -256,6 +276,7 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   MyPostsRoute: typeof MyPostsRoute
   MyProfileRoute: typeof MyProfileRoute
+  TrashCanRoute: typeof TrashCanRoute
   AdminLazyRoute: typeof AdminLazyRoute
   FavoritesLazyRoute: typeof FavoritesLazyRoute
   SearchLazyRoute: typeof SearchLazyRoute
@@ -269,6 +290,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   MyPostsRoute: MyPostsRoute,
   MyProfileRoute: MyProfileRoute,
+  TrashCanRoute: TrashCanRoute,
   AdminLazyRoute: AdminLazyRoute,
   FavoritesLazyRoute: FavoritesLazyRoute,
   SearchLazyRoute: SearchLazyRoute,
@@ -291,6 +313,7 @@ export const routeTree = rootRoute
         "/",
         "/my-posts",
         "/my-profile",
+        "/trash-can",
         "/admin",
         "/favorites",
         "/search",
@@ -308,6 +331,9 @@ export const routeTree = rootRoute
     },
     "/my-profile": {
       "filePath": "my-profile.tsx"
+    },
+    "/trash-can": {
+      "filePath": "trash-can.tsx"
     },
     "/admin": {
       "filePath": "admin.lazy.tsx"

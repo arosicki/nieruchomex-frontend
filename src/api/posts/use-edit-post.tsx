@@ -8,6 +8,7 @@ import { getErrorText } from '../helpers/get-error-text';
 import { ErrorCodes } from '../helpers/error-codes';
 import { FetchError } from '../helpers/fetch-error';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 interface Params {
     id: number;
@@ -32,6 +33,7 @@ interface Variables {
 export const useEditPost = ({ id }: Params) => {
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const { t } = useTranslation();
 
     return useMutation<Response<Post>, FetchError, Variables>({
         mutationFn: async ({
@@ -76,7 +78,7 @@ export const useEditPost = ({ id }: Params) => {
         },
         onSuccess: (data) => {
             queryClient.setQueryData<Response<Post>>(
-                [QueryKeys.POST, data.data.id],
+                [QueryKeys.POST, `${data.data.id}`],
                 () => data,
             );
 
@@ -89,8 +91,8 @@ export const useEditPost = ({ id }: Params) => {
             });
 
             toast({
-                title: 'Post Edited',
-                description: 'Post edited successfully',
+                title: t('Post Edited'),
+                description: t('Post has been edited successfully'),
             });
         },
         onError: (error) => {
@@ -98,7 +100,7 @@ export const useEditPost = ({ id }: Params) => {
                 error.errors?.[0]?.code ?? ErrorCodes.INTERNAL_SERVER_ERROR;
 
             toast({
-                title: 'Could not edit post',
+                title: t('Could not edit post'),
                 description: getErrorText(errorCode),
                 variant: 'destructive',
             });

@@ -5,14 +5,14 @@ interface Props {
     posts: Post[];
     displayMode?: 'status' | 'favorite';
     displayFormat?: 'list' | 'grid';
-    editButton?: boolean;
+    buttonConfiguration?: 'edit' | 'restore' | 'view';
 }
 
 export const PostList = ({
     posts,
     displayMode = 'favorite',
     displayFormat = 'list',
-    editButton = false,
+    buttonConfiguration = 'view',
 }: Props) => {
     return (
         <ul className="flex flex-col gap-6 w-full h-full pt-6">
@@ -22,7 +22,7 @@ export const PostList = ({
                     {...post}
                     displayMode={displayMode}
                     displayFormat={displayFormat}
-                    editButton={editButton}
+                    buttonConfiguration={buttonConfiguration}
                 />
             ))}
             <div className="w-full pb-1" />
