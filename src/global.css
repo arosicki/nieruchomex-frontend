@@ -4,8 +4,8 @@
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
+        --background: 0, 0%, 100%;
+        --foreground: 0, 0%, 3.9%;
         --card: 0 0% 100%;
         --card-foreground: 0 0% 3.9%;
         --popover: 0 0% 100%;
@@ -43,10 +43,56 @@
 
         --deleted: 0 84.2% 65.2%;
         --deleted-foreground: 0 0% 98%;
+
+        .marker-cluster-small {
+            background-color: hsl(var(--foreground), 0.6);
+        }
+        .marker-cluster-small div {
+            background-color: hsl(var(--foreground));
+            color: hsl(var(--background));
+        }
+
+        .fill-circle-transparent circle {
+            fill: transparent;
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+        }
+        .leaflet-popup-content-wrapper {
+            padding: 0;
+            border-radius: var(--radius);
+        }
+
+        .leaflet-popup-close-button.leaflet-popup-close-button {
+            color: hsl(var(--foreground));
+            background-color: hsl(var(--background));
+            border-radius: 9999px;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            right: 0.25rem;
+            top: 0.25rem;
+        }
+
+        .leaflet-popup-close-button.leaflet-popup-close-button span {
+            font-size: 1.5rem;
+            line-height: 1;
+            margin-top: -2px;
+        }
+
+        .leaflet-popup-content-wrapper,
+        .leaflet-popup-tip {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+        }
     }
     .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
+        --background: 0, 0%, 3.9%;
+        --foreground: 0, 0%, 98%;
         --card: 0 0% 3.9%;
         --card-foreground: 0 0% 98%;
         --popover: 0 0% 3.9%;

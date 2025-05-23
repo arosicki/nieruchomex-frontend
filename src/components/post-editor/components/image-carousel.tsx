@@ -18,9 +18,10 @@ import { useTranslation } from 'react-i18next';
 interface Props {
     images: Image[];
     title: string;
+    navCarousel?: boolean;
 }
 
-export const ImageCarousel = ({ images, title }: Props) => {
+export const ImageCarousel = ({ images, title, navCarousel = true }: Props) => {
     const { t } = useTranslation();
     const [current, setCurrent] = useState(0);
     const [count, setCount] = useState(0);
@@ -78,28 +79,30 @@ export const ImageCarousel = ({ images, title }: Props) => {
                     {t('# of #', { current, max: count })}
                 </Badge>
             </Carousel>
-            <Carousel className="w-full mb-2" setApi={setSmallCarouselApi}>
-                <CarouselContent>
-                    {images.map((image, index) => (
-                        <CarouselItem
-                            key={index}
-                            className="basis-1/2 md:basis-1/4 xl:basis-1/5"
-                            onClick={() => bigCarouselApi?.scrollTo(index)}
-                        >
-                            <img
-                                className={cn(
-                                    'h-full object-cover border-2 rounded-md',
-                                    index === current - 1
-                                        ? 'border-primary'
-                                        : 'border-transparent',
-                                )}
-                                src={getImageUrl(image.url)}
-                                alt={title}
-                            />
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-            </Carousel>
+            {navCarousel && (
+                <Carousel className="w-full mb-2" setApi={setSmallCarouselApi}>
+                    <CarouselContent>
+                        {images.map((image, index) => (
+                            <CarouselItem
+                                key={index}
+                                className="basis-1/2 md:basis-1/4 xl:basis-1/5"
+                                onClick={() => bigCarouselApi?.scrollTo(index)}
+                            >
+                                <img
+                                    className={cn(
+                                        'h-full object-cover border-2 rounded-md',
+                                        index === current - 1
+                                            ? 'border-primary'
+                                            : 'border-transparent',
+                                    )}
+                                    src={getImageUrl(image.url)}
+                                    alt={title}
+                                />
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                </Carousel>
+            )}
         </>
     );
 };

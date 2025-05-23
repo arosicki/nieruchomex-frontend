@@ -9,6 +9,7 @@ import {
     TileLayer,
     useMapEvent,
 } from 'react-leaflet';
+import { createMarkerIcon } from '../map/create-marker-icon';
 
 interface Props {
     children?: ReactNode;
@@ -16,6 +17,8 @@ interface Props {
     center?: [number, number];
     onChange?: (lat: number, lng: number) => void;
 }
+
+const icon = createMarkerIcon();
 
 export const LocationSelector = ({
     children,
@@ -34,6 +37,7 @@ export const LocationSelector = ({
         });
         return null;
     };
+    console.count('render');
 
     return (
         <MapContainer
@@ -61,7 +65,7 @@ export const LocationSelector = ({
                 </LayersControl.BaseLayer>
             </LayersControl>
 
-            <Marker position={position} />
+            <Marker position={position} icon={icon} />
             <UpdateMarkerToMapCenter />
             {children}
         </MapContainer>

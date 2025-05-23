@@ -27,6 +27,7 @@ import { useEditorRef } from '@udecode/plate-common/react';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import { useTranslation } from 'react-i18next';
+import { createMarkerIcon } from '../map/create-marker-icon';
 
 interface ViewProps {
     post: Post;
@@ -249,7 +250,10 @@ export const PostEditor = ({ post, disabled }: Props) => {
                             <div className="h-96 w-full">
                                 {disabled ? (
                                     <Map center={mapCenter}>
-                                        <Marker position={mapCenter} />
+                                        <Marker
+                                            position={mapCenter}
+                                            icon={createMarkerIcon()}
+                                        />
                                     </Map>
                                 ) : (
                                     <LocationSelector
