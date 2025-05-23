@@ -27,7 +27,6 @@ import { useRetrieveAddress } from '@/api/address/use-retrive-address';
 import { LatLngTuple } from 'leaflet';
 import { useTranslation } from 'react-i18next';
 import { toast } from '@/hooks/use-toast';
-import { Link } from '@tanstack/react-router';
 
 export const SearchPage = () => {
     const { t } = useTranslation();
