@@ -64,7 +64,8 @@
             border-radius: var(--radius);
         }
 
-        .leaflet-popup-close-button.leaflet-popup-close-button {
+        .leaflet-popup-close-button.leaflet-popup-close-button,
+        .leaflet-popup-close-button.leaflet-popup-close-button:hover {
             color: hsl(var(--foreground));
             background-color: hsl(var(--background));
             border-radius: 9999px;
