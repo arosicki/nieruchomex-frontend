@@ -72,7 +72,11 @@ export const SearchPage = () => {
     }, [address, t]);
 
     const center = useMemo(() => {
-        if (params.mapboxId) return address?.geometry.coordinates;
+        if (params.mapboxId && address?.geometry.coordinates)
+            return [
+                address?.geometry.coordinates[1],
+                address?.geometry.coordinates[0],
+            ] as LatLngTuple;
 
         return userLocation;
     }, [userLocation, address, params.mapboxId]);
@@ -104,8 +108,13 @@ export const SearchPage = () => {
             search: newSearch as any,
         });
     };
-    console.log(center);
-    console.log(userLocation);
+    console.log('center', center);
+    console.log(
+        'coords',
+        address?.geometry.coordinates,
+        address?.geometry.coordinates === center,
+    );
+    console.log('userLocation', userLocation, userLocation === center);
 
     return (
         <WallLayout>

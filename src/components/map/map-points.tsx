@@ -44,7 +44,7 @@ export const MapPoints = ({ posts }: Props) => {
                     icon={createMarkerIcon()}
                 >
                     <Popup>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 min-w-48">
                             <ImageCarousel
                                 images={post.images}
                                 title={post.title}
