@@ -9,7 +9,6 @@ export const GlobalLoader = () => {
         const dark = document.documentElement.classList.contains('dark');
         setIsDarkTheme(dark);
 
-        // Optional: Watch for theme changes dynamically
         const observer = new MutationObserver(() => {
             setIsDarkTheme(document.documentElement.classList.contains('dark'));
         });
