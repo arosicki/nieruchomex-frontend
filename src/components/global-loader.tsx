@@ -6,26 +6,31 @@ export const GlobalLoader = () => {
     const [isDarkTheme, setIsDarkTheme] = useState(false);
 
     useEffect(() => {
-        setIsDarkTheme(
-            window.document.documentElement.classList.contains('dark'),
-        );
+        const dark = document.documentElement.classList.contains('dark');
+        setIsDarkTheme(dark);
+
+        // Optional: Watch for theme changes dynamically
+        const observer = new MutationObserver(() => {
+            setIsDarkTheme(document.documentElement.classList.contains('dark'));
+        });
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class'],
+        });
+
+        return () => observer.disconnect();
     }, []);
+
+    const logoSrc = isDarkTheme ? logoDark : logoLight;
+    const logoHeight = isDarkTheme ? 'h-64' : 'h-60';
 
     return (
         <div className="flex items-center justify-center h-screen fixed top-0 left-0 w-full z-10">
-            {isDarkTheme ? (
-                <img
-                    src={logoDark}
-                    alt="Loader"
-                    className="animate-pulse-2 w-auto h-64"
-                />
-            ) : (
-                <img
-                    src={logoLight}
-                    alt="Loader"
-                    className="animate-pulse-2 w-auto h-60"
-                />
-            )}
+            <img
+                src={logoSrc}
+                alt="Loader"
+                className={`animate-pulse-2 w-auto ${logoHeight}`}
+            />
         </div>
     );
 };
