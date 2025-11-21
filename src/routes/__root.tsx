@@ -13,7 +13,10 @@ const queryClient = new QueryClient();
 export const Route = createRootRoute({
     component: () => (
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <ThemeProvider
+                defaultTheme="dark"
+                storageKey="nieruchomex-ui-theme"
+            >
                 <Suspense fallback={<GlobalLoader />}>
                     <GlobalLayout />
                 </Suspense>
@@ -22,9 +25,14 @@ export const Route = createRootRoute({
     ),
     notFoundComponent: () => (
         <QueryClientProvider client={queryClient}>
-            <Suspense fallback={<GlobalLoader />}>
-                <NotFoundPage />
-            </Suspense>
+            <ThemeProvider
+                defaultTheme="dark"
+                storageKey="nieruchomex-ui-theme"
+            >
+                <Suspense fallback={<GlobalLoader />}>
+                    <NotFoundPage />
+                </Suspense>
+            </ThemeProvider>
             <ToastContainer position="bottom-right" theme="dark" />
         </QueryClientProvider>
     ),
