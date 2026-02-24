@@ -1,61 +1,60 @@
-# Nieruchomex – Frontend
+# Nieruchomex – Backend
 
 **Live App:** https://nieruchomex.com/  
-**Backend:** https://github.com/arosicki/nieruchomex-backend
+**Frontend:** https://github.com/arosicki/nieruchomex-frontend
 
-Modern real estate frontend application built with **React + TypeScript** for browsing property listings (sales & rentals).  
-This repository contains the complete client-side application powering the Nieruchomex platform.
+Modern backend API built with **Node.js, TypeScript, and Express** to power the Nieruchomex real estate platform.  
+This repository contains all server-side logic, database models, and API endpoints for managing property listings, users, and related operations.
 
 ## Overview
 
-Nieruchomex is a responsive Single Page Application (SPA) designed to:
+Nieruchomex Backend is a RESTful API designed to:
 
-- Display real estate listings with rich property details
-- Integrate interactive maps
-- Connect seamlessly to a backend API
-- Provide a fast and modern user experience
+- Serve property listing data (sales & rentals)
+- Manage users, authentication, and roles
+- Handle image uploads for listings
+- Integrate with the frontend SPA seamlessly
+- Provide a scalable and maintainable architecture
 
-The project is structured for scalability, maintainability, and clean architecture.
+The backend is built for reliability, performance, and clean code practices.
 
 ## Tech Stack
 
-- **React**
+- **Node.js**
 - **TypeScript**
-- **Vite**
-- **Tanstack Router**
-- **Tailwind CSS**
-- **Mapbox GL**
+- **Express.js**
+- **Prisma ORM**
+- **PostgreSQL**
 - **ESLint + Prettier**
+- **Docker (optional for development)**
 
 ## Environment Variables
 
-The project uses Vite, so environment variables must start with `VITE_`.
-
-1. Copy the example file:
-
-```bash
-cp example.env .env
-```
-
-2. Update the variables in `.env` with your values:
+Create a `.env` file based on `example.env` and fill in your database credentials and other secrets:
 
 ```env
-# Backend API endpoint
-VITE_API_URL=https://your-backend-api.com
+# Server
+PORT=4000
 
-# Mapbox token for interactive maps
-VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/nieruchomex
+
+# JWT Secret for authentication
+JWT_SECRET=your_jwt_secret
+
+# Optional: Cloud storage for images
+CLOUDINARY_URL=your_cloudinary_url
 ```
 
-> Additional advanced settings can be configured in `src/config.ts` if needed.
+> Make sure to adjust database credentials and JWT secret according to your environment.
 
 ## Getting Started
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/arosicki/nieruchomex-frontend.git
-cd nieruchomex-frontend
+git clone https://github.com/arosicki/nieruchomex-backend.git
+cd nieruchomex-backend
 ```
 
 2. Install dependencies:
@@ -64,43 +63,55 @@ cd nieruchomex-frontend
 npm install
 ```
 
-3. Run the development server:
+3. Run database migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+The API will run at `http://localhost:4000` by default.
 
 ## Scripts
 
-- `npm run dev` – Start dev server
-- `npm run build` – Build for production
-- `npm run preview` – Preview production build
+- `npm run dev` – Start dev server with hot-reloading
+- `npm run build` – Compile TypeScript for production
+- `npm run start` – Run production build
 - `npm run lint` – Lint code
 - `npm run format` – Format code with Prettier
+- `npx prisma migrate dev` – Apply database migrations
+- `npx prisma studio` – Open Prisma Studio (database admin UI)
 
 ## Features
 
-- Responsive UI with Tailwind CSS
-- Interactive property maps using Mapbox GL
-- Filtering and search of property listings
-- Integration with backend REST API
-- Richtext editor for listing descriptions
+- CRUD operations for property listings
+- User authentication & role management
+- Image uploads and management
+- Type-safe database operations via Prisma
+- Secure API endpoints with JWT authentication
+- Detailed error handling and validation
 
 ## Project Structure
 
 ```
-nieruchomex-frontend/
-├─ public/              # Static assets
+nieruchomex-backend/
 ├─ src/
-│  ├─ components/       # Reusable UI components
-│  ├─ pages/            # Route pages
-│  ├─ hooks/            # Custom React hooks
-│  ├─ api/              # API calls
-│  ├─ config.ts         # Advanced configuration
-│  └─ main.tsx          # App entry point
+│  ├─ controllers/      # Route controllers
+│  ├─ routes/           # API routes
+│  ├─ middlewares/      # Express middlewares
+│  ├─ models/           # Prisma models
+│  ├─ utils/            # Helper functions
+│  └─ server.ts         # App entry point
+├─ prisma/
+│  ├─ schema.prisma     # Database schema
+│  └─ migrations/       # Database migrations
 ├─ example.env           # Example environment variables
 ├─ package.json
-└─ vite.config.ts
+├─ tsconfig.json
+└─ Dockerfile (optional)
 ```
