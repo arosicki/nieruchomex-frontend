@@ -112,6 +112,5 @@ nieruchomex-backend/
 │  └─ migrations/       # Database migrations
 ├─ example.env           # Example environment variables
 ├─ package.json
-├─ tsconfig.json
-└─ Dockerfile (optional)
+└─ tsconfig.json
 ```
